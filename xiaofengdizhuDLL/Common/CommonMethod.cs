@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class CommonMethod
+    public class CommonMethod 
     {
         public CommonSubsystems subsystems = new CommonSubsystems();
         public Project project
@@ -18,11 +18,18 @@ namespace Game
                 return GameManager.Project;
             }
         }
+        public ReadOnlyList<ComponentPlayer> componentPlayers
+        {
+            get
+            {
+                return subsystems.players.ComponentPlayers;
+            }
+        }
         public ComponentPlayer componentPlayer
         {
             get
             {
-                return subsystems.player.ComponentPlayer;
+                return componentPlayers[0];
             }
         }
         //常用方法
@@ -40,7 +47,7 @@ namespace Game
         //获取指定位置方块Value
         public int getBlock(int x, int y, int z)
         {
-            return subsystems.terrain.TerrainData.GetCellValue(x, y, z);
+            return subsystems.terrain.Terrain.GetCellValue(x, y, z);
         }
         //方块Value转方块ID
         public int BlockValue2ID(int value)
@@ -68,13 +75,13 @@ namespace Game
         public void setBlock(int x, int y, int z, int value)
         {
             SubsystemTerrain subsystemTerrain = subsystems.terrain;
-            TerrainData terrainData = subsystemTerrain.TerrainData;
-            terrainData.SetCellValueFast(x, y, z, value);
-            TerrainChunk terrainChunk = subsystemTerrain.CellToChunk(x, z);
-            if (terrainChunk != null)
+            Terrain terrain = subsystemTerrain.Terrain;
+            terrain.SetCellValueFast(x, y, z, value);
+            TerrainChunk chunkAtCell = terrain.GetChunkAtCell(x, z);
+            if (chunkAtCell != null)
             {
-                terrainChunk.ModificationCounter++;
-                subsystemTerrain.TerrainUpdater.DowngradeChunkNeighborhoodState(terrainChunk, 1, TerrainChunkState.InvalidLight, false);
+                chunkAtCell.ModificationCounter++;
+                subsystemTerrain.TerrainUpdater.DowngradeChunkNeighborhoodState(chunkAtCell.Coords, 1, TerrainChunkState.InvalidLight, false);
             }
         }
         public void addExplosion(int x, int y, int z, float pressure, bool isIncendiary, bool noExplosionSound)
@@ -431,7 +438,7 @@ namespace Game
             {
                 for(int z = startZ; z < endZ; z++)
                 {
-                    if (bottomY == -1) bottomY = subsystems.terrain.TerrainData.GetTopHeightFast(x, z);
+                    if (bottomY == -1) bottomY = subsystems.terrain.Terrain.GetChunkAtCell(x, z).GetTopHeightFast(x, z);
                     if (floorValue != -1) {
                         placeBlock(x, bottomY, z, floorValue);
                     }
@@ -512,13 +519,13 @@ namespace Game
         }
         public void uploadFile(string path)
         {
-            DialogsManager.ShowDialog(new SelectExternalContentProviderDialog("Select Upload Destination", delegate (IExternalContentProvider provider)
+            DialogsManager.ShowDialog(null,new SelectExternalContentProviderDialog("Select Upload Destination", false,delegate (IExternalContentProvider provider)
             {
                 try
                 {
                     string fileName = Storage.GetFileName(path);
                     CancellableBusyDialog busyDialog = new CancellableBusyDialog("Uploading file", false);
-                    DialogsManager.ShowDialog(busyDialog);
+                    DialogsManager.ShowDialog(null,busyDialog);
                     Task.Run(delegate
                     {
                         Stream stream = Storage.OpenFile(path, OpenFileMode.Read);
@@ -535,7 +542,7 @@ namespace Game
                                 }, delegate (Exception error)
                                 {
                                     DialogsManager.HideDialog(busyDialog);
-                                    DialogsManager.ShowDialog(new MessageDialog("Error", error.Message, "OK", null, null));
+                                    DialogsManager.ShowDialog(null,new MessageDialog("Error", error.Message, "OK", null, null));
                                     Utilities.Dispose<Stream>(ref stream);
                                 });
                             }, false);
@@ -543,14 +550,14 @@ namespace Game
                         catch (Exception ex)
                         {
                             DialogsManager.HideDialog(busyDialog);
-                            DialogsManager.ShowDialog(new MessageDialog("Error", ex.Message, "OK", null, null));
+                            DialogsManager.ShowDialog(null,new MessageDialog("Error", ex.Message, "OK", null, null));
                             Utilities.Dispose<Stream>(ref stream);
                         }
                     });
                 }
                 catch (Exception ex)
                 {
-                    DialogsManager.ShowDialog(new MessageDialog("Error", ex.Message, "OK", null, null));
+                    DialogsManager.ShowDialog(null,new MessageDialog("Error", ex.Message, "OK", null, null));
                 }
             }));
         }

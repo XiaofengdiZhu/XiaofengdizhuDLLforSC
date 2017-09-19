@@ -16,6 +16,9 @@ namespace Game
         private SubsystemTime m_subsystemTime;
         private SubsystemProjectiles m_subsystemProjectiles;
         private Random m_random = new Random();
+
+        private int m_arrowValue;
+
         private double m_nextUpdateTime;
         private double m_ChargeTime;
         private float m_distance;
@@ -44,6 +47,39 @@ namespace Game
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
             m_subsystemTime = Project.FindSubsystem<SubsystemTime>(true);
             m_subsystemProjectiles = Project.FindSubsystem<SubsystemProjectiles>(true);
+            switch (valuesDictionary.GetValue<string>("ArrowType"))
+            {
+                case "WoodenArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.WoodenArrow));
+                    break;
+                case "StoneArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.StoneArrow));
+                    break;
+                case "IronArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.IronArrow));
+                    break;
+                case "DiamondArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.DiamondArrow));
+                    break;
+                case "FireArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.FireArrow));
+                    break;
+                case "IronBolt":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.IronBolt));
+                    break;
+                case "DiamondBolt":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.DiamondBolt));
+                    break;
+                case "ExplosiveBolt":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.ExplosiveBolt));
+                    break;
+                case "CopperArrow":
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.CopperArrow));
+                    break;
+                default:
+                    m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.StoneArrow));
+                    break;
+            }
         }
 
         public void Update(float dt)
@@ -57,9 +93,8 @@ namespace Game
                     Vector3 target_direction = m_componenttChaseBehavior.Target.ComponentBody.Position - position;
                     m_distance = target_direction.Length();
                     Vector3 direction = Vector3.Normalize(target_direction + m_random.Vector3((m_distance<10)?0.4f:1f, false));
-                    int value = TerrainData.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, (ArrowBlock.ArrowType)0));//ArrowType:0、1、2、3、4、8
                     float vx = MathUtils.Lerp(0f, 40f, MathUtils.Pow((float)m_ChargeTime / 2f, 0.5f));
-                    m_subsystemProjectiles.FireProjectile(value, position, direction * vx + new Vector3(0, 8 * m_distance / vx, 0), Vector3.Zero, m_componentCreature);
+                    m_subsystemProjectiles.FireProjectile(m_arrowValue, position, direction * vx + new Vector3(0, m_random.UniformFloat(5f, 8f) * m_distance / vx, 0), Vector3.Zero, m_componentCreature);
                 }
                 m_ChargeTime = m_random.UniformFloat(1.6f, 2.2f);
                 if (m_distance < 10) m_ChargeTime *= 0.7;

@@ -7,10 +7,12 @@ namespace Game
     public class ComponentDiggerBehavior : ComponentBehavior, IUpdateable
     {
         private ComponentCreature m_componentCreature;
+        private ComponentMiner m_componentMiner;
         private SubsystemTerrain m_subsystemTerrain;
         private StateMachine m_stateMachine = new StateMachine();
         private SubsystemTime m_subsystemTime;
         private Vector3 m_diggingPosition;
+        private float bodyHeight;
         private double m_nextUpdateTime;
         private double m_startDigTime;
         private double m_digTime;
@@ -36,8 +38,10 @@ namespace Game
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentCreature = Entity.FindComponent<ComponentCreature>(true);
+            m_componentMiner = Entity.FindComponent<ComponentMiner>(true);
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
             m_subsystemTime = Project.FindSubsystem<SubsystemTime>(true);
+            bodyHeight = Entity.FindComponent<ComponentBody>(true).BoxSize.Y;
             m_isDigging = false;
         }
 
@@ -48,15 +52,21 @@ namespace Game
                 Vector3 vector3 = this.m_componentCreature.ComponentBody.Position;
                 if (!m_isDigging)
                 {
-                    Point3 point3 = new Point3((int)vector3.X, (int)vector3.Y, (int)vector3.Z);
-                    int cellValue = this.m_subsystemTerrain.TerrainData.GetCellValue(point3.X, point3.Y - 1, point3.Z);
-                    float digResilience = BlocksManager.Blocks[TerrainData.ExtractContents(cellValue)].DigResilience;
-                    if (digResilience > 0 && digResilience < 60)
+                    TerrainRaycastResult? terrainRaycastResult = m_componentMiner.PickTerrainForDigging(vector3, new Vector3(0, -1, 0));
+                    if (terrainRaycastResult.HasValue)
                     {
-                        m_digTime = digResilience / 5;
-                        m_diggingPosition = vector3;
-                        m_startDigTime = m_subsystemTime.GameTime;
-                        m_isDigging = true;
+                        if (terrainRaycastResult.Value.Distance < 1.2)
+                        {
+                            int cellValue = terrainRaycastResult.Value.Value;
+                            float digResilience = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)].DigResilience;
+                            if (digResilience > 0 && digResilience < 60)
+                            {
+                                m_digTime = digResilience / 5;
+                                m_diggingPosition = vector3;
+                                m_startDigTime = m_subsystemTime.GameTime;
+                                m_isDigging = true;
+                            }
+                        }
                     }
                 }
                 else if (!vector3.Equals(m_diggingPosition))
@@ -68,8 +78,15 @@ namespace Game
             }
             if (m_isDigging && m_subsystemTime.GameTime - m_startDigTime > m_digTime)
             {
-                Point3 point3 = new Point3((int)m_diggingPosition.X, (int)m_diggingPosition.Y, (int)m_diggingPosition.Z);
-                m_subsystemTerrain.DestroyCell(1, point3.X, point3.Y - 1, point3.Z, 0, false, false);
+                TerrainRaycastResult? terrainRaycastResult = m_componentMiner.PickTerrainForDigging(m_componentCreature.ComponentBody.Position, new Vector3(0, -1, 0));
+                if (terrainRaycastResult.HasValue)
+                {
+                    if (terrainRaycastResult.Value.Distance < 1.2)
+                    {
+                        Point3 point3 = terrainRaycastResult.Value.CellFace.Point;
+                        m_subsystemTerrain.DestroyCell(1, point3.X, point3.Y, point3.Z, 0, false, false);
+                    }
+                }
                 m_isDigging = false;
             }
         }

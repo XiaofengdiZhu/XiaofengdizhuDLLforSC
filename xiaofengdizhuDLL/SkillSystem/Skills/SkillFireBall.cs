@@ -11,7 +11,7 @@ namespace Game
         }
         public override bool Input()
         {
-            return InputManager.IsKeyDownOnce(Key.Y);
+            return Keyboard.IsKeyDownOnce(Key.Y);
         }
         public override void Action()
         {

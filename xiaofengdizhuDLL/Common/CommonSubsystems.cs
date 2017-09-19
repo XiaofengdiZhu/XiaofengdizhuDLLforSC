@@ -11,18 +11,18 @@ namespace Game
                 return GameManager.Project;
             }
         }
-        public SubsystemGui gui
+        public SubsystemPlayers players
         {
             get
             {
-                return project.FindSubsystem<SubsystemGui>(true);
+                return project.FindSubsystem<SubsystemPlayers>(true);
             }
         }
-        public SubsystemPlayer player
+        public ComponentPlayer componentPlayer
         {
             get
             {
-                return project.FindSubsystem<SubsystemPlayer>(true);
+                return players.ComponentPlayers[0];
             }
         }
         public SubsystemTerrain terrain

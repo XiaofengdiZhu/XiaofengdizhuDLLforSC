@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="AnimalBehaviors\ComponentCreeperBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentDiggerBehavior.cs" />
+    <Compile Include="AnimalBehaviors\ComponentDisplayHealthAndName.cs" />
     <Compile Include="AnimalBehaviors\ComponentExplosiveCreatureBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentShooterBehavior.cs" />
     <Compile Include="Common\CommonMethod.cs" />
@@ -44,35 +45,35 @@
     <Compile Include="Common\StoreBlocks.cs" />
     <Compile Include="Others\Maze.cs" />
     <Compile Include="SkillSystem\ComponentSkillInput.cs" />
+    <Compile Include="SkillSystem\Skill.cs" />
+    <Compile Include="SkillSystem\SkillManager.cs" />
+    <Compile Include="SkillSystem\Skills\SkillFireBall.cs" />
     <Compile Include="SkillSystem\Skills\SkillGateofBabylon.cs" />
     <Compile Include="SkillSystem\Skills\SkillTest.cs" />
     <Compile Include="TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SkillSystem\Skill.cs" />
-    <Compile Include="SkillSystem\Skills\SkillFireBall.cs" />
-    <Compile Include="SkillSystem\SkillManager.cs" />
-    <Compile Include="SkillSystem\SubsystemSkillInput.cs" />
-    <Compile Include="TargetState\SubsystemTargetState.cs" />
     <Compile Include="TargetState\TargetStateWidget.cs" />
     <Compile Include="xiaofengdizhu.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Database.xml" />
+    <Content Include="Content\Widgets\GameWidget.xml" />
+    <Content Include="Content\Widgets\TargetStateWidget.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Engine">
-      <HintPath>F:\SC-with-JS-2.0.30\SurvivalcraftAppX\Engine.dll</HintPath>
+      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\Engine.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem">
-      <HintPath>F:\SC-with-JS-2.0.30\SurvivalcraftAppX\EntitySystem.dll</HintPath>
+      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="Survivalcraft">
-      <HintPath>F:\SC-with-JS-2.0.30\SurvivalcraftAppX\Survivalcraft.exe</HintPath>
+      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\Survivalcraft.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Database.xml" />
-    <Content Include="Content\Screens\GameScreen.xml" />
-    <Content Include="Content\Widgets\TargetStateWidget.xml" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

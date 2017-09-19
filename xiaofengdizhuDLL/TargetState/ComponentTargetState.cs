@@ -10,9 +10,7 @@ namespace Game
         private ComponentMiner m_componentMiner;
         private SubsystemTime m_subsystemTime;
         private SubsystemDrawing m_subsystemDrawing;
-        private SubsystemInput m_subsystemInput;
-        private SubsystemTargetState m_subsystemTargetState;
-        private long m_lastMeleeHits;
+        private TargetStateWidget targetStateWidget;
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
@@ -20,8 +18,7 @@ namespace Game
             m_componentMiner = Entity.FindComponent<ComponentMiner>(true);
             m_subsystemTime = Project.FindSubsystem<SubsystemTime>(true);
             m_subsystemDrawing = Project.FindSubsystem<SubsystemDrawing>(true);
-            m_subsystemInput = Project.FindSubsystem<SubsystemInput>(true);
-            m_subsystemTargetState = Project.FindSubsystem<SubsystemTargetState>(true);
+            targetStateWidget = m_componentPlayer.View.GameWidget.Children.Find<TargetStateWidget>("TargetState", true);
         }
         public int UpdateOrder
         {
@@ -32,18 +29,15 @@ namespace Game
         }
         public void Update(float dt)
         {
-            long newMeleeHits = m_componentMiner.ComponentCreature.PlayerStats.MeleeHits;
-            if (m_lastMeleeHits != newMeleeHits)
+            if (m_componentPlayer.ComponentInput.PlayerInput.Hit.HasValue)
             {
-                m_lastMeleeHits = newMeleeHits;
-                Vector3 viewPosition3 = m_subsystemDrawing.ViewPosition;
-                PlayerInput playerInput = m_subsystemInput.PlayerInput;
-                Vector3 vector = Vector3.Normalize(this.m_subsystemDrawing.ScreenToWorld(new Vector3(playerInput.Hit.Value, 1f), Matrix.Identity) - viewPosition3);
+                Vector3 viewPosition3 = this.m_componentPlayer.View.ActiveCamera.ViewPosition;
+                Vector3 vector = Vector3.Normalize(this.m_componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(m_componentPlayer.ComponentInput.PlayerInput.Hit.Value, 1f), Matrix.Identity) - viewPosition3);
                 BodyRaycastResult? bodyRaycastResult = m_componentMiner.PickBody(viewPosition3, vector);
                 if (bodyRaycastResult.HasValue)
                 {
-                    m_subsystemTargetState.TargetBody = bodyRaycastResult.Value.ComponentBody;
-                    m_subsystemTargetState.prepareDisapear();
+                    targetStateWidget.TargetBody = bodyRaycastResult.Value.ComponentBody;
+                    targetStateWidget.prepareDisapear();
                 }
             }
         }

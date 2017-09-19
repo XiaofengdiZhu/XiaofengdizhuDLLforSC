@@ -30,7 +30,7 @@ namespace Game
         {
             get
             {
-                return subsystems.player.ComponentPlayer;
+                return subsystems.componentPlayer;
             }
         }
     }
