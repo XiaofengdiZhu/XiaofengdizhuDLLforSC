@@ -44,11 +44,13 @@
     <Compile Include="Common\StoreBlock.cs" />
     <Compile Include="Common\StoreBlocks.cs" />
     <Compile Include="Others\Maze.cs" />
+    <Compile Include="Others\PlayBadApple.cs" />
     <Compile Include="SkillSystem\ComponentSkillInput.cs" />
     <Compile Include="SkillSystem\Skill.cs" />
     <Compile Include="SkillSystem\SkillManager.cs" />
     <Compile Include="SkillSystem\Skills\SkillFireBall.cs" />
     <Compile Include="SkillSystem\Skills\SkillGateofBabylon.cs" />
+    <Compile Include="SkillSystem\Skills\SkillPlayBadApple.cs" />
     <Compile Include="SkillSystem\Skills\SkillTest.cs" />
     <Compile Include="TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Others\BadApple.7z" />
+    <None Include="SkillSystem\Skills\readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

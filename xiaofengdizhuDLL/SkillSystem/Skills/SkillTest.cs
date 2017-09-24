@@ -132,20 +132,28 @@ namespace Game
             Vector3 down = Vector3.TransformNormal(-0.005f * Vector3.UnitY, camera.ViewMatrix);
             primitivesRenderer3d.FontBatch(ContentManager.Get<BitmapFont>("Fonts/Pericles32"), 1, DepthStencilState.DepthRead, RasterizerState.CullNoneScissor, BlendState.AlphaBlend, SamplerState.LinearClamp).QueueText("TEST TEST TEST", vector, right, down, Color.Red, TextAnchor.HorizontalCenter | TextAnchor.Bottom);
 
-            TexturedBatch3D batch = primitivesRenderer3d.TexturedBatch(ContentManager.Get<Texture2D>("Textures/Sun"), false, 0, DepthStencilState.DepthRead, RasterizerState.CullCounterClockwiseScissor, BlendState.AlphaBlend, SamplerState.LinearClamp);
-
-            Vector3 position1 = Vector3.Transform(new Vector3(0, 80, 0), camera.ViewMatrix);
+            TexturedBatch3D batch = primitivesRenderer3d.TexturedBatch(ContentManager.Get<Texture2D>("Textures/Moon1"), true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.PointClamp);
+            
+            Vector3 position1 = new Vector3(0, 80, 0);
             Vector3 vector2 = position1 - camera.ViewPosition;
             float num = Vector3.Dot(vector2, camera.ViewDirection);
             float num2 = vector2.Length();
             Vector3 v = -(0.01f + 0.02f * num) / num2 * vector2;
             Vector3 unitZ = Vector3.UnitZ;
             Vector3 unitY = Vector3.UnitY;
-            Vector3 p1 = position1 - 10 * unitZ - 10 * unitY + v;
-            Vector3 p2 = position1 + 10 * unitZ - 10 * unitY + v;
-            Vector3 p3 = position1 + 10 * unitZ + 10 * unitY + v;
-            Vector3 p4 = position1 - 10 * unitZ + 10 * unitY + v;
-            batch.QueueQuad(p1, p2, p3, p4, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(0f, 1f), Color.Red);
+            Vector3 p1 = Vector3.Transform(position1 - 10 * unitZ - 10 * unitY, camera.ViewMatrix);
+            Vector3 p2 = Vector3.Transform(position1 + 10 * unitZ - 10 * unitY, camera.ViewMatrix);
+            Vector3 p3 = Vector3.Transform(position1 + 10 * unitZ + 10 * unitY, camera.ViewMatrix);
+            Vector3 p4 = Vector3.Transform(position1 - 10 * unitZ + 10 * unitY, camera.ViewMatrix);
+            batch.QueueQuad(p1, p2, p3, p4, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(0f, 1f), Color.White);
+            
+            /*
+            Vector3 position1 = new Vector3(0, 80, 0);
+            Matrix matrix = Matrix.CreateRotationY(0);
+            matrix.Translation = position;
+            Matrix value2 = camera.ViewMatrix;
+            Vector3 p = matrix.Translation;
+            */
             /*
             float timeOfDay = commonMethod.project.FindSubsystem<SubsystemTimeOfDay>(true).TimeOfDay;
             float f = MathUtils.Max(CalculateDawnGlowIntensity(timeOfDay), CalculateDuskGlowIntensity(timeOfDay));
@@ -182,5 +190,4 @@ namespace Game
             return MathUtils.Max(1f - MathUtils.Abs(timeOfDay - 0.75f) / 0.100000024f * 2f, 0f);
         }
     }
-    
 }
