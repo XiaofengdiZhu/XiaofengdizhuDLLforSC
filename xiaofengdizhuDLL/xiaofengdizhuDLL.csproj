@@ -45,12 +45,14 @@
     <Compile Include="Common\StoreBlocks.cs" />
     <Compile Include="Others\Maze.cs" />
     <Compile Include="Others\PlayBadApple.cs" />
+    <Compile Include="Others\PlayBadApple1.cs" />
     <Compile Include="SkillSystem\ComponentSkillInput.cs" />
     <Compile Include="SkillSystem\Skill.cs" />
     <Compile Include="SkillSystem\SkillManager.cs" />
     <Compile Include="SkillSystem\Skills\SkillFireBall.cs" />
     <Compile Include="SkillSystem\Skills\SkillGateofBabylon.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple.cs" />
+    <Compile Include="SkillSystem\Skills\SkillPlayBadApple1.cs" />
     <Compile Include="SkillSystem\Skills\SkillTest.cs" />
     <Compile Include="TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

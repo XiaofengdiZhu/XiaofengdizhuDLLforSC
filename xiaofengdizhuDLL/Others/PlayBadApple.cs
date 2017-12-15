@@ -4,7 +4,6 @@ using Engine.Content;
 using Engine.Graphics;
 using Engine.Media;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,8 +20,6 @@ namespace Game
         Vector3 unitY = Vector3.UnitY;
         public PlayBadApple()
         {
-            Log.Information("test");
-            
             Stream stream = Storage.OpenFile("app:BadApple\\BadApple.ogg", OpenFileMode.Read);
             BinaryReader expr_0C = new BinaryReader(stream);
             SoundBuffer soundBuffer;
@@ -44,7 +41,7 @@ namespace Game
             }
             else soundBuffer = new SoundBuffer(stream, bytesCount, 1, 44100);
             m_music = new Sound(soundBuffer, 1, AudioManager.ToEnginePitch(0), 0, true, false);
-            
+
             for (int i = 0; i < 6574; i++)
             {
                 m_pictures[i] = Texture2D.Load("app:BadApple\\BadApple_" + (i + 1).ToString() + ".png");

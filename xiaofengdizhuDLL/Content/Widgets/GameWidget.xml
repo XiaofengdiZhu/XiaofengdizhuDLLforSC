@@ -90,8 +90,8 @@
     </StackPanelWidget>
   </CanvasWidget>
       
-  <CanvasWidget Name="TargetStateCanvas" HorizontalAlignment="Near" VerticalAlignment="Near" Margin="80, 0" IsHitTestVisible="false">
+  <!--<CanvasWidget Name="TargetStateCanvas" HorizontalAlignment="Near" VerticalAlignment="Near" Margin="80, 0" IsHitTestVisible="false">
      <TargetStateWidget Name="TargetState" HorizontalAlignment="Center" IsVisible="false"/>
-  </CanvasWidget>
+  </CanvasWidget>-->
 
 </GameWidget>

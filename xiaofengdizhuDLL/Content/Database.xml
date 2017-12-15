@@ -379,7 +379,7 @@
               <Parameter Name="AutoDespawn" Guid="1daa043d-2b72-4b08-9e97-28ac9cf3e0f6" Value="False" Type="bool" />
             </MemberComponentTemplate>
             <MemberComponentTemplate Name="Inventory" Guid="c636765b-a58e-4169-a643-8306119b22b9" InheritanceParent="de5c0cb9-42d1-4ee4-b58f-bb9bb668b890" />
-			<MemberComponentTemplate Name="TargetState" Guid="ec2c5604-f585-4d6d-abce-ac1f80fbf3eb" InheritanceParent="33d11fde-8076-4f51-9281-e1cd56c6ca01" />
+			      <!--<MemberComponentTemplate Name="TargetState" Guid="ec2c5604-f585-4d6d-abce-ac1f80fbf3eb" InheritanceParent="33d11fde-8076-4f51-9281-e1cd56c6ca01" />-->
             <MemberComponentTemplate Name="Locomotion" Guid="d81c5357-fabb-4c19-8b46-7c493ebd91a0" InheritanceParent="f800ca88-e13e-455d-8def-849c99c615fa">
               <Parameter Name="WalkSpeed" Guid="5ada07d0-f6d2-4d1d-8cc6-d668ab8c55e5" Value="3.1" Type="float" />
               <Parameter Name="LookAutoLevelY" Guid="6ca79811-89f8-46ac-87b0-cff107fc1336" Value="False" Type="bool" />
@@ -3872,9 +3872,9 @@
         </ComponentTemplate>
       </Folder>
       <Folder Name="Gameplay" Guid="d3d4b692-acc9-4128-9b99-a5acf1de1fbb">
-        <ComponentTemplate Name="TargetState" Description="Takes player inputs and controls a creature with them" Guid="33d11fde-8076-4f51-9281-e1cd56c6ca01" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+        <!--<ComponentTemplate Name="TargetState" Description="Takes player inputs and controls a creature with them" Guid="33d11fde-8076-4f51-9281-e1cd56c6ca01" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
           <Parameter Name="Class" Guid="35ea5275-6b8e-4237-b493-cc3c675caf97" Value="Game.ComponentTargetState" Type="string" />
-        </ComponentTemplate>
+        </ComponentTemplate>-->
         <ComponentTemplate Name="BlockEntity" Description="Represents an entity that is a part of terrain as a single block" Guid="09a85cba-d94e-41b8-9497-f20ed942c17e" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
           <Parameter Name="Class" Guid="5d97eae3-490b-4028-ba4d-bc9ef72eb069" Value="Game.ComponentBlockEntity" Type="string" />
           <Parameter Name="Coordinates" Description="Block coordinates of entity" Guid="617a435a-514a-4177-b8d9-069ac586e6a8" Value="0,0,0" Type="Point3" />

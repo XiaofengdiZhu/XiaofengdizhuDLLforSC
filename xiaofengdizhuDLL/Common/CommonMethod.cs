@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Media;
 using GameEntitySystem;
 using System;
 using System.Collections.Generic;
@@ -252,6 +253,70 @@ namespace Game
                 storeBlocks.Add(centerX + x - 1, 0, centerY - y, value);
                 storeBlocks.Add(centerX - x, 0, centerY + y - 1, value);
                 storeBlocks.Add(centerX - x, 0, centerY - y, value);
+            }
+            return storeBlocks;
+        }
+        public Dictionary<Color, int> color2colorInt = new Dictionary<Color, int>(){
+            { WorldPalette.DefaultColors[0],0},
+            { WorldPalette.DefaultColors[1],1},
+            { WorldPalette.DefaultColors[2],2},
+            { WorldPalette.DefaultColors[3],3},
+            { WorldPalette.DefaultColors[4],4},
+            { WorldPalette.DefaultColors[5],5},
+            { WorldPalette.DefaultColors[6],6},
+            { WorldPalette.DefaultColors[7],7},
+            { WorldPalette.DefaultColors[8],8},
+            { WorldPalette.DefaultColors[9],9},
+            { WorldPalette.DefaultColors[10],10},
+            { WorldPalette.DefaultColors[11],11},
+            { WorldPalette.DefaultColors[12],12},
+            { WorldPalette.DefaultColors[13],13},
+            { WorldPalette.DefaultColors[14],14},
+            { WorldPalette.DefaultColors[15],15}
+        };
+        public void UpdateColor2colorInt()
+        {
+            color2colorInt = new Dictionary<Color, int>() {
+            { SubsystemPalette.GetColor(subsystems.terrain, 0),0},
+            { SubsystemPalette.GetColor(subsystems.terrain, 1),1},
+            { SubsystemPalette.GetColor(subsystems.terrain, 2),2},
+            { SubsystemPalette.GetColor(subsystems.terrain, 3),3},
+            { SubsystemPalette.GetColor(subsystems.terrain, 4),4},
+            { SubsystemPalette.GetColor(subsystems.terrain, 5),5},
+            { SubsystemPalette.GetColor(subsystems.terrain, 6),6},
+            { SubsystemPalette.GetColor(subsystems.terrain, 7),7},
+            { SubsystemPalette.GetColor(subsystems.terrain, 8),8},
+            { SubsystemPalette.GetColor(subsystems.terrain, 9),9},
+            { SubsystemPalette.GetColor(subsystems.terrain, 10),10},
+            { SubsystemPalette.GetColor(subsystems.terrain, 11),11},
+            { SubsystemPalette.GetColor(subsystems.terrain, 12),12},
+            { SubsystemPalette.GetColor(subsystems.terrain, 13),13},
+            { SubsystemPalette.GetColor(subsystems.terrain, 14),14},
+            { SubsystemPalette.GetColor(subsystems.terrain, 15),15}
+        };
+        }
+        //生成xz平面像素画，默认使用彩色粘土Clay,defaultColorIndex默认颜色序号（色表中不存在该颜色时的颜色）
+        public StoreBlocks getImage(string path, int defaultColorIndex)
+        {
+            Image image = Image.Load(path);
+            return getImage(image,defaultColorIndex);
+        }
+        public StoreBlocks getImage(Image image, int defaultColorIndex)
+        {
+            StoreBlocks storeBlocks = new StoreBlocks();
+            for (int x = 0; x < image.Width; x++)
+            {
+                for (int y = 0; y < image.Height; y++)
+                {
+                    try
+                    {
+                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | color2colorInt[image.GetPixel(x, y)] << 1)));
+                    }
+                    catch
+                    {
+                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | defaultColorIndex << 1)));
+                    }
+                }
             }
             return storeBlocks;
         }

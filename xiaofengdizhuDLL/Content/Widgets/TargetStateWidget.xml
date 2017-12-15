@@ -1,4 +1,4 @@
-<TargetStateWidget xmlns="runtime-namespace:Game">
+<!--<TargetStateWidget xmlns="runtime-namespace:Game">
   <StackPanelWidget Direction="Vertical">
     <StackPanelWidget Direction="Horizontal">
       <LabelWidget Name="Name" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
@@ -11,4 +11,4 @@
       <LabelWidget Name="AttackResilience" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
     </StackPanelWidget>
   </StackPanelWidget>
-</TargetStateWidget>
+</TargetStateWidget>-->
