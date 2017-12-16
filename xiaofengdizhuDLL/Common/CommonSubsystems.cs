@@ -102,5 +102,12 @@ namespace Game
                 return project.FindSubsystem<SubsystemFireworksBlockBehavior>(true);
             }
         }
+        public SubsystemElectricity electricity
+        {
+            get
+            {
+                return project.FindSubsystem<SubsystemElectricity>(true);
+            }
+        }
     }
 }

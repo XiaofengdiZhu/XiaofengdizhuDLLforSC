@@ -564,6 +564,14 @@ namespace Game
             }
             return maze;
         }
+        public void displaySmallMessage(string text , bool blinking, bool playNotificationSound)
+        {
+            componentPlayer.ComponentGui.DisplaySmallMessage(text, blinking, playNotificationSound);
+        }
+        public void displayLargeMessage(string largeText, string smallText, float duration, float delay)
+        {
+            componentPlayer.ComponentGui.DisplayLargeMessage(largeText, smallText, duration, delay);
+        }
         public void packFile(string filePath2Pack)
         {
             packFile(filePath2Pack, filePath2Pack + ".zip");

@@ -64,7 +64,8 @@ namespace Game
         }
         public override bool Input()
         {
-            return Keyboard.IsKeyDownOnce(Key.L);
+            //return Keyboard.IsKeyDownOnce(Key.L);
+            return false;
         }
         public override void Action()
         {
@@ -122,10 +123,22 @@ namespace Game
         }
         public override void Action()
         {
-            Vector3 vector3 = commonMethod.playerPosition;
-            Point3 position = new Point3((int)vector3.X, (int)vector3.Y, (int)vector3.Z);
-            Image image = Image.Load("data:/myFolder/eve.png");
-            commonMethod.setBlocks(position.X - image.Width / 2, 2, position.Z - image.Height / 2, commonMethod.getImage(image, 15));
+            ComponentMiner miner = componentPlayer.ComponentMiner;
+            Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
+            GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
+            Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+            TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
+            if (terrainRaycastResult.HasValue)
+            {
+                for(int x = 0; x < 72; x++)
+                {
+                    for(int y = 0; y < 54; y++)
+                    {
+                        commonMethod.placeBlock(x, 3, y, terrainRaycastResult.Value.Value);
+                        //((FourLedElectricElement)(commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4))).m_glowPoints[2].Color = new Color(255, 255, 255);
+                    }
+                }
+            }
         }
     }
 }
