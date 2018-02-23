@@ -33,17 +33,41 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimalBehaviors\ComponentCreeperBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentDiggerBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentDisplayHealthAndName.cs" />
     <Compile Include="AnimalBehaviors\ComponentExplosiveCreatureBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentShooterBehavior.cs" />
+    <Compile Include="Blocks\SixteenLedBlock.cs" />
+    <Compile Include="Blocks\SixteenLedElectricElement.cs" />
+    <Compile Include="Blocks\SixtyFourLedBlock.cs" />
+    <Compile Include="Blocks\SixtyFourLedElectricElement.cs" />
     <Compile Include="Common\CommonMethod.cs" />
     <Compile Include="Common\CommonSubsystems.cs" />
     <Compile Include="Common\StoreBlock.cs" />
     <Compile Include="Common\StoreBlocks.cs" />
     <Compile Include="Others\Maze.cs" />
+    <Compile Include="Others\PlayGluttonousSnake.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleBy4LED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByPaintedClay.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByTexturedBatch3D.cs" />
@@ -56,6 +80,7 @@
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\SkillPlayBadAppleByTexturedBatch3D.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\SkillPlayBadAppleByPaintedClay.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\SkillPlayBadAppleBy4LED.cs" />
+    <Compile Include="SkillSystem\Skills\SkillPlayGluttonousSnake.cs" />
     <Compile Include="SkillSystem\Skills\SkillTest.cs" />
     <Compile Include="TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +88,7 @@
     <Compile Include="xiaofengdizhu.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BlocksData.txt" />
     <Content Include="Content\Database.xml" />
     <Content Include="Content\Widgets\GameWidget.xml" />
     <Content Include="Content\Widgets\TargetStateWidget.xml" />
@@ -82,8 +108,15 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SkillSystem\Skills\SkillPlayBadApple\BadApple.7z" />
     <None Include="SkillSystem\Skills\readme.md" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.001" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.002" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.003" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.004" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.005" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.006" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.007" />
+    <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.008" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

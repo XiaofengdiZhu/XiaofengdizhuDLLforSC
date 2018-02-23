@@ -130,12 +130,13 @@ namespace Game
             TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
             if (terrainRaycastResult.HasValue)
             {
-                for(int x = 0; x < 72; x++)
+                for(int x = 0; x < 240; x++)
                 {
-                    for(int y = 0; y < 54; y++)
+                    for(int y = 0; y < 135; y++)
                     {
-                        commonMethod.placeBlock(x, 3, y, terrainRaycastResult.Value.Value);
-                        //((FourLedElectricElement)(commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4))).m_glowPoints[2].Color = new Color(255, 255, 255);
+                        //commonMethod.placeBlock(x, 3, y, terrainRaycastResult.Value.Value);
+                        GlowPoint[] glowPoints = ((SixteenLedElectricElement)(commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4))).m_glowPoints;
+                        for(int i=0;i<16;i+=2)glowPoints[i].Color = new Color(255, 255, 255);
                     }
                 }
             }

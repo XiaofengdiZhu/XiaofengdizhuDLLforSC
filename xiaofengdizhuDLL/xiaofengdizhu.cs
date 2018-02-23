@@ -17,11 +17,3 @@ namespace xiaofengdizhuDLL
         }
     }
 }
-namespace Game
-{
-    public class MyBlock : CubeBlock
-    {
-        public const int Index = 310;
-    }
-
-}
