@@ -58,10 +58,17 @@
     <Compile Include="AnimalBehaviors\ComponentDisplayHealthAndName.cs" />
     <Compile Include="AnimalBehaviors\ComponentExplosiveCreatureBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentShooterBehavior.cs" />
-    <Compile Include="Blocks\SixteenLedBlock.cs" />
-    <Compile Include="Blocks\SixteenLedElectricElement.cs" />
-    <Compile Include="Blocks\SixtyFourLedBlock.cs" />
-    <Compile Include="Blocks\SixtyFourLedElectricElement.cs" />
+    <Compile Include="BlocksEntity\ComponentBlocksEntity.cs" />
+    <Compile Include="BlocksEntity\SubsystemBlocksEntities.cs" />
+    <Compile Include="CombinedChest\CombinedChestBlock.cs" />
+    <Compile Include="CombinedChest\ComponentCombinedChest.cs" />
+    <Compile Include="CombinedChest\ComponentInventoryWithPage.cs" />
+    <Compile Include="MoreLedBlocks\SixteenLedBlock.cs" />
+    <Compile Include="MoreLedBlocks\SixteenLedElectricElement.cs" />
+    <Compile Include="MoreLedBlocks\SixtyFourLedBlock.cs" />
+    <Compile Include="MoreLedBlocks\SixtyFourLedElectricElement.cs" />
+    <Compile Include="CombinedChest\CombinedChestWidget.cs" />
+    <Compile Include="CombinedChest\SubsystemCombinedChestBlockBehavior.cs" />
     <Compile Include="Common\CommonMethod.cs" />
     <Compile Include="Common\CommonSubsystems.cs" />
     <Compile Include="Common\StoreBlock.cs" />
@@ -90,6 +97,7 @@
   <ItemGroup>
     <Content Include="Content\BlocksData.txt" />
     <Content Include="Content\Database.xml" />
+    <Content Include="Content\Widgets\CombinedChestWidget.xml" />
     <Content Include="Content\Widgets\GameWidget.xml" />
     <Content Include="Content\Widgets\TargetStateWidget.xml" />
   </ItemGroup>

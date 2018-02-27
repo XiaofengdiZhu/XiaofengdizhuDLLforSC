@@ -1,0 +1,10 @@
+<ChestWidget xmlns="runtime-namespace:Game">
+  <BevelledRectangleWidget Size="614, 402" BevelSize="3" />
+  <LabelWidget CanvasWidget.Position="12, 14" Name="ChestLabel" Text="Combined Chest" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
+  <LabelWidget Name="PageLabel" CanvasWidget.Position="250, 14" Font="{Fonts/Pericles24}" />
+  <LabelWidget CanvasWidget.Position="306, 14" Name="InventoryLabel" Text="Inventory" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
+  <GridPanelWidget CanvasWidget.Position="12, 52" Name="ChestGrid" ColumnsCount="4" RowsCount="4"/>
+  <GridPanelWidget CanvasWidget.Position="306, 52" Name="InventoryGrid" ColumnsCount="4" RowsCount="4"/>
+  <BevelledButtonWidget CanvasWidget.Position="72, 340" Name="PageLeftButton" Style="{Styles/ButtonStyle_ArrowLeft}" />
+  <BevelledButtonWidget CanvasWidget.Position="170, 340" Name="PageRightButton" Style="{Styles/ButtonStyle_ArrowRight}" />
+</ChestWidget>
