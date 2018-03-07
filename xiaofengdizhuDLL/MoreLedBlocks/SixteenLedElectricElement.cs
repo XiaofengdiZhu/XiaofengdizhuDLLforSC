@@ -4,13 +4,14 @@ namespace Game
     // Token: 0x02000394 RID: 916
     public class SixteenLedElectricElement : MountedElectricElement
     {
-        // Token: 0x06001769 RID: 5993 RVA: 0x0000FABB File Offset: 0x0000DCBB
+        public SubsystemGlow m_subsystemGlow;
+        public float m_voltage;
+        public Color m_color;
+        public GlowPoint[] m_glowPoints = new GlowPoint[16];
         public SixteenLedElectricElement(SubsystemElectricity subsystemElectricity, CellFace cellFace) : base(subsystemElectricity, cellFace)
         {
             this.m_subsystemGlow = subsystemElectricity.Project.FindSubsystem<SubsystemGlow>(true);
         }
-
-        // Token: 0x0600176A RID: 5994 RVA: 0x0009AC1C File Offset: 0x00098E1C
         public override void OnAdded()
         {
             CellFace cellFace = base.CellFaces[0];
@@ -35,7 +36,6 @@ namespace Game
                 this.m_glowPoints[i].Type = GlowPointType.Square;
             }
         }
-        // Token: 0x0600176B RID: 5995 RVA: 0x0009ADFC File Offset: 0x00098FFC
         public override void OnRemoved()
         {
             for (int i = 0; i < 16; i++)
@@ -43,8 +43,6 @@ namespace Game
                 this.m_subsystemGlow.RemoveGlowPoint(this.m_glowPoints[i]);
             }
         }
-
-        // Token: 0x0600176C RID: 5996 RVA: 0x0009AE28 File Offset: 0x00099028
         public override bool Simulate()
         {
             float voltage = this.m_voltage;
@@ -73,17 +71,5 @@ namespace Game
             }
             return false;
         }
-
-        // Token: 0x04001151 RID: 4433
-        public SubsystemGlow m_subsystemGlow;
-
-        // Token: 0x04001152 RID: 4434
-        public float m_voltage;
-
-        // Token: 0x04001153 RID: 4435
-        public Color m_color;
-
-        // Token: 0x04001154 RID: 4436
-        public GlowPoint[] m_glowPoints = new GlowPoint[16];
     }
 }

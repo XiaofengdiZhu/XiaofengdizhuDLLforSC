@@ -27,11 +27,8 @@ namespace Game
             this.m_subsystemAudio = base.Project.FindSubsystem<SubsystemAudio>(true);
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
         }
-
-        //private CommonMethod commonMethod = new CommonMethod();
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
-            //commonMethod.displaySmallMessage("test", false, false);
             ComponentBlocksEntity blocksEntity = null;
             Log.Information(m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x - 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z+1) + " " + m_subsystemTerrain.Terrain.GetCellValue(x, y, z-1));
             if (m_subsystemTerrain.Terrain.GetCellContents(x + 1, y, z) == 320)

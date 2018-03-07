@@ -397,6 +397,7 @@
             <MemberComponentTemplate Name="Sleep" Guid="e7b98f0e-317f-4589-8033-ca605f92ee15" InheritanceParent="188816b9-23bd-4fb2-9a3b-ac78540b5e6b" />
             <MemberComponentTemplate Name="Input" Guid="f5e5a7c3-b04e-4d95-8db4-2e7574adc4b9" InheritanceParent="74f93359-4e79-43ab-8cce-ff85a3ddedb3" />
             <MemberComponentTemplate Name="SkillInput" Guid="15e5a7c3-b04e-4d95-8db4-2e7574adc4b9" InheritanceParent="84f93359-4e79-43ab-8cce-ff85a3ddedb3" />
+            <MemberComponentTemplate Name="FireflySurround" Guid="f7b98f0e-317f-4589-8033-ca605f92ee15" InheritanceParent="288816b9-23bd-4fb2-9a3b-ac78540b5e6b" />
           </EntityTemplate>
           <EntityTemplate Name="FlightlessBird" Guid="548cf071-2593-45c2-b1c5-623b7c473612" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
             <MemberComponentTemplate Name="StareBehavior" Guid="01664144-a8e3-4b08-9f2b-6c037a7a8ee7" InheritanceParent="e4fdbb74-183f-4075-9d92-c67f58d700b9" />
@@ -3345,6 +3346,10 @@
     </Folder>
     <Folder Name="Subsystems" Guid="75acb50b-fb75-4c85-af38-a0fb51a9eb90">
       <Folder Name="BlockBehaviors" Guid="00c97f0f-731e-481c-9909-eae9cc5ee940">
+        <SubsystemTemplate Name="ExperienceOreBlockBehavior" Guid="139ea51e-c41d-4c93-99ae-a9b5a491c7aa" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+          <ParameterSet Name="Texts" Description="Contains sign texts" Guid="cdafca01-cf4e-414d-854e-aaaa8a138d0e" />
+          <Parameter Name="Class" Guid="f62ca7a9-a354-48ee-a504-e7d112d859b9" Value="Game.SubsystemExperienceOreBlockBehavior" Type="string" />
+        </SubsystemTemplate>
         <SubsystemTemplate Name="SignBlockBehavior" Guid="039ea51e-c41d-4c93-99ae-a9b5a491c7aa" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
           <ParameterSet Name="Texts" Description="Contains sign texts" Guid="bdafca01-cf4e-414d-854e-aaaa8a138d0e" />
           <Parameter Name="Class" Guid="e62ca7a9-a354-48ee-a504-e7d112d859b9" Value="Game.SubsystemSignBlockBehavior" Type="string" />
@@ -3379,6 +3384,10 @@
         <SubsystemTemplate Name="SaplingBlockBehavior" Guid="3830d91c-64fd-4048-ac76-efe4b0e26315" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
           <ParameterSet Name="Saplings" Description="Contains saplings data" Guid="6743c56e-9e37-411d-ba9b-ad9bf5631201" />
           <Parameter Name="Class" Guid="6dfdc7f1-530b-4f6d-a7f3-1691f021533d" Value="Game.SubsystemSaplingBlockBehavior" Type="string" />
+        </SubsystemTemplate>
+        <SubsystemTemplate Name="OreSaplingBlockBehavior" Guid="4830d91c-64fd-4048-ac76-efe4b0e26315" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+          <ParameterSet Name="OreSaplings" Description="Contains saplings data" Guid="7743c56e-9e37-411d-ba9b-ad9bf5631201" />
+          <Parameter Name="Class" Guid="7dfdc7f1-530b-4f6d-a7f3-1691f021533d" Value="Game.SubsystemOreSaplingBlockBehavior" Type="string" />
         </SubsystemTemplate>
         <SubsystemTemplate Name="CactusBlockBehavior" Guid="3858a400-2708-4e12-bccf-0495889fff79" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
           <Parameter Name="Class" Guid="765c87c0-ea8a-4513-9cbd-5cf89c72e2a9" Value="Game.SubsystemCactusBlockBehavior" Type="string" />
@@ -3913,6 +3922,9 @@
           <Parameter Name="Class" Guid="46dd5d8f-8a84-4bb6-bb7c-bc42afe926d4" Value="Game.ComponentSleep" Type="string" />
           <Parameter Name="AllowManualWakeUp" Description="Whether manual wakeup is allowed" Guid="c8e25973-c8da-4aa6-a6bf-5a08c78972cf" Value="False" Type="bool" />
         </ComponentTemplate>
+        <ComponentTemplate Name="FireflySurround" Description="Handles sleeping of the creature entity" Guid="288816b9-23bd-4fb2-9a3b-ac78540b5e6b" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+          <Parameter Name="Class" Guid="56dd5d8f-8a84-4bb6-bb7c-bc42afe926d4" Value="Game.ComponentFireflySurround" Type="string" />
+        </ComponentTemplate>
         <ComponentTemplate Name="Udder" Description="Handles milking" Guid="32c8be61-7eca-4c96-98b3-5c5e7479129a" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
           <Parameter Name="Class" Guid="08425007-e131-472e-9746-78f493091c58" Value="Game.ComponentUdder" Type="string" />
           <Parameter Name="MilkRegenerationTime" Description="Time to regenerate milk after milking, in seconds" Guid="23c5b42f-a0cc-4cb8-bb67-fc5b06bbdeae" Value="300" Type="float" />
@@ -4271,6 +4283,7 @@
         <MemberSubsystemTemplate Name="BlocksEntities" Guid="7bddfe21-5866-4fd2-9d6d-b023ec73a34c" InheritanceParent="dcd8d745-1802-4dc7-80ed-8e01712fe611" />
         <MemberSubsystemTemplate Name="Weather" Guid="6c19da5c-c0ea-49a3-bc63-ae7e446e1665" InheritanceParent="7101ee51-9ab5-43cf-93ca-fca178d719cc" />
         <MemberSubsystemTemplate Name="AnimatedTextures" Guid="6c2475d6-f132-4a60-afa3-cbfe78f86911" InheritanceParent="23271fad-714e-49b7-a01d-9301a9e4588b" />
+        <MemberSubsystemTemplate Name="ExperienceOreBlockBehavior" Guid="997fdf9a-574e-434f-aae3-89bf53a00fd7" InheritanceParent="139ea51e-c41d-4c93-99ae-a9b5a491c7aa" />
         <MemberSubsystemTemplate Name="FertilizerBlockBehavior" Guid="711f0197-36d8-4f81-ab6b-0d39df860c85" InheritanceParent="05b0eac6-51df-4e52-b9e7-4495020a1b66" />
         <MemberSubsystemTemplate Name="MatchBlockBehavior" Guid="73f073bd-f8cc-46a5-9246-1c338ce23660" InheritanceParent="2b55476c-d33b-4012-89f8-dae22283ca67" />
         <MemberSubsystemTemplate Name="IvyBlockBehavior" Guid="786b6f3d-a64b-458c-bd4e-e85a67b50263" InheritanceParent="7aba3213-a92d-46ca-8665-5fe3036314fe" />
@@ -4310,6 +4323,7 @@
         <MemberSubsystemTemplate Name="TorchBehavior" Guid="dbe3e57b-d722-4e0a-a820-4a5475e8c4ac" InheritanceParent="1815d2e9-776d-40e3-abde-c46d1cc8b301" />
         <MemberSubsystemTemplate Name="Particles" Guid="dc1e2bf6-99e1-4d0f-ac15-819063d95872" InheritanceParent="f3929cef-b001-4354-8dbb-8d293ac81c8f" />
         <MemberSubsystemTemplate Name="SaplingBlockBehavior" Guid="def570aa-83e8-4007-860d-efeda2e89fa8" InheritanceParent="3830d91c-64fd-4048-ac76-efe4b0e26315" />
+        <MemberSubsystemTemplate Name="OreSaplingBlockBehavior" Guid="eef570aa-83e8-4007-860d-efeda2e89fa8" InheritanceParent="4830d91c-64fd-4048-ac76-efe4b0e26315" />
         <MemberSubsystemTemplate Name="PlantBehavior" Guid="e2028b62-a57c-4017-ad16-8ba9a4dace17" InheritanceParent="32d1d42c-cb28-446a-9401-3ee0abedc296" />
         <MemberSubsystemTemplate Name="BlocksScanner" Guid="e295b1db-3bad-4ea1-be18-54c3f271cf4a" InheritanceParent="a0a74e2a-ff7c-42a3-a393-9ab0d1c0a398" />
         <MemberSubsystemTemplate Name="WhistleBlockBehavior" Guid="e9bfce2d-46f6-4855-96eb-b4c651e7f358" InheritanceParent="c07adbb0-3ad3-45d6-a91a-7bea44aabd96" />
