@@ -104,7 +104,7 @@ namespace Game
         public override bool OnInteract(TerrainRaycastResult raycastResult, ComponentMiner componentMiner)
         {
             ComponentBlocksEntity blocksEntity = this.m_subsystemBlocksEntities.GetBlockEntity(raycastResult.CellFace.X, raycastResult.CellFace.Y, raycastResult.CellFace.Z);
-            if (blocksEntity != null && componentMiner.ComponentPlayer != null)
+            if (blocksEntity != null && blocksEntity.Coordinates.Count == 2 && componentMiner.ComponentPlayer != null)
             {
                 ComponentCombinedChest ComponentCombinedChest = blocksEntity.Entity.FindComponent<ComponentCombinedChest>(true);
                 componentMiner.ComponentPlayer.ComponentGui.ModalPanelWidget = new CombinedChestWidget(componentMiner.Inventory, ComponentCombinedChest);

@@ -123,18 +123,29 @@ namespace Game
         }
         public override void Action()
         {
-            ComponentMiner miner = componentPlayer.ComponentMiner;
-            Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
-            GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
-            Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
-            TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
-            if (terrainRaycastResult.HasValue)
+            try
             {
-                Point3 a = terrainRaycastResult.Value.CellFace.Point;
-                int value = commonMethod.getBlock(a.X, a.Y+1, a.Z);
-                int data = Terrain.ExtractData(value);
-                commonMethod.displaySmallMessage(a.ToString() + " "+ data.ToString() + " "+((value & 15360) >> 10).ToString(), false, false);
+                ComponentMiner miner = componentPlayer.ComponentMiner;
+                Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
+                //TelescopeCamera camera = (TelescopeCamera)componentPlayer.View.ActiveCamera;
+                Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
+                GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
+                Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+                TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
+                if (terrainRaycastResult.HasValue)
+                {
+                    Point3 a = terrainRaycastResult.Value.CellFace.Point;
+                    int value = commonMethod.getBlock(a.X, a.Y, a.Z);
+                    int data = Terrain.ExtractData(value);
+                    var b = commonMethod.project.FindSubsystem<SubsystemDefenceTowerCoreBlockBehavior>(true).m_defenceTowers;
+                    commonMethod.displaySmallMessage(b[a].type.ToString() + " " + data, false, false);
+                    //commonMethod.displaySmallMessage(a.ToString() + " " + data.ToString() + " " + ((value & 15360) >> 10).ToString(), false, false);
+                }
+            }catch(Exception e)
+            {
+                Log.Warning(e.ToString());
             }
+            //commonMethod.displaySmallMessage(Math.Round(viewDirection.X,2).ToString() + "," + Math.Round(viewDirection.Y, 2).ToString() + "," + Math.Round(viewDirection.Z,2).ToString() + "  " + Math.Round(MathUtils.RadToDeg(camera.m_angles.X)).ToString() + "," + Math.Round(MathUtils.RadToDeg(camera.m_angles.Y)).ToString(), false,false);
         }
     }
 }

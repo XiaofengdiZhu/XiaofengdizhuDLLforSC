@@ -29,7 +29,7 @@ namespace Game
             m_subsystemWeather = Project.FindSubsystem<SubsystemWeather>(true);
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
             m_subsystemGameInfo = Project.FindSubsystem<SubsystemGameInfo>(true);
-            m_texture = ContentManager.Get<Texture2D>("Textures/Firefly");
+            m_texture = ContentManager.Get<Texture2D>("Textures/Round32");
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
             isLivingMode = m_subsystemGameInfo.WorldSettings.EnvironmentBehaviorMode == EnvironmentBehaviorMode.Living;
         }
@@ -52,7 +52,6 @@ namespace Game
                         int humidity = m_subsystemTerrain.Terrain.GetHumidity(cell.X, cell.Y);
                         randomPosition.Y = (float)m_subsystemTerrain.Terrain.GetTopHeight(cell.X, cell.Y) + m_random.UniformFloat(0.4f, 4f);
                         float randomFloat = m_random.UniformFloat(0f, 1f);
-                        Log.Information("test：" + humidity.ToString() + "  " + randomFloat.ToString());
                         //生成速率和限制由湿度决定，亮度大于8处不生成
                         if (m_subsystemTerrain.Terrain.GetCellLight(cell.X, (int)randomPosition.Y, cell.Y) < 9 && ((humidity > 12 && randomFloat < 0.8f) || (humidity > 10 && randomFloat < 0.6f) || (humidity > 8 && randomFloat < 0.45f) || (humidity > 6 && randomFloat < 0.3f)))
                         {

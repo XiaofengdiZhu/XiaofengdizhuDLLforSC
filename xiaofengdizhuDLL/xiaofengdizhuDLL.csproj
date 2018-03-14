@@ -61,9 +61,16 @@
     <Compile Include="AnimalBehaviors\ComponentShooterBehavior.cs" />
     <Compile Include="BlocksEntity\ComponentBlocksEntity.cs" />
     <Compile Include="BlocksEntity\SubsystemBlocksEntities.cs" />
-    <Compile Include="CombinedChest\CombinedChestBlock.cs" />
-    <Compile Include="CombinedChest\ComponentCombinedChest.cs" />
-    <Compile Include="CombinedChest\ComponentInventoryWithPage.cs" />
+    <Compile Include="MoreChest\AutoCollectPickablesHole\AutoCollectPickablesHoleBlock.cs" />
+    <Compile Include="MoreChest\AutoCollectPickablesHole\SubsystemAutoCollectPickablesHoleBlockBehavior.cs" />
+    <Compile Include="MoreChest\CombinedChest\CombinedChestBlock.cs" />
+    <Compile Include="MoreChest\CombinedChest\ComponentCombinedChest.cs" />
+    <Compile Include="MoreChest\CombinedChest\ComponentInventoryWithPage.cs" />
+    <Compile Include="DefenceTower\DefenceTowerCoreBlock.cs" />
+    <Compile Include="DefenceTower\DefenceTowerManager.cs" />
+    <Compile Include="DefenceTower\FlySharkTower\FlysharkBlock.cs" />
+    <Compile Include="DefenceTower\FlySharkTower\SubsystemFlysharkBlockBehavior.cs" />
+    <Compile Include="DefenceTower\SubsystemDefenceTowerCoreBlockBehavior.cs" />
     <Compile Include="OreTree\ExperienceOreBlock.cs" />
     <Compile Include="OreTree\OreBlock.cs" />
     <Compile Include="OreTree\OrePlantsManager.cs" />
@@ -75,8 +82,8 @@
     <Compile Include="MoreLedBlocks\SixteenLedElectricElement.cs" />
     <Compile Include="MoreLedBlocks\SixtyFourLedBlock.cs" />
     <Compile Include="MoreLedBlocks\SixtyFourLedElectricElement.cs" />
-    <Compile Include="CombinedChest\CombinedChestWidget.cs" />
-    <Compile Include="CombinedChest\SubsystemCombinedChestBlockBehavior.cs" />
+    <Compile Include="MoreChest\CombinedChest\CombinedChestWidget.cs" />
+    <Compile Include="MoreChest\CombinedChest\SubsystemCombinedChestBlockBehavior.cs" />
     <Compile Include="Common\CommonMethod.cs" />
     <Compile Include="Common\CommonSubsystems.cs" />
     <Compile Include="Common\StoreBlock.cs" />
@@ -100,6 +107,9 @@
     <Compile Include="TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TargetState\TargetStateWidget.cs" />
+    <Compile Include="Telescope\SubsystemTelescopeBlockBehavior.cs" />
+    <Compile Include="Telescope\TelescopeBlock.cs" />
+    <Compile Include="Telescope\TelescopeCamera.cs" />
     <Compile Include="xiaofengdizhu.cs" />
   </ItemGroup>
   <ItemGroup>

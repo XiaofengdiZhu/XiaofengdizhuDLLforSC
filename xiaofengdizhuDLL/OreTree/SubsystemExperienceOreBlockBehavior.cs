@@ -32,7 +32,7 @@ namespace Game
             base.Load(valuesDictionary);
             m_subsystemAudio = base.Project.FindSubsystem<SubsystemAudio>(true);
             m_subsystemTime = base.Project.FindSubsystem<SubsystemTime>(true);
-            m_texture = ContentManager.Get<Texture2D>("Textures/ExperienceOrb");
+            m_texture = ContentManager.Get<Texture2D>("Textures/Round32");
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
             m_visibilityRange = (float)SettingsManager.VisibilityRange;
         }
@@ -101,7 +101,7 @@ namespace Game
                             Vector3 p3 = Vector3.Transform(orb.position + orb.size * (-v1 + v2), camera.ViewMatrix);
                             Vector3 p4 = Vector3.Transform(orb.position + orb.size * (v1 + v2), camera.ViewMatrix);
                             TexturedBatch3D texturedBatch3D = m_primitivesRenderer.TexturedBatch(m_texture, true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.AnisotropicWrap);
-                            texturedBatch3D.QueueQuad(p1, p3, p4, p2, new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), Color.White);
+                            texturedBatch3D.QueueQuad(p1, p3, p4, p2, new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Color(255,205,97));
                         }
                     }
                 }
