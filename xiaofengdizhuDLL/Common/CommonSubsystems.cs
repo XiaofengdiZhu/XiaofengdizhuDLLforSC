@@ -25,6 +25,13 @@ namespace Game
                 return players.ComponentPlayers[0];
             }
         }
+        public ComponentGui componentGui
+        {
+            get
+            {
+                return componentPlayer.Entity.FindComponent<ComponentGui>(true);
+            }
+        }
         public SubsystemTerrain terrain
         {
             get

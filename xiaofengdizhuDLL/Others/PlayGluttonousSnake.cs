@@ -17,6 +17,7 @@ namespace Game
         private int[,] m_layerSnake;
         private bool[,] m_layerSnakeHead;
         private Color[,] m_layerOutput;
+        public bool m_stop = false;
         private CommonMethod commonMethod = new CommonMethod();
         public enum SnakeType
         {
@@ -27,13 +28,21 @@ namespace Game
             Player3,
             Computer
         }
-        Color[] m_snakeColor = new Color[]{
+        Color[] m_snakeBodyColor = new Color[]{
             new Color(0,0,0),
             new Color(255,255,255),
             new Color(255,255,255),
             new Color(255,255,255),
             new Color(255,255,255),
             new Color(255,0,0)
+        };
+        Color[] m_snakeHeadColor = new Color[]{
+            new Color(0,0,0),
+            new Color(160,160,160),
+            new Color(160,160,160),
+            new Color(160,160,160),
+            new Color(160,160,160),
+            new Color(255,128,128)
         };
         public enum SnakeStatus
         {
@@ -209,62 +218,62 @@ namespace Game
         //每帧执行
         public void UpdatePlayerSnakesDirection()
         {
-                foreach (Snake snake in m_snakes)
+            foreach (Snake snake in m_snakes)
+            {
+                int playerIndex = -1;
+                switch (snake.Type)
                 {
-                    int playerIndex = -1;
-                    switch (snake.Type)
+                    case SnakeType.None:
+                        continue;
+                    case SnakeType.Computer:
+                        continue;
+                    case SnakeType.Player0:
+                        playerIndex = 0;
+                        break;
+                    case SnakeType.Player1:
+                        playerIndex = 1;
+                        break;
+                    case SnakeType.Player2:
+                        playerIndex = 2;
+                        break;
+                    case SnakeType.Player3:
+                        playerIndex = 3;
+                        break;
+                }
+                if (playerIndex > -1)
+                {
+                    if (playerIndex >= commonMethod.componentPlayers.Count) continue;
+                    Point direction = snake.Direction;
+                    Vector3 vector3 = commonMethod.componentPlayers[playerIndex].ComponentInput.PlayerInput.Move;
+                    if (vector3.X > vector3.Z)
                     {
-                        case SnakeType.None:
-                            continue;
-                        case SnakeType.Computer:
-                            continue;
-                        case SnakeType.Player0:
-                            playerIndex = 0;
-                            break;
-                        case SnakeType.Player1:
-                            playerIndex = 1;
-                            break;
-                        case SnakeType.Player2:
-                            playerIndex = 2;
-                            break;
-                        case SnakeType.Player3:
-                            playerIndex = 3;
-                            break;
+                        if (vector3.X > 0)
+                        {
+                            direction = Point.Right;
+                        }
+                        else
+                        {
+                            direction = Point.Down;
+                        }
                     }
-                    if (playerIndex > -1)
+                    else if (vector3.X < vector3.Z)
                     {
-                        if (playerIndex >= commonMethod.componentPlayers.Count) continue;
-                        Point direction = snake.Direction;
-                        Vector3 vector3 = commonMethod.componentPlayers[playerIndex].ComponentInput.PlayerInput.Move;
-                        if (vector3.X > vector3.Z)
+                        if (vector3.Z > 0)
                         {
-                            if (vector3.X > 0)
-                            {
-                                direction = Point.Right;
-                            }
-                            else
-                            {
-                                direction = Point.Down;
-                            }
+                            direction = Point.Up;
                         }
-                        else if (vector3.X < vector3.Z)
+                        else
                         {
-                            if (vector3.Z > 0)
-                            {
-                                direction = Point.Up;
-                            }
-                            else
-                            {
-                                direction = Point.Left;
-                            }
+                            direction = Point.Left;
                         }
-                        if (direction != snake.LastDirection && direction != -(snake.LastDirection))
-                        {
-                            snake.Direction = direction;
-                        }
+                    }
+                    if (direction != snake.LastDirection && direction != -(snake.LastDirection))
+                    {
+                        snake.Direction = direction;
                     }
                 }
-            
+            }
+
         }
         //每次刷新前执行
         public void UpdateComputerSnakesDirection()
@@ -272,55 +281,69 @@ namespace Game
             foreach (Snake snake in m_snakes)
             {
                 if (snake.Type != SnakeType.Computer) continue;
-                Point fruitDirection = FindFruitDirection(snake.Head,snake.LastDirection,snake.Index);
+                Point fruitDirection = FindFruitDirection(snake.Head, snake.LastDirection, snake.Index);
                 Point direction = fruitDirection;
                 if (direction == Point.Zero || direction == snake.LastDirection || direction == -(snake.LastDirection))
                 {
+                    fruitDirection = snake.LastDirection;
                     direction = snake.LastDirection;
                 }
                 Point nextPosition = snake.Head + direction;
                 int triedTimes = 0;
-                while (!isPointInRange(nextPosition) || (m_layerSnake[nextPosition.X, nextPosition.Y] > 0 && m_layerSnake[nextPosition.X, nextPosition.Y] != snake.Index) || m_layerTerrain[nextPosition.X, nextPosition.Y] == TerrainType.Wall ||((m_layerSnake[nextPosition.X, nextPosition.Y] == 0 && m_layerTerrain[nextPosition.X, nextPosition.Y] != TerrainType.Wall) &&( (isPointInRange(nextPosition.X + direction.X, nextPosition.Y + direction.Y) && m_layerSnakeHead[nextPosition.X + direction.X,nextPosition.Y + direction.Y]) || (isPointInRange(nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y]) || (isPointInRange(nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y]))))
+                while (
+                    !isPointInRange(nextPosition)
+                    || (m_layerSnake[nextPosition.X, nextPosition.Y] > 0 && m_layerSnake[nextPosition.X, nextPosition.Y] != snake.Index)
+                    || m_layerTerrain[nextPosition.X, nextPosition.Y] == TerrainType.Wall
+                    || (
+                        (m_layerSnake[nextPosition.X, nextPosition.Y] == 0 && m_layerTerrain[nextPosition.X, nextPosition.Y] != TerrainType.Wall)
+                        && (
+                            (isPointInRange(nextPosition.X + direction.X, nextPosition.Y + direction.Y) && m_layerSnakeHead[nextPosition.X + direction.X, nextPosition.Y + direction.Y])
+                            || (isPointInRange(nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y])
+                            || (isPointInRange(nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y])
+                        )
+                    )
+                )
                 {
-                    //Log.Information("!isPointInRange: " + !isPointInRange(nextPosition) + " || m_layerSnake > 0 :" + (isPointInRange(nextPosition) && m_layerSnake[nextPosition.X, nextPosition.Y] > 0) + " || m_layerTerrain == Wall: " + (isPointInRange(nextPosition) && m_layerTerrain[nextPosition.X, nextPosition.Y] == TerrainType.Wall) + " ||((m_layerSnake == 0 " + (isPointInRange(nextPosition) && m_layerSnake[nextPosition.X, nextPosition.Y] == 0) + " && m_layerTerrain != wall: " + (isPointInRange(nextPosition) && m_layerTerrain[nextPosition.X, nextPosition.Y] != TerrainType.Wall) + " ) && ( next: " + (isPointInRange(nextPosition.X + direction.X, nextPosition.Y + direction.Y) && m_layerSnakeHead[nextPosition.X + direction.X, nextPosition.Y + direction.Y]) + " || left: " + (isPointInRange(nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y]) + " || right: " + (isPointInRange(nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y]) + ")");
-
-                    //if ((isPointInRange(nextPosition.X + direction.X, nextPosition.Y + direction.Y) && m_layerSnakeHead[nextPosition.X + direction.X, nextPosition.Y + direction.Y])) Log.Information((nextPosition.X + direction.X) + "," + (nextPosition.Y + direction.Y));
-                    //if ((isPointInRange(nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y])) Log.Information((nextPosition.X + direction.TurnLeft().X) + "," + (nextPosition.Y + direction.TurnLeft().Y));
-                    //if ((isPointInRange(nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnRight().X, nextPosition.Y + direction.TurnRight().Y])) Log.Information((nextPosition.X + direction.TurnRight().X) + "," + (nextPosition.Y + direction.TurnRight().Y));
-                    if (triedTimes > 1) {
-                        triedTimes++;
-                        direction = fruitDirection;
+                    if (triedTimes ==2)
+                    {
+                        direction = snake.LastDirection;
+                        nextPosition = snake.Head + direction;
                         break;
                     }
                     else if (triedTimes == 0)
                     {
                         triedTimes++;
-                        if(fruitDirection == snake.LastDirection || fruitDirection == snake.LastDirection.TurnLeft())
+                        if (fruitDirection == snake.LastDirection || fruitDirection == snake.LastDirection.TurnLeft())
                         {
-                            direction = direction.TurnRight();
+                            direction = snake.LastDirection.TurnRight();
                         }
                         else
                         {
-                            direction = direction.TurnLeft();
+                            direction = snake.LastDirection.TurnLeft();
                         }
                         nextPosition = snake.Head + direction;
                     }
                     else if (triedTimes == 1)
                     {
                         triedTimes++;
-                        if (fruitDirection == snake.LastDirection || fruitDirection == snake.LastDirection.TurnRight())
+                        if(direction== snake.LastDirection.TurnRight())
                         {
-                            direction = direction.TurnLeft();
-                        }
-                        else
+                            direction = snake.LastDirection.TurnLeft();
+                        }else if(direction == snake.LastDirection.TurnLeft())
                         {
-                            direction = direction.TurnRight();
+                            direction = snake.LastDirection.TurnRight();
                         }
                         nextPosition = snake.Head + direction;
                     }
                 }
-                snake.Direction = direction;
-                //if (triedTimes>0) Log.Information(triedTimes + " " + direction + " " + fruitDirection);
+                if (direction == Point.Zero|| direction == -(snake.LastDirection))
+                {
+                    snake.Direction = snake.LastDirection;
+                }
+                else
+                {
+                    snake.Direction = direction;
+                }
             }
         }
         public void MoveSnakes()
@@ -361,8 +384,7 @@ namespace Game
             deadSnakes = deadSnakes.OrderBy(s => s.Index).ToList();
             foreach (Snake snake in deadSnakes)
             {
-                if(snake.Type == SnakeType.Computer)Log.Information("死亡：" + snake.Index);
-                foreach(Point point in snake.Body)
+                foreach (Point point in snake.Body)
                 {
                     AddFruit(point);
                 }
@@ -381,8 +403,8 @@ namespace Game
                 {
                     m_layerSnake[point.X, point.Y] = snake.Index;
                 }
-                if(m_layerSnake[snake.Head.X, snake.Head.Y] == 0) m_layerSnake[snake.Head.X, snake.Head.Y] = (int)snake.Index;
-                m_layerSnakeHead[snake.Head.X, snake.Head.Y] = (snake.Index>0);
+                if (m_layerSnake[snake.Head.X, snake.Head.Y] == 0) m_layerSnake[snake.Head.X, snake.Head.Y] = (int)snake.Index;
+                m_layerSnakeHead[snake.Head.X, snake.Head.Y] = (snake.Index > 0);
             }
         }
         public void UpdateLayerOutput()
@@ -393,9 +415,9 @@ namespace Game
                 if (snake.Status == SnakeStatus.Dead || snake.Type == SnakeType.None) continue;
                 foreach (Point point in snake.Body)
                 {
-                    m_layerOutput[point.X, point.Y] = m_snakeColor[(int)snake.Type];
+                    m_layerOutput[point.X, point.Y] = m_snakeBodyColor[(int)snake.Type];
                 }
-                m_layerOutput[snake.Head.X, snake.Head.Y] = m_snakeColor[(int)snake.Type];
+                m_layerOutput[snake.Head.X, snake.Head.Y] = m_snakeHeadColor[(int)snake.Type];
             }
             for (int x = 0; x < m_width; x++)
             {
@@ -408,30 +430,20 @@ namespace Game
         }
         public void Update()
         {
-            try
-            {
-                UpdateComputerSnakesDirection();
-                MoveSnakes();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                AddFruitRandomly();
-                UpdateLayerOutput();
-            }
-            catch(Exception e) { Log.Information(e.ToString()); }
+            if (m_stop) return;
+            UpdateComputerSnakesDirection();
+            MoveSnakes();
+            AddFruitRandomly();
+            AddFruitRandomly();
+            UpdateLayerOutput();
         }
         public Point FindBlankRandomly(bool allowFruit)
         {
-            for (int triedTimes=0;triedTimes<500;triedTimes++)
+            for (int triedTimes = 0; triedTimes < 500; triedTimes++)
             {
                 int x = m_random.Int(0, m_width - 1);
                 int y = m_random.Int(0, m_height - 1);
-                if (allowFruit?(m_layerTerrain[x, y] != TerrainType.Wall) :(m_layerTerrain[x, y] == TerrainType.None) && m_layerSnake[x, y] == 0)
+                if (allowFruit ? (m_layerTerrain[x, y] != TerrainType.Wall) : (m_layerTerrain[x, y] == TerrainType.None) && m_layerSnake[x, y] == 0)
                 {
                     return new Point(x, y);
                 }
@@ -443,7 +455,7 @@ namespace Game
             Point position = Point.Zero;
             List<Point> directions = new List<Point>();
             int triedTimes = 0;
-            while(true)
+            while (true)
             {
                 triedTimes++;
                 position = FindBlankRandomly(true);
@@ -484,9 +496,9 @@ namespace Game
         public void AddFruitRandomly()
         {
             Point position = FindBlankRandomly(false);
-            if(position != Point.Zero)m_layerTerrain[position.X, position.Y] = TerrainType.Fruit;
+            if (position != Point.Zero) m_layerTerrain[position.X, position.Y] = TerrainType.Fruit;
         }
-        public Point FindFruitDirection(Point position,Point originDirection, int snakeIndex)
+        public Point FindFruitDirection(Point position, Point originDirection, int snakeIndex)
         {
             Dictionary<Point, int> close = new Dictionary<Point, int>() { { position, 0 } };
             Dictionary<Point, int> open = new Dictionary<Point, int>();
@@ -513,11 +525,7 @@ namespace Game
                     }
                     else
                     {
-                        try
-                        {
-                            if(!open.ContainsKey(nextPosition))open.Add(nextPosition, 1);
-                        }
-                        catch(Exception e) { Log.Information("1\n" + e.ToString()); }
+                        if (!open.ContainsKey(nextPosition)) open.Add(nextPosition, 1);
                     }
                 }
             }
@@ -559,55 +567,40 @@ namespace Game
                         }
                         else if (!open.ContainsKey(nextPosition))
                         {
-                            try
-                            {
-                                open.Add(nextPosition, minOpen.Value + 1);
-                            }
-                            catch (Exception e) { Log.Information("2\n" + e.ToString()); }
+                            open.Add(nextPosition, minOpen.Value + 1);
                         }
                     }
                 }
-                try
-                {
-                    if (!close.ContainsKey(minOpen.Key)) close.Add(minOpen.Key, minOpen.Value);
-                }
-                catch (Exception e) { Log.Information("3\n" + e.ToString()); }
+                if (!close.ContainsKey(minOpen.Key)) close.Add(minOpen.Key, minOpen.Value);
                 open.Remove(minOpen.Key);
                 if (founded)
                 {
-                    try
-                    {
-                        if (!close.ContainsKey(fruitPosition)) close.Add(fruitPosition, minOpen.Value + 1);
-                    }
-                    catch (Exception e) { Log.Information("4\n" + e.ToString()); }
+                    if (!close.ContainsKey(fruitPosition)) close.Add(fruitPosition, minOpen.Value + 1);
                     break;
                 }
                 if (circled > 1000) break;
             }
             if (founded)
             {
-                try
+                Point previousPosition = fruitPosition;
+                circled = 0;
+                while (close[previousPosition] > 1)
                 {
-                    Point previousPosition = fruitPosition;
-                    circled = 0;
-                    while (close[previousPosition] > 1)
+                    circled++;
+                    Point[] previousPositions = new Point[5];
+                    previousPositions[4] = previousPosition;
+                    for (int directionIndex = 0; directionIndex < 4; directionIndex++)
                     {
-                        circled++;
-                        Point[] previousPositions = new Point[5];
-                        previousPositions[4] = previousPosition;
-                        for (int directionIndex = 0; directionIndex < 4; directionIndex++)
+                        previousPositions[directionIndex] = previousPosition + fourDirection[directionIndex];
+                        if (close.ContainsKey(previousPositions[directionIndex]) && close[previousPositions[directionIndex]] < close[previousPositions[4]])
                         {
-                            previousPositions[directionIndex] = previousPosition + fourDirection[directionIndex];
-                            if (close.ContainsKey(previousPositions[directionIndex]) && close[previousPositions[directionIndex]] < close[previousPositions[4]])
-                            {
-                                previousPositions[4] = previousPositions[directionIndex];
-                            }
+                            previousPositions[4] = previousPositions[directionIndex];
                         }
-                        previousPosition = previousPositions[4];
-                        if (circled > 1000) break;
                     }
-                    return previousPosition - position;
-                }catch(Exception e) { Log.Information(e.ToString()); }
+                    previousPosition = previousPositions[4];
+                    if (circled > 1000) break;
+                }
+                return previousPosition - position;
             }
             return Point.Zero;
         }

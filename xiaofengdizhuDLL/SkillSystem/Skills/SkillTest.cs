@@ -137,11 +137,10 @@ namespace Game
                     Point3 a = terrainRaycastResult.Value.CellFace.Point;
                     int value = commonMethod.getBlock(a.X, a.Y, a.Z);
                     int data = Terrain.ExtractData(value);
-                    var b = commonMethod.project.FindSubsystem<SubsystemDefenceTowerCoreBlockBehavior>(true).m_defenceTowers;
-                    commonMethod.displaySmallMessage(b[a].type.ToString() + " " + data, false, false);
-                    //commonMethod.displaySmallMessage(a.ToString() + " " + data.ToString() + " " + ((value & 15360) >> 10).ToString(), false, false);
+                    commonMethod.displaySmallMessage(a.ToString() + " " + data.ToString() + " " + ((value & 15360) >> 10).ToString(), false, false);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Log.Warning(e.ToString());
             }
