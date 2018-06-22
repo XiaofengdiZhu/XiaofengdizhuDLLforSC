@@ -116,5 +116,12 @@ namespace Game
                 return project.FindSubsystem<SubsystemElectricity>(true);
             }
         }
+        public SubsystemGlow glow
+        {
+            get
+            {
+                return project.FindSubsystem<SubsystemGlow>(true);
+            }
+        }
     }
 }

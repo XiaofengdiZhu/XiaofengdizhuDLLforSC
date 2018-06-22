@@ -602,6 +602,7 @@
             <MemberComponentTemplate Name="Health" Guid="c633da41-b5c4-42a7-a857-850107c3d348" InheritanceParent="d7a50718-e128-4d0e-bac1-16f789d50ddd" />
             <MemberComponentTemplate Name="OnFire" Guid="d314318c-9d00-42b9-b23e-f2e1a70d5375" InheritanceParent="93590d78-63b9-4cd6-bc41-e66864cbb050" />
             <MemberComponentTemplate Name="DisplayHealthAndNameBehavior" Guid="9545c864-4364-45e6-bdbc-25326a6b28a7" InheritanceParent="e138cc15-930c-4805-8cfc-b91bfa7f7671" />
+            <MemberComponentTemplate Name="BreedBehavior" Guid="a545c864-4364-45e6-bdbc-25326a6b28a7" InheritanceParent="f138cc15-930c-4805-8cfc-b91bfa7f7671" />
           </EntityTemplate>
           <EntityTemplate Name="Cetacean" Guid="c68b9c49-aeb4-4fe2-ba8f-c166b3d19158" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
             <MemberComponentTemplate Name="SwimAwayBehavior" Guid="19c9eac7-786f-4dec-b506-8dd5878f4afc" InheritanceParent="2e0632aa-8235-4adc-80fa-37d497ca8449" />
@@ -3913,8 +3914,14 @@
         <ComponentTemplate Name="CreeperBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="f138cc15-930c-4805-8cfc-b91bfa7f767a" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
           <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-1ef5-117c0b1a74ba" Value="Game.ComponentCreeperBehavior" Type="string" />
         </ComponentTemplate>
-        <ComponentTemplate Name="DisplayHealthAndNameehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="e138cc15-930c-4805-8cfc-b91bfa7f7671" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+        <ComponentTemplate Name="DisplayHealthAndNameBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="e138cc15-930c-4805-8cfc-b91bfa7f7671" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
           <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-8ef5-117c0b1a79ba" Value="Game.ComponentDisplayHealthAndNameBehavior" Type="string" />
+        </ComponentTemplate>
+        <ComponentTemplate Name="BreedBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="f138cc15-930c-4805-8cfc-b91bfa7f7671" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+          <Parameter Name="Class" Guid="8f538db3-f1fe-4e91-8ef5-117c0b1a79ba" Value="Game.ComponentBreedBehavior" Type="string" />
+          <Parameter Name="BreedPeriodTime" Description="Breed Period Time, in second" Guid="9ad46363-a281-4ead-92a0-95db5641d5d6" Value="2400" Type="double" />
+          <Parameter Name="BreedPeriodTimeRandomOffsetRange" Description="For Example, BreedPeriodTime=100, BreedPeriodTimeRandomOffsetRange=10, then the real breed period time will be between 90s and 110s" Guid="9ad86363-a281-4ead-92a0-95db5641d5d6" Value="100" Type="float" />
+          <Parameter Name="LastBreedTime" Description="Last Period Time, in second" Guid="9ad46363-a281-4ead-9210-95db5641d5d6" Value="0" Type="double" />
         </ComponentTemplate>
         <ComponentTemplate Name="DigInMudBehavior" Description="Behavior that digs in a fish in mud" Guid="b5d86d17-aa62-403c-b004-87d764980dee" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
           <Parameter Name="DigInBlockName" Description="Name of block where the creature can dig in, or empty to not dig in" Guid="8a3155e0-9d50-4fd0-ad0b-b423fc128b8a" Value="" Type="string" />

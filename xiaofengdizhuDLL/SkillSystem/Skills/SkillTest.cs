@@ -127,7 +127,6 @@ namespace Game
             {
                 ComponentMiner miner = componentPlayer.ComponentMiner;
                 Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
-                //TelescopeCamera camera = (TelescopeCamera)componentPlayer.View.ActiveCamera;
                 Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
                 GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
                 Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
@@ -136,15 +135,20 @@ namespace Game
                 {
                     Point3 a = terrainRaycastResult.Value.CellFace.Point;
                     int value = commonMethod.getBlock(a.X, a.Y, a.Z);
-                    int data = Terrain.ExtractData(value);
-                    commonMethod.displaySmallMessage(a.ToString() + " " + data.ToString() + " " + ((value & 15360) >> 10).ToString(), false, false);
+                    for(int x = 0; x < 160; x++)
+                    {
+                        for(int z = 0; z < 90; z++)
+                        {
+                            commonMethod.placeBlock(x, 3, z, value);
+                        }
+                    }
+                    commonMethod.displaySmallMessage(a.ToString(), false, false);
                 }
             }
             catch (Exception e)
             {
                 Log.Warning(e.ToString());
             }
-            //commonMethod.displaySmallMessage(Math.Round(viewDirection.X,2).ToString() + "," + Math.Round(viewDirection.Y, 2).ToString() + "," + Math.Round(viewDirection.Z,2).ToString() + "  " + Math.Round(MathUtils.RadToDeg(camera.m_angles.X)).ToString() + "," + Math.Round(MathUtils.RadToDeg(camera.m_angles.Y)).ToString(), false,false);
         }
     }
 }

@@ -53,6 +53,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimalBehaviors\ComponentBreedBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentCreeperBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentDiggerBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentDisplayHealthAndName.cs" />
@@ -90,6 +91,10 @@
     <Compile Include="Common\StoreBlocks.cs" />
     <Compile Include="Others\Maze.cs" />
     <Compile Include="Others\PlayGluttonousSnake.cs" />
+    <Compile Include="Abandoned\Portal\AutoCollectPickablesHoleBlock.cs" />
+    <Compile Include="Abandoned\Portal\SubsystemPortalBlockBehavior.cs" />
+    <Compile Include="SkillSystem\Skills\PlayTerrariaByOneLED.cs" />
+    <Compile Include="SkillSystem\Skills\SkillPlayTerrariaByOneLED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleBy4LED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByPaintedClay.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByTexturedBatch3D.cs" />
@@ -104,9 +109,9 @@
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\SkillPlayBadAppleBy4LED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayGluttonousSnake.cs" />
     <Compile Include="SkillSystem\Skills\SkillTest.cs" />
-    <Compile Include="TargetState\ComponentTargetState.cs" />
+    <Compile Include="Abandoned\TargetState\ComponentTargetState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TargetState\TargetStateWidget.cs" />
+    <Compile Include="Abandoned\TargetState\TargetStateWidget.cs" />
     <Compile Include="Telescope\SubsystemTelescopeBlockBehavior.cs" />
     <Compile Include="Telescope\TelescopeBlock.cs" />
     <Compile Include="Telescope\TelescopeCamera.cs" />
@@ -128,6 +133,9 @@
     </Reference>
     <Reference Include="Survivalcraft">
       <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\Survivalcraft.exe</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
