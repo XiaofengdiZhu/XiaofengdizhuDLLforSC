@@ -62,6 +62,28 @@ namespace Game
                 return this;
             }
         }
+        public StoreBlocks ClearDuplicatePosition()
+        {
+            StoreBlocks storeBlocks = new StoreBlocks();
+            storeBlocks.IsAbsolute = this.IsAbsolute;
+            Dictionary<Point3, int> dictionary = new Dictionary<Point3, int>();
+            foreach(StoreBlock block in this){
+                Point3 position = block.ToPoint3();
+                if (dictionary.ContainsKey(position))
+                {
+                    dictionary[position] = block.Value;
+                }
+                else
+                {
+                    dictionary.Add(position, block.Value);
+                }
+            }
+            foreach(KeyValuePair<Point3, int> block in dictionary)
+            {
+                storeBlocks.Add(new StoreBlock(block.Key, block.Value));
+            }
+            return storeBlocks;
+        }
         //平移
         public StoreBlocks Translate3D(Point3 point3)
         {
@@ -70,7 +92,8 @@ namespace Game
         public StoreBlocks Translate3D(int dx, int dy, int dz)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
-            foreach(StoreBlock storeBlock in this)
+            storeBlocks.IsAbsolute = this.IsAbsolute;
+            foreach (StoreBlock storeBlock in this)
             {
                 storeBlocks.Add(storeBlock.Translate3D(dx, dy, dz));
             }
@@ -79,6 +102,7 @@ namespace Game
         public StoreBlocks TranslateX(int dx)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
+            storeBlocks.IsAbsolute = this.IsAbsolute;
             foreach (StoreBlock storeBlock in this)
             {
                 storeBlocks.Add(storeBlock.TranslateX(dx));
@@ -88,6 +112,7 @@ namespace Game
         public StoreBlocks TranslateY(int dy)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
+            storeBlocks.IsAbsolute = this.IsAbsolute;
             foreach (StoreBlock storeBlock in this)
             {
                 storeBlocks.Add(storeBlock.TranslateY(dy));
@@ -97,6 +122,7 @@ namespace Game
         public StoreBlocks TranslateZ(int dz)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
+            storeBlocks.IsAbsolute = this.IsAbsolute;
             foreach (StoreBlock storeBlock in this)
             {
                 storeBlocks.Add(storeBlock.TranslateZ(dz));
@@ -124,6 +150,7 @@ namespace Game
             }
             if (IsAbsolute)
             {
+                storeBlocks.IsAbsolute = true;
                 return storeBlocks.Translate3D(GetOriginPointFast());
             }
             else

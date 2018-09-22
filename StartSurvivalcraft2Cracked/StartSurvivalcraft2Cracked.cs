@@ -8,8 +8,8 @@ namespace StartSurvivalcraft2Cracked
         public static void Main(string[] args)
         {
             string dllFileName = "xiaofengdizhuDLL.dll";
-            string projectOutputFolder = "E:\\C项目\\xiaofengdizhuDLL\\xiaofengdizhuDLL\\bin\\Debug\\";
-            string gameFolder = "F:\\SC-with-JS-2.1.23\\SurvivalcraftAppX\\";
+            string projectOutputFolder = "K:\\Microsoft Visual Studio\\Projects\\xiaofengdizhuDLL\\xiaofengdizhuDLL\\bin\\Debug\\";
+            string gameFolder = "L:\\SC-with-JS-2.1.23\\SurvivalcraftAppX\\";
             File.Copy(projectOutputFolder + dllFileName, gameFolder + dllFileName, true);
             Process.Start(@"Survivalcraft 2 Cracked.lnk");
         }

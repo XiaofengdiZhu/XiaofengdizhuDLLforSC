@@ -3633,6 +3633,10 @@
         <SubsystemTemplate Name="AutoCollectPickablesHoleBlockBehavior" Guid="3f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
           <Parameter Name="Class" Guid="318571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemAutoCollectPickablesHoleBlockBehavior" Type="string" />
         </SubsystemTemplate>
+        <SubsystemTemplate Name="FactorioTransportBeltBlockBehavior" Guid="4f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+          <Parameter Name="FactorioTransportBelt" Description="List of FactorioTransportBelt positions in the world" Guid="392653e2-854a-4805-ace9-e64bd00de984" Value="" Type="string" />
+          <Parameter Name="Class" Guid="418571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemFactorioTransportBeltBLockBehavior" Type="string" />
+        </SubsystemTemplate>
       </Folder>
       <Folder Name="Gameplay" Guid="23dd4cdf-442b-4951-b4b1-1043fe4f444e">
         <SubsystemTemplate Name="Names" Description="Allows searching of entities by name" Guid="1678591a-ffc1-4138-b2ee-d6729286d356" InheritanceParent="a3914c13-7801-46a6-b23a-9e2b36e9defb">
@@ -4422,6 +4426,7 @@
         <MemberSubsystemTemplate Name="FlysharkBlockBehavior" Guid="586af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="1f038d3d-e999-452c-959d-47eefb16457a" />
         <MemberSubsystemTemplate Name="DefenceTowerCoreBlockBehavior" Guid="686af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="2f038d3d-e999-452c-959d-47eefb16457a" />
         <MemberSubsystemTemplate Name="AutoCollectPickablesHoleBlockBehavior" Guid="786af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="3f038d3d-e999-452c-959d-47eefb16457a" />
+        <MemberSubsystemTemplate Name="FactorioTransportBeltBlockBehavior" Guid="886af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="4f038d3d-e999-452c-959d-47eefb16457a" />
       </ProjectTemplate>
       <SubsystemTemplate Name="Subsystem" Guid="a3914c13-7801-46a6-b23a-9e2b36e9defb">
         <Parameter Name="IsOptional" Description="If true, subsystem type does not have to be present when creating project" Guid="3494e306-ec62-44ee-97e7-6a2937183891" Value="False" Type="bool" />

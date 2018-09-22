@@ -60,8 +60,12 @@
     <Compile Include="AnimalBehaviors\ComponentExplosiveCreatureBehavior.cs" />
     <Compile Include="AnimalBehaviors\ComponentFireflySurround.cs" />
     <Compile Include="AnimalBehaviors\ComponentShooterBehavior.cs" />
+    <Compile Include="Abandoned\Robot\ComponentRobotBehavior.cs" />
     <Compile Include="BlocksEntity\ComponentBlocksEntity.cs" />
     <Compile Include="BlocksEntity\SubsystemBlocksEntities.cs" />
+    <Compile Include="Common\StaticCommonMethod.cs" />
+    <Compile Include="Factorio\BeltTransport\FactorioTransportBeltBlock.cs" />
+    <Compile Include="Factorio\BeltTransport\SubsystemFactorioBeltTransportBLockBehavior.cs" />
     <Compile Include="MoreChest\AutoCollectPickablesHole\AutoCollectPickablesHoleBlock.cs" />
     <Compile Include="MoreChest\AutoCollectPickablesHole\SubsystemAutoCollectPickablesHoleBlockBehavior.cs" />
     <Compile Include="MoreChest\CombinedChest\CombinedChestBlock.cs" />
@@ -89,12 +93,13 @@
     <Compile Include="Common\CommonSubsystems.cs" />
     <Compile Include="Common\StoreBlock.cs" />
     <Compile Include="Common\StoreBlocks.cs" />
+    <Compile Include="Others\Bresenham3D.cs" />
     <Compile Include="Others\Maze.cs" />
     <Compile Include="Others\PlayGluttonousSnake.cs" />
     <Compile Include="Abandoned\Portal\AutoCollectPickablesHoleBlock.cs" />
     <Compile Include="Abandoned\Portal\SubsystemPortalBlockBehavior.cs" />
-    <Compile Include="SkillSystem\Skills\PlayTerrariaByOneLED.cs" />
-    <Compile Include="SkillSystem\Skills\SkillPlayTerrariaByOneLED.cs" />
+    <Compile Include="Abandoned\PlayTerraria\PlayTerrariaByOneLED.cs" />
+    <Compile Include="Abandoned\PlayTerraria\SkillPlayTerrariaByOneLED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleBy4LED.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByPaintedClay.cs" />
     <Compile Include="SkillSystem\Skills\SkillPlayBadApple\PlayBadAppleByTexturedBatch3D.cs" />
@@ -126,13 +131,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Engine">
-      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\Engine.dll</HintPath>
+      <HintPath>L:\SC-with-JS-2.1.23\SurvivalcraftAppX\Engine.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem">
-      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\EntitySystem.dll</HintPath>
+      <HintPath>L:\SC-with-JS-2.1.23\SurvivalcraftAppX\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="Survivalcraft">
-      <HintPath>F:\SC-with-JS-2.1.23\SurvivalcraftAppX\Survivalcraft.exe</HintPath>
+      <HintPath>L:\SC-with-JS-2.1.23\SurvivalcraftAppX\Survivalcraft.exe</HintPath>
     </Reference>
     <Reference Include="System.Drawing">
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
@@ -142,6 +147,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Abandoned\PlayTerraria\TerrariaByOneLED.7z" />
     <None Include="SkillSystem\Skills\readme.md" />
     <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.001" />
     <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.002" />
@@ -152,6 +158,7 @@
     <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.007" />
     <None Include="SkillSystem\Skills\SkillPlayBadApple\ImagesAndWorld\BadApple.7z.008" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

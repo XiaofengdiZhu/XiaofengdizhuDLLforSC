@@ -21,7 +21,7 @@ namespace Game
         }
         public override bool Input()
         {
-            if (Keyboard.IsKeyDownOnce(Key.O))
+            /*if (Keyboard.IsKeyDownOnce(Key.O))
             {
                 if (!m_isPlaying)
                 {
@@ -41,7 +41,7 @@ namespace Game
             {
                 //commonMethod.displaySmallMessage(m_playGluttonousSnake.FindFruit(m_playGluttonousSnake.m_snakes[1].Head).ToString(),false,false);
                 m_playGluttonousSnake.AddSnake(PlayGluttonousSnake.SnakeType.Computer);
-            }
+            }*/
             if (m_isPlaying) return true; else return false;
         }
         public override void Action()

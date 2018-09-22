@@ -94,7 +94,6 @@ namespace Game
             subsystems.sky.MakeLightningStrike(new Vector3(x, y, z));
         }
         //地形
-        //
         public void fillBox(int x1, int y1, int z1, int x2, int y2, int z2, int value)
         {
             int dx = Math.Abs(x1 - x2), dy = Math.Abs(y1 - y2), dz = Math.Abs(z1 - z2);
@@ -127,156 +126,24 @@ namespace Game
                 }
             }
         }
+        //画三角面
+        public void drawTriangle(Vector3 v1, Vector3 v2, Vector3 v3, int value)
+        {
+            setBlocks(StaticCommonMethod.getTriangle(v1, v2, v3, value).ClearDuplicatePosition());
+        }
         //画直线
         public void drawLine(int x1, int y1, int z1, int x2, int y2, int z2, int value)
         {
-            setBlocks(getLine3D(x1, y1, z1, x2, y2, z2, value));
+            setBlocks(StaticCommonMethod.getLine3D(x1, y1, z1, x2, y2, z2, value));
         }
-        public StoreBlocks getLine3D(int dx, int dy, int dz, int value)
-        {
-            return getLine3D(0, 0, 0, dx, dy, dz, value);
-        }
-        public StoreBlocks getLine3D(int x1, int y1, int z1, int x2, int y2, int z2, int value)
-        {
-            StoreBlocks storeBlocks = new StoreBlocks();
-            storeBlocks.IsAbsolute = true;
-            Dictionary<int, List<int>> dictionaryXY = getLine(x1, y1, x2, y2);
-            Dictionary<int, List<int>> dictionaryYZ = getLine(y1, z1, y2, z2);
-            foreach (int key in dictionaryXY.Keys)
-            {
-                List<int> listY = dictionaryXY[key];
-                for (int i = 0; i < listY.Count; i++)
-                {
-                    if (!dictionaryYZ.ContainsKey(listY[i])) continue;
-                    List<int> listZ = dictionaryYZ[listY[i]];
-                    for (int j = 0; j < listZ.Count; j++)
-                    {
-                        storeBlocks.Add(key, listY[i], listZ[j], value );
-                    }
-                }
-            }
-            return storeBlocks;
-        }
-        //getLine3D画直线辅助函数，获取二维平面上两点间的点，返回以x为key，List y为value的字典
-        public Dictionary<int, List<int>> getLine(int x1, int y1, int x2, int y2)
-        {
-            Dictionary<int, List<int>> dictionary = new Dictionary<int, List<int>>();
-            int dx = Math.Abs(x2 - x1), dy = Math.Abs(y2 - y1);
-            bool yy = false;
-            if (dx < dy)
-            {
-                yy = true;
-                int temp = x1;
-                x1 = y1; y1 = temp;
-                temp = x2;
-                x2 = y2; y2 = temp;
-                temp = dx;
-                dx = dy; dy = temp;
-            }
-            int ix, iy;
-            if (x2 - x1 > 0) ix = 1; else ix = -1;
-            if (y2 - y1 > 0) iy = 1; else iy = -1;
-            int cx = x1, cy = y1, n2dy = dy << 1, n2dydx = (dy - dx) << 1, d = (dy << 1) - dx;
-            List<int> list = new List<int>();
-            while (cx <= x2)
-            {
-                if (d < 0) d += n2dy;
-                else
-                {
-                    if (yy) dictionary.Add(cy, list);
-                    list = new List<int>();
-                    cy += iy;
-                    d += n2dydx;
-                }
-                if (!yy)
-                {
-                    dictionary.Add(cx, new List<int> { cy });
-                }
-                else
-                {
-                    list.Add(cx);
-                }
-                cx += ix;
-            }
-            if (yy) dictionary.Add(cy, list);
-            return dictionary;
-        }
+        
         public void drawCircle(int centerX, int centerY, int centerZ, int diameter, int value)
         {
-            setBlocks(getCircle(centerX, centerZ, diameter, value).Translate3D(0,20,0));
+            setBlocks(StaticCommonMethod.getCircle(centerX, centerZ, diameter, value).Translate3D(0,20,0));
         }
-        public StoreBlocks getCircle(int centerX,int centerY, int diameter,int value)
-        {
-            StoreBlocks storeBlocks = new StoreBlocks();
-            storeBlocks.IsAbsolute = true;
-            int radius = diameter >> 1;
-            bool isOdd = ((diameter & 1) == 1);
-            int x = 0, y = radius, d = 3 - (radius << 1);
-            while (x < y)
-            {
-                storeBlocks.AddRange(CirclePlot(centerX, centerY, x, y, value, isOdd));
-                if (d < 0)
-                {
-                    d = d + (x << 2) + 6;
-                }
-                else
-                {
-                    d = d + ((x - y) << 2) + 10;
-                    y--;
-                }
-                x++;
-            }
-            return storeBlocks;
-        }
-        public StoreBlocks CirclePlot(int centerX, int centerY, int x, int y, int value, bool isOdd)
-        {
-            StoreBlocks storeBlocks = new StoreBlocks();
-            storeBlocks.IsAbsolute = true;
-            if (isOdd)
-            {
-                storeBlocks.Add(centerX + x, 0, centerY + y, value);
-                storeBlocks.Add(centerX - x, 0, centerY + y, value);
-                storeBlocks.Add(centerX + x, 0, centerY - y, value);
-                storeBlocks.Add(centerX - x, 0, centerY - y, value);
-                storeBlocks.Add(centerX + y, 0, centerY + x, value);
-                storeBlocks.Add(centerX - y, 0, centerY + x, value);
-                storeBlocks.Add(centerX + y, 0, centerY - x, value);
-                storeBlocks.Add(centerX - y, 0, centerY - x, value);
-            }
-            else
-            {
-                storeBlocks.Add(centerX + y - 1, 0, centerY + x - 1, value);
-                storeBlocks.Add(centerX + y - 1, 0, centerY - x, value);
-                storeBlocks.Add(centerX - y, 0, centerY + x - 1, value);
-                storeBlocks.Add(centerX - y, 0, centerY - x, value);
-                storeBlocks.Add(centerX + x - 1, 0, centerY + y - 1, value);
-                storeBlocks.Add(centerX + x - 1, 0, centerY - y, value);
-                storeBlocks.Add(centerX - x, 0, centerY + y - 1, value);
-                storeBlocks.Add(centerX - x, 0, centerY - y, value);
-            }
-            return storeBlocks;
-        }
-        public Dictionary<Color, int> color2colorInt = new Dictionary<Color, int>(){
-            { WorldPalette.DefaultColors[0],0},
-            { WorldPalette.DefaultColors[1],1},
-            { WorldPalette.DefaultColors[2],2},
-            { WorldPalette.DefaultColors[3],3},
-            { WorldPalette.DefaultColors[4],4},
-            { WorldPalette.DefaultColors[5],5},
-            { WorldPalette.DefaultColors[6],6},
-            { WorldPalette.DefaultColors[7],7},
-            { WorldPalette.DefaultColors[8],8},
-            { WorldPalette.DefaultColors[9],9},
-            { WorldPalette.DefaultColors[10],10},
-            { WorldPalette.DefaultColors[11],11},
-            { WorldPalette.DefaultColors[12],12},
-            { WorldPalette.DefaultColors[13],13},
-            { WorldPalette.DefaultColors[14],14},
-            { WorldPalette.DefaultColors[15],15}
-        };
         public void UpdateColor2colorInt()
         {
-            color2colorInt = new Dictionary<Color, int>() {
+            StaticCommonMethod.color2colorInt = new Dictionary<Color, int>() {
             { SubsystemPalette.GetColor(subsystems.terrain, 0),0},
             { SubsystemPalette.GetColor(subsystems.terrain, 1),1},
             { SubsystemPalette.GetColor(subsystems.terrain, 2),2},
@@ -294,31 +161,6 @@ namespace Game
             { SubsystemPalette.GetColor(subsystems.terrain, 14),14},
             { SubsystemPalette.GetColor(subsystems.terrain, 15),15}
         };
-        }
-        //生成xz平面像素画，默认使用彩色粘土Clay,defaultColorIndex默认颜色序号（色表中不存在该颜色时的颜色）
-        public StoreBlocks getImage(string path, int defaultColorIndex)
-        {
-            Image image = Image.Load(path);
-            return getImage(image,defaultColorIndex);
-        }
-        public StoreBlocks getImage(Image image, int defaultColorIndex)
-        {
-            StoreBlocks storeBlocks = new StoreBlocks();
-            for (int x = 0; x < image.Width; x++)
-            {
-                for (int y = 0; y < image.Height; y++)
-                {
-                    try
-                    {
-                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | color2colorInt[image.GetPixel(x, y)] << 1)));
-                    }
-                    catch
-                    {
-                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | defaultColorIndex << 1)));
-                    }
-                }
-            }
-            return storeBlocks;
         }
         public void copyAndPasteBlock(int x1, int y1, int z1, int x2, int y2, int z2, int x3, int y3, int z3)
         {
@@ -404,13 +246,15 @@ namespace Game
                     using (StreamWriter streamWriter = new StreamWriter(stream, Encoding.UTF8))
                     {
                         int blockCount = storeBlocks.Count;
-                        string s = blockCount.ToString();
+                        //string s = blockCount.ToString();
+                        streamWriter.Write(blockCount.ToString());
                         foreach (StoreBlock storeBlock in storeBlocks)
                         {
-                            s += ";";
-                            s += storeBlock.ToString();
+                            //s += ";";
+                            //s += storeBlock.ToString();
+                            streamWriter.Write(";" + storeBlock.ToString());
                         }
-                        streamWriter.Write(s);
+                        //streamWriter.Write(s);
                     }
                     break;
             }
@@ -634,7 +478,7 @@ namespace Game
                 }
             }));
         }
-        /*public void unpackFile(string path)
+        /*public static void unpackFile(string path)
         {
             string path2place = path + Storage.GetFileName(path) + "/";
             unpackFile(path, path2place);
@@ -644,7 +488,7 @@ namespace Game
             Stream stream = Storage.OpenFile(path, OpenFileMode.Read);
             unpackFile( stream, path2place);
         }
-        public void unpackFile(Stream stream, string path2place)
+        public static void unpackFile(Stream stream, string path2place)
         {
             Storage.CreateDirectory(path2place);
             using (ZipArchive zipArchive = ZipArchive.Open(stream, true))
