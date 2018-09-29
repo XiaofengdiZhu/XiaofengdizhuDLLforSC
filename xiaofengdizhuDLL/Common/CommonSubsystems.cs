@@ -11,6 +11,7 @@ namespace Game
                 return GameManager.Project;
             }
         }
+
         public SubsystemPlayers players
         {
             get
@@ -18,6 +19,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemPlayers>(true);
             }
         }
+
         public ComponentPlayer componentPlayer
         {
             get
@@ -25,6 +27,7 @@ namespace Game
                 return players.ComponentPlayers[0];
             }
         }
+
         public ComponentGui componentGui
         {
             get
@@ -32,6 +35,7 @@ namespace Game
                 return componentPlayer.Entity.FindComponent<ComponentGui>(true);
             }
         }
+
         public SubsystemTerrain terrain
         {
             get
@@ -39,6 +43,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemTerrain>(true);
             }
         }
+
         public SubsystemExplosions explosions
         {
             get
@@ -46,6 +51,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemExplosions>(true);
             }
         }
+
         public SubsystemDrawing drawing
         {
             get
@@ -53,6 +59,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemDrawing>(true);
             }
         }
+
         public SubsystemWeather weather
         {
             get
@@ -60,6 +67,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemWeather>(true);
             }
         }
+
         public SubsystemSky sky
         {
             get
@@ -67,6 +75,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemSky>(true);
             }
         }
+
         public SubsystemGameInfo gameInfo
         {
             get
@@ -74,6 +83,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemGameInfo>(true);
             }
         }
+
         public SubsystemTime time
         {
             get
@@ -81,6 +91,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemTime>(true);
             }
         }
+
         public SubsystemPickables pickables
         {
             get
@@ -88,6 +99,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemPickables>(true);
             }
         }
+
         public SubsystemProjectiles projectiles
         {
             get
@@ -95,6 +107,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemProjectiles>(true);
             }
         }
+
         public SubsystemParticles particles
         {
             get
@@ -102,6 +115,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemParticles>(true);
             }
         }
+
         public SubsystemFireworksBlockBehavior fireworks
         {
             get
@@ -109,6 +123,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemFireworksBlockBehavior>(true);
             }
         }
+
         public SubsystemElectricity electricity
         {
             get
@@ -116,6 +131,7 @@ namespace Game
                 return project.FindSubsystem<SubsystemElectricity>(true);
             }
         }
+
         public SubsystemGlow glow
         {
             get

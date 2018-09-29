@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Engine;
+﻿using Engine;
 using Engine.Graphics;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -9,6 +8,7 @@ namespace Game
     {
         public const int Index = 400;
         public Texture2D[] m_textures;
+
         public static int[,] m_cornerType2Rotations = new int[8, 3] {
             //{OriginalRotation, TailRotation, TailBackRotation}
             {0,1,3 },
@@ -20,6 +20,7 @@ namespace Game
             {3,0,2 },
             {1,0,2 }
         };
+
         public static int?[,] m_rotations2CornerType = new int?[4, 2] {
             //{OriginalRotation, IsTailOnRight(true 1; false 0)}
             {1,0},
@@ -27,12 +28,14 @@ namespace Game
             {5,4},
             {2,6}
         };
+
         public static string[] m_displayNames = new string[3]
         {
             "Factorio ",
             "Factorio Fast ",
             "Factorio Express "
         };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,6 +53,7 @@ namespace Game
                 }
             }
         }
+
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
             //generator.GenerateCubeVertices(this, value, x, y, z, 0.009f, 0.009f, 0.009f, 0.009f, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent, -1, geometry.OpaqueSubsetsByFace);
@@ -59,10 +63,12 @@ namespace Game
         {
             DrawFactorioBeltTransportBlock(primitivesRenderer, value, size, ref matrix, m_textures[GetColor(Terrain.ExtractData(value))], environmentData);
         }
+
         public override BlockDebrisParticleSystem CreateDebrisParticleSystem(SubsystemTerrain subsystemTerrain, Vector3 position, int value, float strength)
         {
             return new BlockDebrisParticleSystem(subsystemTerrain, position, 0f, this.DestructionDebrisScale, Color.White, this.GetFaceTextureSlot(4, value));
         }
+
         public override IEnumerable<int> GetCreativeValues()
         {
             yield return Terrain.MakeBlockValue(this.BlockIndex, 0, SetColor(0, 0));
@@ -72,11 +78,13 @@ namespace Game
             }
             yield break;
         }
+
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
         {
             int color = GetColor(Terrain.ExtractData(value));
             return m_displayNames[color] + base.GetDisplayName(subsystemTerrain, value);
         }
+
         public override void GetDropValues(SubsystemTerrain subsystemTerrain, int oldValue, int newValue, int toolLevel, List<BlockDropValue> dropValues, out bool showDebris)
         {
             showDebris = false;
@@ -87,6 +95,7 @@ namespace Game
                 Count = 1
             });
         }
+
         public override BlockPlacementData GetPlacementValue(SubsystemTerrain subsystemTerrain, ComponentMiner componentMiner, int value, TerrainRaycastResult raycastResult)
         {
             Vector3 forward = Matrix.CreateFromQuaternion(componentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation).Forward;
@@ -118,43 +127,51 @@ namespace Game
                 CellFace = raycastResult.CellFace
             };
         }
+
         //0 z-; 1 x-; 2 z+; 3 x+
         public static int GetRotation(int data)
         {
             return data & 3;
         }
+
         public static int SetRotation(int data, int rotation)
         {
             return (data & -4) | (rotation & 3);
         }
+
         public static Point3 RotationToDirection(int rotation)
         {
             return CellFace.FaceToPoint3((rotation + 2) % 4);
         }
+
         public static int GetColor(int data)
         {
             return (data >> 3 & 3);
         }
+
         public static int SetColor(int data, int color)
         {
             return (data & -25) | ((color & 3) << 3);
         }
+
         public static bool? GetSlopeType(int data)
         {
             if ((data & 4) != 0)
             {
-                return new bool?((data & 512) !=0);
+                return new bool?((data & 512) != 0);
             }
             return null;
         }
+
         public static int SetSlopeType(int data, bool? slopeType)
         {
             if (slopeType != null)
             {
-                return (data & -513) | 4 | (slopeType.Value?1:0) << 9;
+                return (data & -513) | 4 | (slopeType.Value ? 1 : 0) << 9;
             }
             return data & -5;
         }
+
         public static int? GetCornerType(int data)
         {
             if ((data & 32) != 0)
@@ -163,6 +180,7 @@ namespace Game
             }
             return null;
         }
+
         public static int SetCornerType(int data, int? cornertype)
         {
             if (cornertype != null)
@@ -171,23 +189,27 @@ namespace Game
             }
             return data & -481;
         }
+
         public enum CornerType
         {
             None,
             OneQuarter,
             ThreeQuarters
         }
+
         public static int m_texRowCount = 12;
         public static int m_texColCount = 16;
         public static Vector4[,] m_texCoords = new Vector4[m_texRowCount, m_texColCount];
+
         public static Vector4 XYToTextureCoords(int x, int y)
         {
-            float x1 = (float)x/ (float)m_texColCount;
+            float x1 = (float)x / (float)m_texColCount;
             float y1 = (float)y / (float)m_texRowCount;
             float z = (float)(x + 1f) / (float)m_texColCount;
             float w = (float)(y + 1f) / (float)m_texRowCount;
             return new Vector4(x1, y1, z, w);
         }
+
         public static void DrawFactorioBeltTransportBlock(PrimitivesRenderer3D primitivesRenderer, int value, float size, ref Matrix matrix, Texture2D texture, DrawBlockEnvironmentData environmentData)
         {
             environmentData = (environmentData ?? BlocksManager.m_defaultEnvironmentData);

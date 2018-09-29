@@ -1,5 +1,4 @@
-﻿using Engine;
-using GameEntitySystem;
+﻿using GameEntitySystem;
 using System.Collections.Generic;
 using TemplatesDatabase;
 
@@ -12,6 +11,7 @@ namespace Game
         private SubsystemExplosions m_subsystemExplosions;
 
         private Dictionary<string, bool> m_skillInputDictionary;
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
@@ -20,6 +20,7 @@ namespace Game
             m_subsystemExplosions = Project.FindSubsystem<SubsystemExplosions>(true);
             SkillManager.Initialize();
         }
+
         public int UpdateOrder
         {
             get
@@ -27,6 +28,7 @@ namespace Game
                 return 0;
             }
         }
+
         public void Update(float dt)
         {
             Dictionary<string, bool> skillInputDictionary = new Dictionary<string, bool>();
@@ -46,10 +48,11 @@ namespace Game
             }
             foreach (string key in skillInputDictionary.Keys)
             {
-                if(skillInputDictionary[key])
-                SkillManager.SkillDictionary[key].Action();
+                if (skillInputDictionary[key])
+                    SkillManager.SkillDictionary[key].Action();
             }
         }
+
         private void UpdateInputFromMouseAndKeyboard()
         {
             Dictionary<string, bool> skillInputDictionary = new Dictionary<string, bool>();

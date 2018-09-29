@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Engine;
+﻿using System.Collections.Generic;
 
 namespace Game
 {
@@ -10,7 +7,9 @@ namespace Game
         static DefenceTowerManager()
         {
         }
+
         public static int m_towerKindCount = 7;
+
         public static string[] m_towerName = new string[]
         {
             "Defence",
@@ -21,6 +20,7 @@ namespace Game
             "Lightning",
             "Unknown"
         };
+
         public static List<int[]> m_towerBlocks = new List<int[]>()
         {
             new int[]{},
@@ -31,6 +31,7 @@ namespace Game
             new int[]{231,231,231,231 },//大锗块
             new int[]{126,126,126,126,126}//大钻块
         };
+
         public static double[] m_towerPeriod = new double[]
         {
             double.MaxValue,

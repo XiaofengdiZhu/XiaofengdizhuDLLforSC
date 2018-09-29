@@ -1,6 +1,4 @@
-﻿using Engine;
-using GameEntitySystem;
-using System.Collections.Generic;
+﻿using GameEntitySystem;
 
 namespace Game
 {
@@ -8,17 +6,21 @@ namespace Game
     {
         public CommonSubsystems subsystems = new CommonSubsystems();
         public CommonMethod commonMethod = new CommonMethod();
+
         public virtual string Name
         {
             get { return null; }
         }
+
         public virtual bool Input()
         {
             return false;
         }
+
         public virtual void Action()
         {
         }
+
         public Project project
         {
             get
@@ -26,6 +28,7 @@ namespace Game
                 return GameManager.Project;
             }
         }
+
         public ComponentPlayer componentPlayer
         {
             get

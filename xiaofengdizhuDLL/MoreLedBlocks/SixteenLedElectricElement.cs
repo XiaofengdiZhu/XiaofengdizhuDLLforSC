@@ -1,4 +1,5 @@
 ﻿using Engine;
+
 namespace Game
 {
     // Token: 0x02000394 RID: 916
@@ -8,10 +9,12 @@ namespace Game
         public float m_voltage;
         public Color m_color;
         public GlowPoint[] m_glowPoints = new GlowPoint[16];
+
         public SixteenLedElectricElement(SubsystemElectricity subsystemElectricity, CellFace cellFace) : base(subsystemElectricity, cellFace)
         {
             this.m_subsystemGlow = subsystemElectricity.Project.FindSubsystem<SubsystemGlow>(true);
         }
+
         public override void OnAdded()
         {
             CellFace cellFace = base.CellFaces[0];
@@ -25,7 +28,7 @@ namespace Game
                 Vector3 vector2 = (mountingFace < 4) ? Vector3.UnitY : Vector3.UnitX;
                 Vector3 vector3 = Vector3.Cross(vector, vector2);
                 this.m_glowPoints[i] = this.m_subsystemGlow.AddGlowPoint();
-                this.m_glowPoints[i].Position = v - 0.4375f * CellFace.FaceToVector3(mountingFace) + vector3 * ((float)((i%4) * -2f + 3f) * 0.125f) + vector2 * ((float)((i / 4) * -2f + 3f) * 0.125f);
+                this.m_glowPoints[i].Position = v - 0.4375f * CellFace.FaceToVector3(mountingFace) + vector3 * ((float)((i % 4) * -2f + 3f) * 0.125f) + vector2 * ((float)((i / 4) * -2f + 3f) * 0.125f);
                 this.m_glowPoints[i].Forward = vector;
                 this.m_glowPoints[i].Up = vector2;
                 this.m_glowPoints[i].Right = vector3;
@@ -36,6 +39,7 @@ namespace Game
                 this.m_glowPoints[i].Type = GlowPointType.Square;
             }
         }
+
         public override void OnRemoved()
         {
             for (int i = 0; i < 16; i++)
@@ -43,6 +47,7 @@ namespace Game
                 this.m_subsystemGlow.RemoveGlowPoint(this.m_glowPoints[i]);
             }
         }
+
         public override bool Simulate()
         {
             float voltage = this.m_voltage;

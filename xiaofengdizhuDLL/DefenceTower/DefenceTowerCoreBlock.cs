@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Game
 {
     public class DefenceTowerCoreBlock : CubeBlock
     {
         public const int Index = 360;
+
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
         {
             int num = Terrain.ExtractData(value);
@@ -13,6 +13,7 @@ namespace Game
             name = DefenceTowerManager.m_towerName[num];
             if (name.Length > 0) return name += " Tower Core"; else return "Defence Tower Core";
         }
+
         public override IEnumerable<int> GetCreativeValues()
         {
             yield return Terrain.MakeBlockValue(360, 0, 0);

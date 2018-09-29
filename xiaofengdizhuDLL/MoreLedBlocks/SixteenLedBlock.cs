@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Engine;
+using Engine.Graphics;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.CompilerServices;
-using Engine;
-using Engine.Graphics;
+
 namespace Game
 {
     public class SixteenLedBlock : MountedElectricElementBlock
@@ -38,6 +37,7 @@ namespace Game
             this.m_standaloneBlockMesh = new BlockMesh();
             this.m_standaloneBlockMesh.AppendModelMeshPart(modelMesh.MeshParts[0], boneAbsoluteTransform * m2, false, false, false, false, Color.White);
         }
+
         //[IteratorStateMachine(typeof(SixteenLedBlock.< GetProceduralCraftingRecipes > d__5))]
         public override IEnumerable<CraftingRecipe> GetProceduralCraftingRecipes()
         {
@@ -65,20 +65,24 @@ namespace Game
             }
             yield break;
         }
+
         public override bool IsFaceTransparent(SubsystemTerrain subsystemTerrain, int face, int value)
         {
             int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
             return face != CellFace.OppositeFace(mountingFace);
         }
+
         public override int GetFace(int value)
         {
             return SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
         }
+
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
         {
             int color = SixteenLedBlock.GetColor(Terrain.ExtractData(value));
             return LedBlock.LedColorDisplayNames[color] + " 16-LED";
         }
+
         //[IteratorStateMachine(typeof(SixteenLedBlock.< GetCreativeValues > d__9))]
         public override IEnumerable<int> GetCreativeValues()
         {
@@ -90,6 +94,7 @@ namespace Game
             }
             yield break;
         }
+
         public override BlockPlacementData GetPlacementValue(SubsystemTerrain subsystemTerrain, ComponentMiner componentMiner, int value, TerrainRaycastResult raycastResult)
         {
             int data = SixteenLedBlock.SetMountingFace(Terrain.ExtractData(value), raycastResult.CellFace.Face);
@@ -100,6 +105,7 @@ namespace Game
                 CellFace = raycastResult.CellFace
             };
         }
+
         public override void GetDropValues(SubsystemTerrain subsystemTerrain, int oldValue, int newValue, int toolLevel, List<BlockDropValue> dropValues, out bool showDebris)
         {
             int color = SixteenLedBlock.GetColor(Terrain.ExtractData(oldValue));
@@ -110,6 +116,7 @@ namespace Game
             });
             showDebris = true;
         }
+
         public override BoundingBox[] GetCustomCollisionBoxes(SubsystemTerrain terrain, int value)
         {
             int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
@@ -119,6 +126,7 @@ namespace Game
             }
             return this.m_collisionBoxesByFace[mountingFace];
         }
+
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
             int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
@@ -128,14 +136,17 @@ namespace Game
                 generator.GenerateWireVertices(value, x, y, z, mountingFace, 1f, Vector2.Zero, geometry.SubsetOpaque);
             }
         }
+
         public override void DrawBlock(PrimitivesRenderer3D primitivesRenderer, int value, Color color, float size, ref Matrix matrix, DrawBlockEnvironmentData environmentData)
         {
             BlocksManager.DrawMeshBlock(primitivesRenderer, this.m_standaloneBlockMesh, color, 2f * size, ref matrix, environmentData);
         }
+
         public override ElectricElement CreateElectricElement(SubsystemElectricity subsystemElectricity, int value, int x, int y, int z)
         {
             return new SixteenLedElectricElement(subsystemElectricity, new CellFace(x, y, z, this.GetFace(value)));
         }
+
         public override ElectricConnectorType? GetConnectorType(SubsystemTerrain terrain, int value, int face, int connectorFace, int x, int y, int z)
         {
             int face2 = this.GetFace(value);
@@ -145,22 +156,27 @@ namespace Game
             }
             return null;
         }
+
         public static int GetColor(int data)
         {
             return data >> 3 & 7;
         }
+
         public static int SetColor(int data, int color)
         {
             return (data & -57) | (color & 7) << 3;
         }
+
         public static int GetMountingFace(int data)
         {
             return data & 7;
         }
+
         public static int SetMountingFace(int data, int face)
         {
             return (data & -8) | (face & 7);
         }
+
         public const int Index = 310;
         public BlockMesh m_standaloneBlockMesh;
         public BlockMesh[] m_blockMeshesByFace = new BlockMesh[6];

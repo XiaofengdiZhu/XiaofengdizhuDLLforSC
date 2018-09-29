@@ -1,10 +1,7 @@
 ﻿using Engine;
+using Engine.Media;
 using System;
 using System.Collections.Generic;
-using Engine.Media;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -25,14 +22,17 @@ namespace Game
             }
             return ABC;
         }
+
         public static Point3 RoundV3toP3(Vector3 v)
         {
             return new Point3((int)MathUtils.Round(v.X), (int)MathUtils.Round(v.Y), (int)MathUtils.Round(v.Z));
         }
+
         public static StoreBlocks getLine3D(int dx, int dy, int dz, int value)
         {
             return getLine3D(0, 0, 0, dx, dy, dz, value);
         }
+
         public static StoreBlocks getLine3D(int x1, int y1, int z1, int x2, int y2, int z2, int value)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -40,6 +40,7 @@ namespace Game
             Bresenham3D.DoLine(x1, y1, z1, x2, y2, z2, (int x3, int y3, int z3) => storeBlocks.Add(x3, y3, z3, value));
             return storeBlocks;
         }
+
         public static StoreBlocks getCircle(int centerX, int centerY, int diameter, int value)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -63,6 +64,7 @@ namespace Game
             }
             return storeBlocks;
         }
+
         public static StoreBlocks CirclePlot(int centerX, int centerY, int x, int y, int value, bool isOdd)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -91,6 +93,7 @@ namespace Game
             }
             return storeBlocks;
         }
+
         public static Dictionary<Color, int> color2colorInt = new Dictionary<Color, int>(){
             { WorldPalette.DefaultColors[0],0},
             { WorldPalette.DefaultColors[1],1},
@@ -109,12 +112,14 @@ namespace Game
             { WorldPalette.DefaultColors[14],14},
             { WorldPalette.DefaultColors[15],15}
         };
+
         //生成xz平面像素画，默认使用彩色粘土Clay,defaultColorIndex默认颜色序号（色表中不存在该颜色时的颜色）
         public static StoreBlocks getImage(string path, int defaultColorIndex)
         {
             Image image = Image.Load(path);
             return getImage(image, defaultColorIndex);
         }
+
         public static StoreBlocks getImage(Image image, int defaultColorIndex)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -134,10 +139,13 @@ namespace Game
             }
             return storeBlocks;
         }
+
         //谢尔宾斯基三角形
         public static float sqrt3 = (float)Math.Sqrt(3);
+
         public static float sqrt12 = (float)(Math.Sqrt(12));
         public static float sqrt48 = (float)(Math.Sqrt(48));
+
         public static StoreBlocks get3DSierpinskiTriangle(Vector3 bottomCenter, int value, float height, int targetTimes)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -149,6 +157,7 @@ namespace Game
             }
             return storeBlocks;
         }
+
         public static List<Vector3> get3DSierpinskiTriangleNextBotomCenters(Vector3 bottomCenter, float height, int nowTimes, int targetTimes)
         {
             List<Vector3> nexts = new List<Vector3>();
@@ -171,6 +180,7 @@ namespace Game
             }
             return nexts;
         }
+
         public static StoreBlocks getPyramid(Vector3 bottomCenter, float height, int value)
         {
             StoreBlocks storeBlocks = new StoreBlocks();
@@ -185,7 +195,9 @@ namespace Game
             storeBlocks.AddRange(StaticCommonMethod.getTriangle(A, B, C, value));
             return storeBlocks.ClearDuplicatePosition();
         }
+
         public static int[] halfHeights = new int[5] { 40, 13, 4, 1, 0 };
+
         public static StoreBlocks getKoch90(CellFace bottomCenter, int value, int targetTimes)
         {
             targetTimes = targetTimes < 6 ? targetTimes : 5;
@@ -253,10 +265,10 @@ namespace Game
                     foreach (int otherFace in FaceToSurround(face))
                     {
                         Point3 other = CellFace.FaceToPoint3(otherFace);
-                        nextBottomCenters.Add(new CellFace(nowBottomCenter.X + other.X * ( nowDoubleHalfHeight + 1), nowBottomCenter.Y + other.Y * (nowDoubleHalfHeight + 1), nowBottomCenter.Z + other.Z * (nowDoubleHalfHeight + 1), nowBottomCenter.Face));
+                        nextBottomCenters.Add(new CellFace(nowBottomCenter.X + other.X * (nowDoubleHalfHeight + 1), nowBottomCenter.Y + other.Y * (nowDoubleHalfHeight + 1), nowBottomCenter.Z + other.Z * (nowDoubleHalfHeight + 1), nowBottomCenter.Face));
                         nextBottomCenters.Add(new CellFace(nowBottomCenter.X + (direction.X + other.X) * nowHalfHeight + other.X, nowBottomCenter.Y + (direction.Y + other.Y) * nowHalfHeight + other.Y, nowBottomCenter.Z + (direction.Z + other.Z) * nowHalfHeight + +other.Z, otherFace));
                     }
-                    foreach(Point3 diagonal in FaceToDiagonal(face))
+                    foreach (Point3 diagonal in FaceToDiagonal(face))
                     {
                         nextBottomCenters.Add(new CellFace(nowBottomCenter.X + diagonal.X * (nowDoubleHalfHeight + 1), nowBottomCenter.Y + diagonal.Y * (nowDoubleHalfHeight + 1), nowBottomCenter.Z + diagonal.Z * (nowDoubleHalfHeight + 1), nowBottomCenter.Face));
                     }
@@ -266,15 +278,17 @@ namespace Game
             }
             return storeBlocks;
         }
+
         public static int[] FaceToSurround(int face)
         {
-            if(face ==4 || face == 5)
+            if (face == 4 || face == 5)
             {
                 return new int[4]
                     {
                         0,1,2,3
                     };
-            }else if(face ==1 || face == 3)
+            }
+            else if (face == 1 || face == 3)
             {
                 return new int[4]
                     {
@@ -293,6 +307,7 @@ namespace Game
                 return new int[0];
             }
         }
+
         public static Point3[] FaceToDiagonal(int face)
         {
             if (face == 4 || face == 5)

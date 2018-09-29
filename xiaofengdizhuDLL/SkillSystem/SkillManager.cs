@@ -9,6 +9,7 @@ namespace Game
     {
         public static Dictionary<string, Skill> m_skillDictionary;
         public static Dictionary<string, bool> m_defaultSkillInputDictionary;
+
         public static void Initialize()
         {
             Dictionary<string, Skill> skillDictionary = new Dictionary<string, Skill>();
@@ -16,7 +17,7 @@ namespace Game
             List<TypeInfo> list = new List<TypeInfo>(typeof(SkillManager).GetTypeInfo().Assembly.DefinedTypes);
             foreach (TypeInfo current in list)
             {
-                if(current.IsSubclassOf(typeof(Skill)) && !current.IsAbstract)
+                if (current.IsSubclassOf(typeof(Skill)) && !current.IsAbstract)
                 {
                     Skill skill = (Skill)Activator.CreateInstance(current.AsType());
                     if (skill.Name != null)
@@ -37,14 +38,15 @@ namespace Game
             m_defaultSkillInputDictionary = defaultSkillInputDictionary;
             foreach (Skill skill in m_skillDictionary.Values)
             {
-
             }
         }
+
         public static Dictionary<string, Skill> SkillDictionary
         {
             get { return m_skillDictionary; }
             set { m_skillDictionary = value; }
         }
+
         public static Dictionary<string, bool> DefaultSkillInputDictionary
         {
             get { return m_defaultSkillInputDictionary; }

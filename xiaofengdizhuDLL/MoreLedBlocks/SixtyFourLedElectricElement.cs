@@ -1,4 +1,5 @@
 ﻿using Engine;
+
 namespace Game
 {
     // Token: 0x02000394 RID: 916
@@ -35,6 +36,7 @@ namespace Game
                 this.m_glowPoints[i].Type = GlowPointType.Square;
             }
         }
+
         // Token: 0x0600176B RID: 5995 RVA: 0x0009ADFC File Offset: 0x00098FFC
         public override void OnRemoved()
         {

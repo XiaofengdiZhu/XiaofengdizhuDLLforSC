@@ -1,11 +1,6 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using Engine;
-using Engine.Serialization;
-using TemplatesDatabase;
 
 namespace Game
 {
@@ -18,6 +13,7 @@ namespace Game
         public Camera m_lastCamera;
         public View m_view;
         public bool m_hasInitiated = false;
+
         public override int[] HandledBlocks
         {
             get
@@ -28,6 +24,7 @@ namespace Game
                 };
             }
         }
+
         public override bool OnUse(Vector3 start, Vector3 direction, ComponentMiner componentMiner)
         {
             try

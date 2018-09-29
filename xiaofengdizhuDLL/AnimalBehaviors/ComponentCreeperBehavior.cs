@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Game;
-using Engine;
+﻿using Engine;
 using GameEntitySystem;
 using TemplatesDatabase;
 
 namespace Game
 {
-    class ComponentCreeperBehavior : ComponentBehavior, IUpdateable
+    internal class ComponentCreeperBehavior : ComponentBehavior, IUpdateable
     {
         private ComponentCreature m_componentCreature;
         private ComponentHealth m_componentHealth;
@@ -24,6 +21,7 @@ namespace Game
         private bool m_explosionPrepared;
         private double m_nextUpdateTime;
         private double m_exploseTime;
+
         public int UpdateOrder
         {
             get
@@ -31,6 +29,7 @@ namespace Game
                 return 0;
             }
         }
+
         public override float ImportanceLevel
         {
             get
@@ -38,6 +37,7 @@ namespace Game
                 return 0;
             }
         }
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
@@ -53,7 +53,8 @@ namespace Game
             m_shouldExplose = false;
             m_explosionPrepared = false;
             m_exploseTime = 0;
-    }
+        }
+
         public void Update(float dt)
         {
             if (m_subsystemTime.GameTime >= m_nextUpdateTime)
@@ -66,7 +67,7 @@ namespace Game
                     if (!m_shouldExplose) m_shouldExplose = (distance < 1.5);//距离小于1.5应该爆炸
                     else
                     {
-                        if(distance < 5 && m_componentHealth.Health > 0)
+                        if (distance < 5 && m_componentHealth.Health > 0)
                         {
                             m_componenttPilot.Stop();//距离小于5且生命值大于0时一直不动
                             if (!m_explosionPrepared)//如果还未准备下次的爆炸
@@ -77,7 +78,7 @@ namespace Game
                                 m_exploseTime = m_subsystemTime.GameTime + 1.8;
                                 m_explosionPrepared = true;
                             }
-                            else if(m_subsystemTime.GameTime >= m_exploseTime)//已准备好爆炸且到达预定爆炸的时间
+                            else if (m_subsystemTime.GameTime >= m_exploseTime)//已准备好爆炸且到达预定爆炸的时间
                             {
                                 m_isExplosed = true;
                                 m_subsystemExplosions.AddExplosion((int)position.X, (int)position.Y, (int)position.Z, 360, false, false);
@@ -102,6 +103,8 @@ namespace Game
             }
         }
 
-        public ComponentCreeperBehavior() : base() { }
+        public ComponentCreeperBehavior() : base()
+        {
+        }
     }
 }

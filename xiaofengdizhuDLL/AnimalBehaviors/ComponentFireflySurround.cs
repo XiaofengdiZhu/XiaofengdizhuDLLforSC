@@ -1,13 +1,13 @@
-﻿using Engine.Graphics;
-using TemplatesDatabase;
+﻿using Engine;
+using Engine.Graphics;
 using GameEntitySystem;
-using Engine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using TemplatesDatabase;
 
 namespace Game
 {
-    class ComponentFireflySurround : Component, IDrawable
+    internal class ComponentFireflySurround : Component, IDrawable
     {
         private ComponentCreature m_componentCreature;
         public SubsystemTime m_subsystemTime;
@@ -21,6 +21,7 @@ namespace Game
         public List<Firefly> m_fireFlies = new List<Firefly>();
         public double m_lastSpawnTime;
         public bool isLivingMode;
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             m_componentCreature = Entity.FindComponent<ComponentCreature>(true);
@@ -33,6 +34,7 @@ namespace Game
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
             isLivingMode = m_subsystemGameInfo.WorldSettings.EnvironmentBehaviorMode == EnvironmentBehaviorMode.Living;
         }
+
         public void Draw(Camera camera, int drawOrder)
         {
             if (isLivingMode && drawOrder == 10)
@@ -86,8 +88,8 @@ namespace Game
                             Vector3 speed = (firefly.nextPosition - firefly.position) / (float)(firefly.timeToStopMoving - nowTime) * dt;
                             firefly.position += speed;
                         }
-                        double timePassed = (nowTime - firefly.spawnTime)*0.5;
-                        float size = (float)(Math.Sin(7*timePassed)/(7*Math.Sin(timePassed))) * 0.01f + 0.012f;
+                        double timePassed = (nowTime - firefly.spawnTime) * 0.5;
+                        float size = (float)(Math.Sin(7 * timePassed) / (7 * Math.Sin(timePassed))) * 0.01f + 0.012f;
                         Vector3 v1 = Vector3.Normalize(Vector3.Cross(camera.ViewDirection, Vector3.UnitY));
                         Vector3 v2 = -Vector3.Normalize(Vector3.Cross(camera.ViewDirection, v1));
                         Vector3 p1 = Vector3.Transform(firefly.position + size * (-v1 - v2), camera.ViewMatrix);
@@ -101,6 +103,7 @@ namespace Game
                 }
             }
         }
+
         public int[] DrawOrders
         {
             get
@@ -108,9 +111,10 @@ namespace Game
                 return new int[] { 10 };
             }
         }
+
         public class Firefly
         {
-            public Firefly(Vector3 vector3, double time, float hue0,float saturation0)
+            public Firefly(Vector3 vector3, double time, float hue0, float saturation0)
             {
                 position = vector3;
                 nextPosition = vector3;
@@ -119,6 +123,7 @@ namespace Game
                 hue = hue0;
                 saturation = saturation0;
             }
+
             public Vector3 position;
             public Vector3 nextPosition;
             public double timeToStopMoving;

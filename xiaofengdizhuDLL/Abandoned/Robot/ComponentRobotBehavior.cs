@@ -73,7 +73,7 @@ namespace Game
             List<Point3> sixDirection = new List<Point3>() {
                 Point3.UnitX, -Point3.UnitX, Point3.UnitY, -Point3.UnitY, Point3.UnitZ, -Point3.UnitZ
             };
-            
+
             for (int directionIndex = 0; directionIndex < 6; directionIndex++)
             {
                 Point3 nextPosition = position + sixDirection[directionIndex];

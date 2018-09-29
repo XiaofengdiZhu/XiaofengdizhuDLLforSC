@@ -3,7 +3,7 @@ using System.IO;
 
 namespace StartSurvivalcraft2Cracked
 {
-    class StartSurvivalcraft2Cracked
+    internal class StartSurvivalcraft2Cracked
     {
         public static void Main(string[] args)
         {

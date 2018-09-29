@@ -1,18 +1,20 @@
 ﻿using Engine;
 using Engine.Input;
-using GameEntitySystem;
 
 namespace Game
 {
     public class SkillFireBall : Skill
     {
-        public override string Name {
+        public override string Name
+        {
             get { return "FireBall"; }
         }
+
         public override bool Input()
         {
             return Keyboard.IsKeyDownOnce(Key.Y);
         }
+
         public override void Action()
         {
             Vector3 position = componentPlayer.ComponentBody.Position;

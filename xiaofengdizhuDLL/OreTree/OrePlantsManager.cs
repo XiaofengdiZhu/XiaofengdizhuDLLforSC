@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Engine;
 
 namespace Game
 {
@@ -56,15 +56,19 @@ namespace Game
                 }
             }
         }
+
         public static ReadOnlyList<TerrainBrush> GetTreeBrushes(OreTreeType treeType)
         {
             return new ReadOnlyList<TerrainBrush>(OrePlantsManager.m_treeBrushesByType[(int)treeType]);
         }
+
         public static TerrainBrush CreateTreeBrush(Random random, int woodIndex, int leavesIndex, int height, int branchesCount, Func<int, float> leavesProbabilityByHeight, Func<int, float> branchesLengthByHeight)
         {
             return PlantsManager.CreateTreeBrush(random, woodIndex, leavesIndex, height, branchesCount, leavesProbabilityByHeight, branchesLengthByHeight);
         }
+
         public static List<TerrainBrush>[] m_treeBrushesByType = new List<TerrainBrush>[EnumUtils.GetEnumValues(typeof(OreTreeType)).Max() + 1];
+
         public static int[] m_treeTrunksByType = new int[]
         {
             67,
@@ -76,6 +80,7 @@ namespace Game
             67,
             67
         };
+
         public static int[] m_treeLeavesByType = new int[]
         {
             330,

@@ -1,5 +1,5 @@
-﻿using System;
-using Engine;
+﻿using Engine;
+using System;
 
 namespace Game
 {
@@ -8,6 +8,7 @@ namespace Game
         public TelescopeCamera(View view) : base(view)
         {
         }
+
         public override bool UsesMovementControls
         {
             get
@@ -15,6 +16,7 @@ namespace Game
                 return true;
             }
         }
+
         public override bool IsEntityControlEnabled
         {
             get
@@ -22,6 +24,7 @@ namespace Game
                 return true;
             }
         }
+
         public override void Activate(Camera previousCamera)
         {
             m_angles = new Vector2(0f, (float)Math.Asin((double)previousCamera.ViewDirection.Y));
@@ -32,6 +35,7 @@ namespace Game
             }
             base.SetupPerspectiveCamera(previousCamera.ViewPosition, previousCamera.ViewDirection, previousCamera.ViewUp);
         }
+
         public override void Update(float dt)
         {
             ComponentPlayer componentPlayer = base.View.PlayerData.ComponentPlayer;
@@ -44,7 +48,7 @@ namespace Game
             Vector2 cameraLook = componentInput.PlayerInput.CameraLook;
             this.m_angles.X = MathUtils.NormalizeAngle(this.m_angles.X - 4f * cameraLook.X * dt + 0.5f * cameraSneakMove.X * dt);
             this.m_angles.Y = MathUtils.Clamp(MathUtils.NormalizeAngle(this.m_angles.Y + 4f * cameraLook.Y * dt), MathUtils.DegToRad(-45f), MathUtils.DegToRad(80f));
-            this.m_distance = MathUtils.Clamp(this.m_distance + 50f *cameraSneakMove.Z * dt, 2f, 100f);
+            this.m_distance = MathUtils.Clamp(this.m_distance + 50f * cameraSneakMove.Z * dt, 2f, 100f);
             Vector3 v = Vector3.Transform(new Vector3(this.m_distance, 0f, 0f), Matrix.CreateFromYawPitchRoll(this.m_angles.X, 0f, this.m_angles.Y));
             Vector3 vector = base.View.Target.ComponentBody.BoundingBox.Center();
             Vector3 vector2 = vector + v;
@@ -87,6 +91,7 @@ namespace Game
             }
             base.SetupPerspectiveCamera(vector6, vector6 - vector, Vector3.UnitY);
         }
+
         public Vector3 m_position;
         public Vector2 m_angles = new Vector2(0f, MathUtils.DegToRad(30f));
         public float m_distance = 6f;

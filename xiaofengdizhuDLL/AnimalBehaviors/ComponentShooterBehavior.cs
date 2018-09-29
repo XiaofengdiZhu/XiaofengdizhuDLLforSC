@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Game;
-using Engine;
+﻿using Engine;
 using GameEntitySystem;
 using TemplatesDatabase;
 
@@ -52,30 +49,39 @@ namespace Game
                 case "WoodenArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.WoodenArrow));
                     break;
+
                 case "StoneArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.StoneArrow));
                     break;
+
                 case "IronArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.IronArrow));
                     break;
+
                 case "DiamondArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.DiamondArrow));
                     break;
+
                 case "FireArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.FireArrow));
                     break;
+
                 case "IronBolt":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.IronBolt));
                     break;
+
                 case "DiamondBolt":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.DiamondBolt));
                     break;
+
                 case "ExplosiveBolt":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.ExplosiveBolt));
                     break;
+
                 case "CopperArrow":
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.CopperArrow));
                     break;
+
                 default:
                     m_arrowValue = Terrain.MakeBlockValue(192, 0, ArrowBlock.SetArrowType(0, ArrowBlock.ArrowType.StoneArrow));
                     break;
@@ -92,7 +98,7 @@ namespace Game
                     Vector3 position = m_componentCreature.ComponentCreatureModel.EyePosition + m_componentCreature.ComponentBody.Matrix.Right * 0.3f - m_componentCreature.ComponentBody.Matrix.Up * 0.2f + m_componentCreature.ComponentBody.Matrix.Forward * 0.2f;
                     Vector3 target_direction = m_componenttChaseBehavior.Target.ComponentBody.Position - position;
                     m_distance = target_direction.Length();
-                    Vector3 direction = Vector3.Normalize(target_direction + m_random.Vector3((m_distance<10)?0.4f:1f, false));
+                    Vector3 direction = Vector3.Normalize(target_direction + m_random.Vector3((m_distance < 10) ? 0.4f : 1f, false));
                     float vx = MathUtils.Lerp(0f, 40f, MathUtils.Pow((float)m_ChargeTime / 2f, 0.5f));
                     m_subsystemProjectiles.FireProjectile(m_arrowValue, position, direction * vx + new Vector3(0, m_random.UniformFloat(5f, 8f) * m_distance / vx, 0), Vector3.Zero, m_componentCreature);
                 }
@@ -102,8 +108,9 @@ namespace Game
                 m_stateMachine.Update();
             }
         }
-        public ComponentShooterBehavior() : base() { }
+
+        public ComponentShooterBehavior() : base()
+        {
+        }
     }
-
-
 }

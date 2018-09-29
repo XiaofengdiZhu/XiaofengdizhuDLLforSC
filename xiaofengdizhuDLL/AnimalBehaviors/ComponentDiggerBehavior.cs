@@ -90,7 +90,9 @@ namespace Game
                 m_isDigging = false;
             }
         }
-        public ComponentDiggerBehavior() : base() { }
 
+        public ComponentDiggerBehavior() : base()
+        {
+        }
     }
 }

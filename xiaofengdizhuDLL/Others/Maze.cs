@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Game
 {
-
     /// <summary>
     /// 迷宫类
     /// </summary>
@@ -358,7 +353,7 @@ namespace Game
         }
 
         /// <summary>
-        /// 获取迷宫的二维数组 
+        /// 获取迷宫的二维数组
         /// </summary>
         /// <returns></returns>
         public bool[,] GetBoolArray()
@@ -373,6 +368,7 @@ namespace Game
         {
             // 上下左右的门
             private Door topDoor;
+
             public Door TopDoor
             {
                 get { return topDoor; }
@@ -380,6 +376,7 @@ namespace Game
             }
 
             private Door bottonDoor;
+
             public Door BottonDoor
             {
                 get { return bottonDoor; }
@@ -387,6 +384,7 @@ namespace Game
             }
 
             private Door leftDoor;
+
             public Door LeftDoor
             {
                 get { return leftDoor; }
@@ -394,6 +392,7 @@ namespace Game
             }
 
             private Door rightDoor;
+
             public Door RightDoor
             {
                 get { return rightDoor; }
@@ -402,6 +401,7 @@ namespace Game
 
             // 左上 右上 左下 右下的门
             private Door topLeftDoor;
+
             public Door TopLeftDoor
             {
                 get { return topLeftDoor; }
@@ -409,6 +409,7 @@ namespace Game
             }
 
             private Door topRightDoor;
+
             public Door TopRightDoor
             {
                 get { return topRightDoor; }
@@ -416,6 +417,7 @@ namespace Game
             }
 
             private Door bottonLeftDoor;
+
             public Door BottonLeftDoor
             {
                 get { return bottonLeftDoor; }
@@ -423,6 +425,7 @@ namespace Game
             }
 
             private Door bottonRightDoor;
+
             public Door BottonRightDoor
             {
                 get { return bottonRightDoor; }
@@ -455,15 +458,18 @@ namespace Game
             /// 门是否是关闭的
             /// </summary>
             private bool isLocked;
+
             /// <summary>
             /// 是否为固定的门(固定的门无法开启和关闭)
             /// </summary>
             private bool isFixed;
+
             public bool IsFixed
             {
                 get { return isFixed; }
                 set { isFixed = value; }
             }
+
             /// <summary>
             /// 构造函数， 默认为门是锁着的
             /// </summary>
@@ -471,6 +477,7 @@ namespace Game
             {
                 isLocked = true;
             }
+
             /// <summary>
             /// 开门
             /// </summary>
@@ -478,6 +485,7 @@ namespace Game
             {
                 isLocked = false;
             }
+
             /// <summary>
             /// 关门
             /// </summary>
@@ -485,6 +493,7 @@ namespace Game
             {
                 isLocked = true;
             }
+
             /// <summary>
             /// 获取门是否是锁着的
             /// </summary>

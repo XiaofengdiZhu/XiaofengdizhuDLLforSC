@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Engine;
 using System.Xml.Linq;
-using Engine;
+
 namespace Game
 {
     public class CombinedChestWidget : CanvasWidget
@@ -13,7 +13,8 @@ namespace Game
         public LabelWidget m_pageLabel;
         public ComponentInventoryWithPage m_componentInventoryWithPage;
         public int m_pagesCount;
-        public int m_lastPageIndex=-1;
+        public int m_lastPageIndex = -1;
+
         public CombinedChestWidget(IInventory inventory, ComponentCombinedChest componentCombinedChest)
         {
             this.m_componentCombinedChest = componentCombinedChest;
@@ -49,6 +50,7 @@ namespace Game
                 }
             }
         }
+
         public override void Update()
         {
             if (!this.m_componentCombinedChest.IsAddedToProject)

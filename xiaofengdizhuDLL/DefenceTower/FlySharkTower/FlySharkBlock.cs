@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Engine;
+﻿using Engine;
 using Engine.Graphics;
-using TemplatesDatabase;
 
 namespace Game
 {
@@ -21,6 +16,7 @@ namespace Game
             EggBlock.EggType eggType = ((EggBlock)BlocksManager.Blocks[118]).GetEggTypeByCreatureTemplateName("Shark_Bull_Fly");
             BlocksManager.DrawMeshBlock(primitivesRenderer, eggType.BlockMesh, color, eggType.Scale * size, ref matrix, environmentData);
         }
+
         public const int Index = 351;
     }
 }

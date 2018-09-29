@@ -1,11 +1,7 @@
 ﻿using Engine;
-using Engine.Graphics;
 using Engine.Input;
-using Engine.Media;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Speech.Synthesis;
 
 namespace Game
 {
@@ -13,10 +9,12 @@ namespace Game
     {
         public bool isTesting;
         private double nextTime;
+
         public override string Name
         {
             get { return "Test"; }
         }
+
         public override bool Input()
         {
             bool flag = false;
@@ -27,6 +25,7 @@ namespace Game
             }*/
             return flag || (isTesting && subsystems.time.GameTime > nextTime);
         }
+
         public override void Action()
         {
             nextTime = subsystems.time.GameTime + 2;
@@ -38,17 +37,20 @@ namespace Game
             Log.Information(time.Millisecond.ToString());
         }
     }
+
     public class SkillTest1 : Skill
     {
         public override string Name
         {
             get { return "Test1"; }
         }
+
         public override bool Input()
         {
             //return Keyboard.IsKeyDownOnce(Key.I);
             return false;
         }
+
         public override void Action()
         {
             Vector3 position = commonMethod.playerPosition;
@@ -57,17 +59,20 @@ namespace Game
             commonMethod.uploadFile("data:/mydata.txt");
         }
     }
+
     public class SkillTest2 : Skill
     {
         public override string Name
         {
             get { return "Test2"; }
         }
+
         public override bool Input()
         {
             //return Keyboard.IsKeyDownOnce(Key.L);
             return false;
         }
+
         public override void Action()
         {
             //转换dae模型
@@ -78,17 +83,20 @@ namespace Game
             st.Flush();
         }
     }
+
     public class SkillTest3 : Skill
     {
         public override string Name
         {
             get { return "Test3"; }
         }
+
         public override bool Input()
         {
             //return Keyboard.IsKeyDownOnce(Key.M);
             return false;
         }
+
         public override void Action()
         {
             //commonMethod.playerPosition = new Vector3(2250,60,3900);
@@ -100,7 +108,9 @@ namespace Game
             }
             commonMethod.fillBox(2275, 59, 3875, 2324, 59, 3924, 15);
         }
+
         public Maze m_lastMaze;
+
         public Maze LastMaze
         {
             get
@@ -113,17 +123,20 @@ namespace Game
             }
         }
     }
+
     public class SkillTest4 : Skill
     {
         public override string Name
         {
             get { return "Test4"; }
         }
+
         public override bool Input()
         {
             //return Keyboard.IsKeyDownOnce(Key.B);
             return false;
         }
+
         public override void Action()
         {
             try
@@ -153,17 +166,20 @@ namespace Game
             }
         }
     }
+
     public class SkillTest5 : Skill
     {
         public override string Name
         {
             get { return "Test5"; }
         }
+
         public override bool Input()
         {
             //return Keyboard.IsKeyDownOnce(Key.B);
             return false;
         }
+
         public override void Action()
         {
             try
@@ -182,7 +198,7 @@ namespace Game
                     DateTime time = DateTime.Now;
                     StoreBlocks blocks = StaticCommonMethod.getKoch90(new CellFace(0, 3, 0, 4), 46, 5);
                     commonMethod.setBlocks(blocks);
-                    Log.Information((DateTime.Now-time).TotalMilliseconds);
+                    Log.Information((DateTime.Now - time).TotalMilliseconds);
                     Log.Information(blocks.Count);
                     commonMethod.displaySmallMessage(a.ToString(), false, false);
                 }
@@ -192,19 +208,21 @@ namespace Game
                 Log.Warning(e.ToString());
             }
         }
-
     }
+
     public class SkillTest6 : Skill
     {
         public override string Name
         {
             get { return "Test6"; }
         }
+
         public override bool Input()
         {
             return Keyboard.IsKeyDownOnce(Key.B);
             //return false;
         }
+
         public override void Action()
         {
             try
@@ -223,7 +241,7 @@ namespace Game
                     {
                         int data = Terrain.ExtractData(value);
                         int? cornerType = FactorioTransportBeltBlock.GetCornerType(data);
-                        commonMethod.displaySmallMessage(cellFace.X + ","+ cellFace.Y + "," + cellFace.Z + " " + FactorioTransportBeltBlock.GetRotation(data) + (cornerType.HasValue?(" " + cornerType.Value.ToString()):""), false, false);
+                        commonMethod.displaySmallMessage(cellFace.X + "," + cellFace.Y + "," + cellFace.Z + " " + FactorioTransportBeltBlock.GetRotation(data) + (cornerType.HasValue ? (" " + cornerType.Value.ToString()) : ""), false, false);
                     }
                 }
             }
@@ -233,17 +251,20 @@ namespace Game
             }
         }
     }
+
     public class SkillTest7 : Skill
     {
         public override string Name
         {
             get { return "Test7"; }
         }
+
         public override bool Input()
         {
             return Keyboard.IsKeyDownOnce(Key.N);
             //return false;
         }
+
         public override void Action()
         {
             try
@@ -261,7 +282,7 @@ namespace Game
                     int oldValue = commonMethod.getBlock(position.X, position.Y, position.Z);
                     if (Terrain.ExtractContents(oldValue) == 0)
                     {
-                        int value = Terrain.MakeBlockValue(400, 0, FactorioTransportBeltBlock.SetCornerType(FactorioTransportBeltBlock.SetColor( 0,0), 0));
+                        int value = Terrain.MakeBlockValue(400, 0, FactorioTransportBeltBlock.SetCornerType(FactorioTransportBeltBlock.SetColor(0, 0), 0));
                         commonMethod.placeBlock(position.X, position.Y, position.Z, value);
                     }
                 }

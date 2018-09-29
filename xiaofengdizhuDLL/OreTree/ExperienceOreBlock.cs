@@ -1,5 +1,4 @@
-﻿using System;
-using Engine;
+﻿using Engine;
 using Engine.Graphics;
 
 namespace Game
@@ -11,6 +10,7 @@ namespace Game
             base.Initialize();
             m_texture = ContentManager.Get<Texture2D>("Textures/ExperienceOre");
         }
+
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
         }
@@ -19,10 +19,12 @@ namespace Game
         {
             BlocksManager.DrawFlatBlock(primitivesRenderer, value, size, ref matrix, this.m_texture, Color.White, true, environmentData);
         }
+
         public override BlockDebrisParticleSystem CreateDebrisParticleSystem(SubsystemTerrain subsystemTerrain, Vector3 position, int value, float strength)
         {
             return new BlockDebrisParticleSystem(subsystemTerrain, position, 0f, this.DestructionDebrisScale, Color.White, this.GetFaceTextureSlot(4, value));
         }
+
         public const int Index = 330;
         public Texture2D m_texture;
     }

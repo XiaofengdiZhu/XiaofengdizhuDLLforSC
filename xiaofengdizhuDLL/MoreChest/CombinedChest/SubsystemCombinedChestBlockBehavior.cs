@@ -1,7 +1,7 @@
 ﻿using Engine;
 using GameEntitySystem;
-using System;
 using TemplatesDatabase;
+
 namespace Game
 {
     public class SubsystemCombinedChestBlockBehavior : SubsystemBlockBehavior
@@ -9,6 +9,7 @@ namespace Game
         private SubsystemTerrain m_subsystemTerrain;
         public SubsystemBlocksEntities m_subsystemBlocksEntities;
         public SubsystemAudio m_subsystemAudio;
+
         public override int[] HandledBlocks
         {
             get
@@ -27,10 +28,11 @@ namespace Game
             this.m_subsystemAudio = base.Project.FindSubsystem<SubsystemAudio>(true);
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
         }
+
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
             ComponentBlocksEntity blocksEntity = null;
-            Log.Information(m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x - 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z+1) + " " + m_subsystemTerrain.Terrain.GetCellValue(x, y, z-1));
+            Log.Information(m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x - 1, y, z) + " " + m_subsystemTerrain.Terrain.GetCellValue(x + 1, y, z + 1) + " " + m_subsystemTerrain.Terrain.GetCellValue(x, y, z - 1));
             if (m_subsystemTerrain.Terrain.GetCellContents(x + 1, y, z) == 320)
             {
                 blocksEntity = m_subsystemBlocksEntities.GetBlockEntity(x + 1, y, z);
@@ -47,7 +49,7 @@ namespace Game
             {
                 blocksEntity = m_subsystemBlocksEntities.GetBlockEntity(x, y, z - 1);
             }
-            if (blocksEntity != null && blocksEntity.Coordinates.Count<2)
+            if (blocksEntity != null && blocksEntity.Coordinates.Count < 2)
             {
                 Point3 point = new Point3(x, y, z);
                 blocksEntity.Coordinates.Add(point);
@@ -61,6 +63,7 @@ namespace Game
                 base.Project.AddEntity(base.Project.CreateEntity(valuesDictionary));
             }
         }
+
         public override void OnBlockRemoved(int value, int newValue, int x, int y, int z)
         {
             ComponentBlocksEntity blocksEntity = null;

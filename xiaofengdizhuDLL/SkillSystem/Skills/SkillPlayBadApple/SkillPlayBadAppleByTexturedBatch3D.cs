@@ -9,7 +9,7 @@ namespace Game
 {
     public class SkillPlayBadApple : Skill
     {
-        private PlayBadAppleByTexturedBatch3D m_playBadAppleByTexturedBatch3D = new PlayBadAppleByTexturedBatch3D(); 
+        private PlayBadAppleByTexturedBatch3D m_playBadAppleByTexturedBatch3D = new PlayBadAppleByTexturedBatch3D();
         private bool m_isPlaying;
         private DateTime m_startTime;
         public override string Name

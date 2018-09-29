@@ -4,6 +4,7 @@ using GameEntitySystem;
 using System;
 using System.Collections.Generic;
 using TemplatesDatabase;
+
 namespace Game
 {
     public class SubsystemExperienceOreBlockBehavior : SubsystemBlockBehavior, IDrawable
@@ -16,6 +17,7 @@ namespace Game
         public Texture2D m_texture;
         public Dictionary<Point3, ExperienceOre> m_blocks = new Dictionary<Point3, ExperienceOre>();
         public float m_visibilityRange;
+
         public override int[] HandledBlocks
         {
             get
@@ -36,6 +38,7 @@ namespace Game
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
             m_visibilityRange = (float)SettingsManager.VisibilityRange;
         }
+
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
             Point3 point = new Point3(x, y, z);
@@ -44,6 +47,7 @@ namespace Game
                 m_blocks.Add(point, new ExperienceOre(x, y, z));
             }
         }
+
         public override void OnBlockGenerated(int value, int x, int y, int z, bool isLoaded)
         {
             Point3 point = new Point3(x, y, z);
@@ -52,6 +56,7 @@ namespace Game
                 m_blocks.Add(point, new ExperienceOre(x, y, z));
             }
         }
+
         public override void OnBlockRemoved(int value, int newValue, int x, int y, int z)
         {
             Point3 point = new Point3(x, y, z);
@@ -61,6 +66,7 @@ namespace Game
             }
             m_subsystemAudio.PlaySound("Audio/ExperienceCollected", 0.3f, this.m_random.UniformFloat(-0.1f, 0.4f), 0f, 0f);
         }
+
         public void Draw(Camera camera, int drawOrder)
         {
             if (drawOrder == 10)
@@ -101,12 +107,13 @@ namespace Game
                             Vector3 p3 = Vector3.Transform(orb.position + orb.size * (-v1 + v2), camera.ViewMatrix);
                             Vector3 p4 = Vector3.Transform(orb.position + orb.size * (v1 + v2), camera.ViewMatrix);
                             TexturedBatch3D texturedBatch3D = m_primitivesRenderer.TexturedBatch(m_texture, true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.AnisotropicWrap);
-                            texturedBatch3D.QueueQuad(p1, p3, p4, p2, new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Color(255,205,97));
+                            texturedBatch3D.QueueQuad(p1, p3, p4, p2, new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Color(255, 205, 97));
                         }
                     }
                 }
             }
         }
+
         public int[] DrawOrders
         {
             get
@@ -114,9 +121,11 @@ namespace Game
                 return new int[] { 10 };
             }
         }
+
         public class ExperienceOre
         {
             public Random m_random = new Random();
+
             public ExperienceOre(int x, int y, int z)
             {
                 position = new Point3(x, y, z);
@@ -126,9 +135,11 @@ namespace Game
                 orbs[1] = new ExperienceOrb(vector3 + m_random.Vector3(0.5f), m_random.UniformFloat(0.03f, 0.3f));
                 orbs[2] = new ExperienceOrb(vector3 + m_random.Vector3(0.5f), m_random.UniformFloat(0.03f, 0.3f));
             }
+
             public Point3 position;
             public ExperienceOrb[] orbs;
         }
+
         public class ExperienceOrb
         {
             public ExperienceOrb(Vector3 point, float num)
@@ -140,6 +151,7 @@ namespace Game
                 nextSize = num;
                 timeToStopResizing = 0;
             }
+
             public Vector3 position;
             public Vector3 nextPosition;
             public double timeToStopMoving;

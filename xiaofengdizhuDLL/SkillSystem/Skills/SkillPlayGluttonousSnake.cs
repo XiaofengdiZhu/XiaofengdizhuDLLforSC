@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Engine;
+﻿using Engine;
 using Engine.Graphics;
-using Engine.Input;
 using Engine.Media;
+using System;
 
 namespace Game
 {
     public class SkillPlayGluttonousSnake : Skill
     {
-        private PlayGluttonousSnake m_playGluttonousSnake = new PlayGluttonousSnake(144,108);
+        private PlayGluttonousSnake m_playGluttonousSnake = new PlayGluttonousSnake(144, 108);
         private bool m_isPlaying;
         private DateTime m_lastUpdateTime = DateTime.Now;
+
         public override string Name
         {
             get { return "PlayBadAppleBy4LED"; }
         }
+
         public override bool Input()
         {
             /*if (Keyboard.IsKeyDownOnce(Key.O))
@@ -44,17 +41,18 @@ namespace Game
             }*/
             if (m_isPlaying) return true; else return false;
         }
+
         public override void Action()
         {
-            Vector2 position = new Vector2(10f,46f);
+            Vector2 position = new Vector2(10f, 46f);
             FontBatch2D fontBatch2D = commonMethod.subsystems.componentGui.PrimitivesRenderer2D.FontBatch(ContentManager.Get<BitmapFont>("Fonts/Pericles32"), 1, DepthStencilState.None, null, BlendState.AlphaBlend, null);
-            foreach(PlayGluttonousSnake.Snake snake in m_playGluttonousSnake.Snakes)
+            foreach (PlayGluttonousSnake.Snake snake in m_playGluttonousSnake.Snakes)
             {
                 if (snake.Type == PlayGluttonousSnake.SnakeType.Player0)
                 {
-                    fontBatch2D.QueueText("Player  " + (snake.Body.Count-1).ToString(), new Vector2(10f, 10f), 0f, Color.White, TextAnchor.Left, Vector2.One, Vector2.Zero, 0f);
+                    fontBatch2D.QueueText("Player  " + (snake.Body.Count - 1).ToString(), new Vector2(10f, 10f), 0f, Color.White, TextAnchor.Left, Vector2.One, Vector2.Zero, 0f);
                 }
-                else if(snake.Type != PlayGluttonousSnake.SnakeType.None)
+                else if (snake.Type != PlayGluttonousSnake.SnakeType.None)
                 {
                     position += new Vector2(0f, 36f);
                     fontBatch2D.QueueText(snake.Type.ToString() + "  " + (snake.Body.Count - 1).ToString(), position, 0f, Color.White, TextAnchor.Left, Vector2.One, Vector2.Zero, 0f);

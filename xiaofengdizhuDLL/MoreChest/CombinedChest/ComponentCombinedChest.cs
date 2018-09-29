@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Game
+﻿namespace Game
 {
     public class ComponentCombinedChest : ComponentInventoryWithPage
     {

@@ -1,6 +1,5 @@
 ﻿using Engine;
 using Engine.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Game
@@ -23,10 +22,12 @@ namespace Game
             this.m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0f, -1f, 0f), false, false, false, false, Color.White);
             base.Initialize();
         }
+
         public override void DrawBlock(PrimitivesRenderer3D primitivesRenderer, int value, Color color, float size, ref Matrix matrix, DrawBlockEnvironmentData environmentData)
         {
             BlocksManager.DrawMeshBlock(primitivesRenderer, this.m_standaloneBlockMesh, color, size, ref matrix, environmentData);
         }
+
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
             Color[] oreColor = new Color[]
@@ -46,19 +47,21 @@ namespace Game
             generator.GenerateMeshVertices(this, x, y, z, this.m_leavesBlockMesh, color, null, geometry.SubsetAlphaTest);
             generator.GenerateWireVertices(value, x, y, z, 4, 0.01f, Vector2.Zero, geometry.SubsetOpaque);
         }
+
         public override BlockDebrisParticleSystem CreateDebrisParticleSystem(SubsystemTerrain subsystemTerrain, Vector3 position, int value, float strength)
         {
             Color color = BlockColorsMap.SpruceLeavesColorsMap.Lookup(subsystemTerrain.Terrain, Terrain.ToCell(position.X), Terrain.ToCell(position.Z));
             return new BlockDebrisParticleSystem(subsystemTerrain, position, strength, this.DestructionDebrisScale, color, this.DefaultTextureSlot);
         }
+
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
         {
             int num = Terrain.ExtractData(value);
             string name = "";
             switch (num)
             {
-                case 0:name = "Experience";break;
-                case 1:name = "Coal";break;
+                case 0: name = "Experience"; break;
+                case 1: name = "Coal"; break;
                 case 2: name = "Copper"; break;
                 case 3: name = "Iron"; break;
                 case 4: name = "Sulphur"; break;
@@ -66,8 +69,9 @@ namespace Game
                 case 6: name = "Germanium"; break;
                 case 7: name = "Saltpeter"; break;
             }
-            if (name.Length > 0)return name += " Ore Sapling"; else return "Ore Sapling";
+            if (name.Length > 0) return name += " Ore Sapling"; else return "Ore Sapling";
         }
+
         public override IEnumerable<int> GetCreativeValues()
         {
             yield return Terrain.MakeBlockValue(340, 0, 0);
@@ -80,6 +84,7 @@ namespace Game
             yield return Terrain.MakeBlockValue(340, 0, 7);
             yield break;
         }
+
         public override IEnumerable<CraftingRecipe> GetProceduralCraftingRecipes()
         {
             string[] array = new string[]
@@ -119,6 +124,7 @@ namespace Game
             yield break;
             //yield break;
         }
+
         public const int Index = 340;
         public BlockMesh m_standaloneBlockMesh = new BlockMesh();
         public BlockMesh m_leavesBlockMesh = new BlockMesh();

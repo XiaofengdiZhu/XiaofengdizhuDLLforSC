@@ -1,12 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using Engine;
-using Engine.Serialization;
-using TemplatesDatabase;
+﻿using Engine;
 using GameEntitySystem;
+using System;
+using TemplatesDatabase;
 
 namespace Game
 {
@@ -14,11 +9,13 @@ namespace Game
     {
         public SubsystemBodies m_subsystemBodies;
         public DynamicArray<ComponentBody> m_componentBodies = new DynamicArray<ComponentBody>();
-        Random m_random = new Random();
+        private Random m_random = new Random();
+
         protected override void Load(ValuesDictionary valuesDictionary)
         {
             m_subsystemBodies = Project.FindSubsystem<SubsystemBodies>(true);
         }
+
         public override int[] HandledBlocks
         {
             get
@@ -29,6 +26,7 @@ namespace Game
                 };
             }
         }
+
         public override bool OnHitAsProjectile(CellFace? cellFace, ComponentBody componentBody, WorldItem worldItem)
         {
             Entity entity = DatabaseManager.CreateEntity(base.Project, "Shark_Bull_Fly", true);
@@ -44,7 +42,8 @@ namespace Game
                     ComponentCreature componentCreature = this.m_componentBodies.Array[0].Entity.FindComponent<ComponentCreature>();
                     entity.FindComponent<ComponentChaseBehavior>(true).Attack(componentCreature, 24f, 120f, true);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Log.Information(e.ToString());
             }

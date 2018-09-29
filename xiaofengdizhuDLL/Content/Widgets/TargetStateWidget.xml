@@ -1,14 +1,14 @@
 <!--<TargetStateWidget xmlns="runtime-namespace:Game">
   <StackPanelWidget Direction="Vertical">
     <StackPanelWidget Direction="Horizontal">
-      <LabelWidget Name="Name" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
+      <LabelWidget Name="Name" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192" />
     </StackPanelWidget>
-    <ValueBarWidget Name="TargetHealthBar" LayoutDirection="Horizontal" BarsCount="10" BarBlending="false" HalfBars="true" LitBarColor="224, 24, 0" UnlitBarColor="64, 64, 64, 255" BarSize="16, 16" BarSubtexture="{Textures/Atlas/HealthBar}" TextureLinearFilter="true" Margin="0, 2"/>
+    <ValueBarWidget Name="TargetHealthBar" LayoutDirection="Horizontal" BarsCount="10" BarBlending="false" HalfBars="true" LitBarColor="224, 24, 0" UnlitBarColor="64, 64, 64, 255" BarSize="16, 16" BarSubtexture="{Textures/Atlas/HealthBar}" TextureLinearFilter="true" Margin="0, 2" />
     <StackPanelWidget Direction="Horizontal">
-      <LabelWidget Text="ATK: " Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
-      <LabelWidget Name="AttackPower" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
-      <LabelWidget Text="   DEF: " Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
-      <LabelWidget Name="AttackResilience" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192"/>
+      <LabelWidget Text="ATK: " Font="{Fonts/Pericles24}" Color="255, 255, 255, 192" />
+      <LabelWidget Name="AttackPower" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192" />
+      <LabelWidget Text="   DEF: " Font="{Fonts/Pericles24}" Color="255, 255, 255, 192" />
+      <LabelWidget Name="AttackResilience" Text="Non" Font="{Fonts/Pericles24}" Color="255, 255, 255, 192" />
     </StackPanelWidget>
   </StackPanelWidget>
 </TargetStateWidget>-->

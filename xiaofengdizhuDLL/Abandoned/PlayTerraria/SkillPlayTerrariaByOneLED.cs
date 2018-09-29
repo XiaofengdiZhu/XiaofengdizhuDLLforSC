@@ -43,7 +43,6 @@ namespace Game
                                 m_glowPoints[index].FarSize = 0.26f;
                                 m_glowPoints[index].FarDistance = 1f;
                                 m_glowPoints[index].Type = GlowPointType.Square;
-                            
                         }
                     }
                     m_playTerrariaByOneLED.m_glowPoints = m_glowPoints;

@@ -4,9 +4,10 @@ using GameEntitySystem;
 using System;
 using System.Collections.Generic;
 using TemplatesDatabase;
+
 namespace Game
 {
-    public class SubsystemAutoCollectPickablesHoleBlockBehavior : SubsystemBlockBehavior, IDrawable,IUpdateable
+    public class SubsystemAutoCollectPickablesHoleBlockBehavior : SubsystemBlockBehavior, IDrawable, IUpdateable
     {
         public SubsystemTime m_subsystemTime;
         public SubsystemPickables m_subsystemPickables;
@@ -17,6 +18,7 @@ namespace Game
         public Dictionary<Point3, BlackHole> m_blocks = new Dictionary<Point3, BlackHole>();
         public float m_visibilityRange;
         private double m_nextUpdateTime;
+
         public override int[] HandledBlocks
         {
             get
@@ -37,6 +39,7 @@ namespace Game
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
             m_visibilityRange = (float)SettingsManager.VisibilityRange;
         }
+
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
             Point3 point = new Point3(x, y, z);
@@ -45,6 +48,7 @@ namespace Game
                 m_blocks.Add(point, new BlackHole(point, m_subsystemTime.GameTime));
             }
         }
+
         public override void OnBlockGenerated(int value, int x, int y, int z, bool isLoaded)
         {
             Point3 point = new Point3(x, y, z);
@@ -53,6 +57,7 @@ namespace Game
                 m_blocks.Add(point, new BlackHole(point, m_subsystemTime.GameTime));
             }
         }
+
         public override void OnBlockRemoved(int value, int newValue, int x, int y, int z)
         {
             Point3 point = new Point3(x, y, z);
@@ -61,6 +66,7 @@ namespace Game
                 m_blocks.Remove(point);
             }
         }
+
         public void Draw(Camera camera, int drawOrder)
         {
             try
@@ -95,7 +101,7 @@ namespace Game
 
         public void Update(float dt)
         {
-            if (m_subsystemTime.GameTime >= m_nextUpdateTime&&m_blocks.Count > 0)
+            if (m_subsystemTime.GameTime >= m_nextUpdateTime && m_blocks.Count > 0)
             {
                 m_nextUpdateTime += 0.2;
                 foreach (Pickable pickable in m_subsystemPickables.m_pickables)
@@ -104,7 +110,7 @@ namespace Game
                     {
                         float nearestDistance = float.MaxValue;
                         Vector3 nearestPosition = Vector3.Zero;
-                        foreach(BlackHole hole in m_blocks.Values)
+                        foreach (BlackHole hole in m_blocks.Values)
                         {
                             Vector3 blockPosition = new Vector3((float)hole.position.X + 0.5f, (float)hole.position.Y, (float)hole.position.Z + 0.5f);
                             float distance = Vector3.DistanceSquared(blockPosition, pickable.Position);
@@ -149,6 +155,7 @@ namespace Game
                 position = point;
                 spawnTime = time;
             }
+
             public Point3 position;
             public double spawnTime;
         }

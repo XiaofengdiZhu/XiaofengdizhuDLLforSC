@@ -1948,7 +1948,7 @@
               <Parameter Name="KillVerbs" Guid="197e0a0e-2cb6-4ac5-b8fd-47ce3bf454d4" Value="dismembered" Type="string" />
               <Parameter Name="Category" Guid="9e556f95-1934-4fcf-b91c-ae74e5fda93b" Value="WaterPredator" Type="Game.CreatureCategory" />
             </MemberComponentTemplate>
-            <MemberComponentTemplate Name="FishModel" Guid="68d2c191-e05e-4925-8a45-dea83bc08a26" InheritanceParent="210eecbb-7833-4a6b-b3d6-884e8baa6683" >
+            <MemberComponentTemplate Name="FishModel" Guid="68d2c191-e05e-4925-8a45-dea83bc08a26" InheritanceParent="210eecbb-7833-4a6b-b3d6-884e8baa6683">
               <Parameter Name="SwimAnimationSpeed" Guid="1d2628ac-628a-4e11-b5df-a15fbff3b47e" Value="1.4" Type="float" />
               <Parameter Name="TextureOverride" Guid="8b8b0e4c-2ab4-4c37-bdf0-5dff03e0ba9d" Value="Textures/Creatures/Shark_Bull" Type="string" />
               <Parameter Name="ModelName" Guid="aab01257-c841-42eb-bd5a-cd541269366f" Value="Models/Shark_Bull" Type="string" />

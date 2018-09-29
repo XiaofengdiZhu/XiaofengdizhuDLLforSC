@@ -1,16 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using Engine;
-using Engine.Serialization;
-using TemplatesDatabase;
+﻿using Engine;
 using GameEntitySystem;
+using System.Collections.Generic;
+using System.Linq;
+using TemplatesDatabase;
 
 namespace Game
 {
-    public class SubsystemDefenceTowerCoreBlockBehavior : SubsystemBlockBehavior,IUpdateable
+    public class SubsystemDefenceTowerCoreBlockBehavior : SubsystemBlockBehavior, IUpdateable
     {
         public SubsystemBodies m_subsystemBodies;
         public SubsystemProjectiles m_subsystemProjectiles;
@@ -18,9 +14,10 @@ namespace Game
         public SubsystemPlayers m_subsystemPlayers;
         public SubsystemSky m_subsystemSky;
         public DynamicArray<ComponentBody> m_componentBodies = new DynamicArray<ComponentBody>();
-        Random m_random = new Random();
+        private Random m_random = new Random();
         public Dictionary<Point3, DefenceTower> m_defenceTowers = new Dictionary<Point3, DefenceTower>();
         public bool m_attackPlayer = false;
+
         protected override void Load(ValuesDictionary valuesDictionary)
         {
             base.Load(valuesDictionary);
@@ -30,6 +27,7 @@ namespace Game
             m_subsystemPlayers = Project.FindSubsystem<SubsystemPlayers>(true);
             m_subsystemSky = Project.FindSubsystem<SubsystemSky>(true);
         }
+
         public override int[] HandledBlocks
         {
             get
@@ -40,10 +38,12 @@ namespace Game
                 };
             }
         }
+
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
             AddDefenceTower(x, y, z, Terrain.ExtractData(value));
         }
+
         public override void OnNeighborBlockChanged(int x, int y, int z, int neighborX, int neighborY, int neighborZ)
         {
             int type = Terrain.ExtractData(SubsystemTerrain.Terrain.GetCellValue(x, y, z));
@@ -52,10 +52,12 @@ namespace Game
                 SubsystemTerrain.DestroyCell(0, x, y, z, 0, false, false);
             }
         }
+
         public override void OnBlockGenerated(int value, int x, int y, int z, bool isLoaded)
         {
             AddDefenceTower(x, y, z, Terrain.ExtractData(value));
         }
+
         public override void OnBlockRemoved(int value, int newValue, int x, int y, int z)
         {
             if (Terrain.ExtractData(value) > 0)
@@ -67,6 +69,7 @@ namespace Game
                 }
             }
         }
+
         public void Update(float t)
         {
             double nowTime = m_subsystemTime.GameTime;
@@ -173,8 +176,8 @@ namespace Game
                     }
                 }
             }
-
         }
+
         public int UpdateOrder
         {
             get
@@ -182,6 +185,7 @@ namespace Game
                 return 10;
             }
         }
+
         public bool AddDefenceTower(int x, int y, int z, int type)
         {
             if (type > 0)
@@ -237,7 +241,8 @@ namespace Game
             }
             return false;
         }
-        public void FireItem(Vector3 towerPosition,ComponentBody body,int blockValue,float vx)
+
+        public void FireItem(Vector3 towerPosition, ComponentBody body, int blockValue, float vx)
         {
             Vector3 bodyPosition = body.Position;
             float[] distance = new float[5];
@@ -262,14 +267,16 @@ namespace Game
             float vy = sy * vx / sx + 5f * sx / vx;
             m_subsystemProjectiles.FireProjectile(blockValue, firePosition, Vector3.Normalize(new Vector3(bodyPosition.X, 0f, bodyPosition.Z) - new Vector3(firePosition.X, 0f, firePosition.Z)) * vx + Vector3.UnitY * vy, Vector3.Zero, null);
         }
+
         public class DefenceTower
         {
-            public DefenceTower(Point3 point3,int type0,double nowTime)
+            public DefenceTower(Point3 point3, int type0, double nowTime)
             {
                 position = point3;
                 type = type0;
                 nexeActTime = nowTime + DefenceTowerManager.m_towerPeriod[type];
             }
+
             public Point3 position;
             public int type;
             public double nexeActTime;

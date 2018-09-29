@@ -11,11 +11,12 @@ namespace Game
     {
         private Image[] m_pictures = new Image[6574];
         public Sound m_music;
-        Vector3 position = new Vector3(0, 2, 0);
-        Vector3 unitZ = Vector3.UnitZ;
-        Vector3 unitY = Vector3.UnitY;
+        private Vector3 position = new Vector3(0, 2, 0);
+        private Vector3 unitZ = Vector3.UnitZ;
+        private Vector3 unitY = Vector3.UnitY;
         public CommonMethod commonMethod = new CommonMethod();
-        Dictionary<Color, int> color2colorInt = new Dictionary<Color, int>();
+        private Dictionary<Color, int> color2colorInt = new Dictionary<Color, int>();
+
         public PlayBadAppleByPaintedClay()
         {
             Stream stream = Storage.OpenFile("app:BadAppleByPaintedClay\\BadApple.ogg", OpenFileMode.Read);
@@ -64,6 +65,7 @@ namespace Game
                 { new Color(0xff,0xff,0xff),15}
             };
         }
+
         public void Play(int m_pictureIndex)
         {
             for (int x = 0; x < 72; x++)

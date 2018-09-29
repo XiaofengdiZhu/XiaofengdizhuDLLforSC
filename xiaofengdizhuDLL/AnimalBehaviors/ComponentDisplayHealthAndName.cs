@@ -7,7 +7,7 @@ using TemplatesDatabase;
 
 namespace Game
 {
-    class ComponentDisplayHealthAndNameBehavior : Component, IDrawable
+    internal class ComponentDisplayHealthAndNameBehavior : Component, IDrawable
     {
         private PrimitivesRenderer3D m_primitivesRenderer = new PrimitivesRenderer3D();
 
@@ -26,6 +26,7 @@ namespace Game
                 return this.m_drawOrders;
             }
         }
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
@@ -35,6 +36,7 @@ namespace Game
             m_displayName = m_componentCreature.DisplayName;
             m_height = m_componentCreature.ComponentBody.BoxSize.Y;
         }
+
         public void Draw(Camera camera, int drawOrder)
         {
             if (!m_isPlayer)

@@ -96,7 +96,7 @@
     <Compile Include="Others\Bresenham3D.cs" />
     <Compile Include="Others\Maze.cs" />
     <Compile Include="Others\PlayGluttonousSnake.cs" />
-    <Compile Include="Abandoned\Portal\AutoCollectPickablesHoleBlock.cs" />
+    <Compile Include="Abandoned\Portal\PortalBlock.cs" />
     <Compile Include="Abandoned\Portal\SubsystemPortalBlockBehavior.cs" />
     <Compile Include="Abandoned\PlayTerraria\PlayTerrariaByOneLED.cs" />
     <Compile Include="Abandoned\PlayTerraria\SkillPlayTerrariaByOneLED.cs" />
@@ -125,6 +125,12 @@
   <ItemGroup>
     <Content Include="Content\BlocksData.txt" />
     <Content Include="Content\Database.xml" />
+    <Content Include="Content\Textures\Experience.png" />
+    <Content Include="Content\Textures\ExperienceOre.png" />
+    <Content Include="Content\Textures\Factorio\Express-transport-belt_sprite.png" />
+    <Content Include="Content\Textures\Factorio\Fast-transport-belt_sprite.png" />
+    <Content Include="Content\Textures\Factorio\Transport-belt_sprite.png" />
+    <Content Include="Content\Textures\Round32.png" />
     <Content Include="Content\Widgets\CombinedChestWidget.xml" />
     <Content Include="Content\Widgets\GameWidget.xml" />
     <Content Include="Content\Widgets\TargetStateWidget.xml" />

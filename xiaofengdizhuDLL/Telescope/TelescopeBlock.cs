@@ -1,5 +1,4 @@
-﻿using System;
-using Engine;
+﻿using Engine;
 using Engine.Graphics;
 
 namespace Game
@@ -10,6 +9,7 @@ namespace Game
         {
             BlocksManager.DrawFlatBlock(primitivesRenderer, value, size, ref matrix, null, color, false, environmentData);
         }
+
         public const int Index = 350;
     }
 }

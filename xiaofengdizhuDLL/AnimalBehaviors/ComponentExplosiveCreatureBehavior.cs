@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Game;
-using Engine;
+﻿using Engine;
 using GameEntitySystem;
 using TemplatesDatabase;
 
@@ -58,7 +55,8 @@ namespace Game
             }
         }
 
-        public ComponentExplosiveCreatureBehavior() : base() { }
-
+        public ComponentExplosiveCreatureBehavior() : base()
+        {
+        }
     }
 }

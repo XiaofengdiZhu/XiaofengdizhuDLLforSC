@@ -10,10 +10,11 @@ namespace Game
     {
         private Image[] m_pictures = new Image[6574];
         public Sound m_music;
-        Vector3 position = new Vector3(0, 2, 0);
-        Vector3 unitZ = Vector3.UnitZ;
-        Vector3 unitY = Vector3.UnitY;
+        private Vector3 position = new Vector3(0, 2, 0);
+        private Vector3 unitZ = Vector3.UnitZ;
+        private Vector3 unitY = Vector3.UnitY;
         public CommonMethod commonMethod = new CommonMethod();
+
         public PlayBadAppleBy4LED()
         {
             Stream stream = Storage.OpenFile("app:BadAppleBy4LED\\BadApple.ogg", OpenFileMode.Read);
@@ -43,6 +44,7 @@ namespace Game
                 m_pictures[i] = Image.Load("app:BadAppleBy4LED\\BadApple_" + (i + 1).ToString() + ".png");
             }
         }
+
         public void Play(int m_pictureIndex)
         {
             for (int x = 0; x < 72; x++)
@@ -59,7 +61,6 @@ namespace Game
                     }
                     catch
                     {
-
                     }
                 }
             }

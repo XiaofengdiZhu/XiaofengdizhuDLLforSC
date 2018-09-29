@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Engine;
+using GameEntitySystem;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Engine;
-using GameEntitySystem;
 using TemplatesDatabase;
 
 namespace Game
@@ -10,6 +10,7 @@ namespace Game
     public abstract class ComponentInventoryWithPage : Component, IInventory
     {
         public int PageIndex { get; set; }
+
         public static int FindAcquireSlotForItem(IInventory inventory, int value)
         {
             for (int i = 0; i < inventory.SlotsCount; i++)
@@ -28,6 +29,7 @@ namespace Game
             }
             return -1;
         }
+
         public static int AcquireItems(IInventory inventory, int value, int count)
         {
             while (count > 0)
@@ -42,6 +44,7 @@ namespace Game
             }
             return count;
         }
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             int value = valuesDictionary.GetValue<int>("SlotsCount");
@@ -62,6 +65,7 @@ namespace Game
                 }
             }
         }
+
         protected override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
         {
             ValuesDictionary valuesDictionary2 = new ValuesDictionary();
@@ -79,6 +83,7 @@ namespace Game
                 }
             }
         }
+
         public Project Project
         {
             get
@@ -86,6 +91,7 @@ namespace Game
                 return base.Project;
             }
         }
+
         public virtual int SlotsCount
         {
             get
@@ -93,6 +99,7 @@ namespace Game
                 return this.m_slots.Count;
             }
         }
+
         public virtual int ActiveSlotIndex
         {
             get
@@ -103,6 +110,7 @@ namespace Game
             {
             }
         }
+
         public virtual int GetSlotValue(int slotIndex)
         {
             if (slotIndex < 0 || slotIndex >= this.m_slots.Count)
@@ -115,6 +123,7 @@ namespace Game
             }
             return this.m_slots[slotIndex].Value;
         }
+
         public virtual int GetSlotCount(int slotIndex)
         {
             if (slotIndex >= 0 && slotIndex < this.m_slots.Count)
@@ -123,6 +132,7 @@ namespace Game
             }
             return 0;
         }
+
         //两倍容量
         public virtual int GetSlotCapacity(int slotIndex, int value)
         {
@@ -132,6 +142,7 @@ namespace Game
             }
             return 0;
         }
+
         public virtual int GetSlotProcessCapacity(int slotIndex, int value)
         {
             int slotCount = this.GetSlotCount(slotIndex);
@@ -150,6 +161,7 @@ namespace Game
             }
             return 0;
         }
+
         public virtual void AddSlotItems(int slotIndex, int value, int count)
         {
             if (count <= 0 || slotIndex < 0 || slotIndex >= this.m_slots.Count)
@@ -165,6 +177,7 @@ namespace Game
             }
             throw new InvalidOperationException("Cannot add slot items.");
         }
+
         public virtual void ProcessSlotItems(int slotIndex, int value, int count, int processCount, out int processedValue, out int processedCount)
         {
             int slotCount = this.GetSlotCount(slotIndex);
@@ -184,6 +197,7 @@ namespace Game
             processedValue = value;
             processedCount = count;
         }
+
         public virtual int RemoveSlotItems(int slotIndex, int count)
         {
             if (slotIndex >= 0 && slotIndex < this.m_slots.Count)
@@ -195,6 +209,7 @@ namespace Game
             }
             return 0;
         }
+
         public void DropAllItems(Vector3 position)
         {
             SubsystemPickables subsystemPickables = base.Project.FindSubsystem<SubsystemPickables>(true);
@@ -210,8 +225,10 @@ namespace Game
                 }
             }
         }
+
         protected List<ComponentInventoryWithPage.Slot> m_slots = new List<ComponentInventoryWithPage.Slot>();
         public Random m_random = new Random();
+
         protected class Slot
         {
             public int Value;

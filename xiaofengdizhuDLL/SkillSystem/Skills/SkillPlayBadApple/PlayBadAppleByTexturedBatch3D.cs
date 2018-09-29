@@ -1,13 +1,9 @@
 ﻿using Engine;
 using Engine.Audio;
-using Engine.Content;
 using Engine.Graphics;
 using Engine.Media;
 using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -15,42 +11,44 @@ namespace Game
     {
         private Texture2D[] m_pictures = new Texture2D[6574];
         public Sound m_music;
-        Vector3 position = new Vector3(0, 30, 36);
-        Vector3 unitZ = Vector3.UnitZ;
-        Vector3 unitY = Vector3.UnitY;
+        private Vector3 position = new Vector3(0, 30, 36);
+        private Vector3 unitZ = Vector3.UnitZ;
+        private Vector3 unitY = Vector3.UnitY;
+
         public PlayBadAppleByTexturedBatch3D()
         {
             try
             {
                 Stream stream = Storage.OpenFile("app:BadAppleByTexturedBatch3D\\BadApple.ogg", OpenFileMode.Read);
-            BinaryReader br = new BinaryReader(stream);
-            SoundBuffer soundBuffer;
-            bool flag = br.ReadBoolean();
-            int bytesCount = br.ReadInt32();
-            if (flag)
-            {
-                MemoryStream memoryStream = new MemoryStream();
-                using (StreamingSource streamingSource = Ogg.Stream(stream, false))
+                BinaryReader br = new BinaryReader(stream);
+                SoundBuffer soundBuffer;
+                bool flag = br.ReadBoolean();
+                int bytesCount = br.ReadInt32();
+                if (flag)
                 {
-                    streamingSource.CopyTo(memoryStream);
-                    if (memoryStream.Length > 2147483647L)
+                    MemoryStream memoryStream = new MemoryStream();
+                    using (StreamingSource streamingSource = Ogg.Stream(stream, false))
                     {
-                        throw new InvalidOperationException("Audio data too long.");
+                        streamingSource.CopyTo(memoryStream);
+                        if (memoryStream.Length > 2147483647L)
+                        {
+                            throw new InvalidOperationException("Audio data too long.");
+                        }
+                        memoryStream.Position = 0L;
+                        soundBuffer = new SoundBuffer(memoryStream, (int)memoryStream.Length, 1, 44100);
                     }
-                    memoryStream.Position = 0L;
-                    soundBuffer = new SoundBuffer(memoryStream, (int)memoryStream.Length, 1, 44100);
                 }
-            }
-            else soundBuffer = new SoundBuffer(stream, bytesCount, 1, 44100);
-            m_music = new Sound(soundBuffer, 1, AudioManager.ToEnginePitch(0), 0, true, false);
+                else soundBuffer = new SoundBuffer(stream, bytesCount, 1, 44100);
+                m_music = new Sound(soundBuffer, 1, AudioManager.ToEnginePitch(0), 0, true, false);
 
-            for (int i = 0; i < 6574; i++)
-            {
-                m_pictures[i] = Texture2D.Load("app:BadAppleByTexturedBatch3D\\BadApple_" + (i + 1).ToString() + ".png");
-            }
+                for (int i = 0; i < 6574; i++)
+                {
+                    m_pictures[i] = Texture2D.Load("app:BadAppleByTexturedBatch3D\\BadApple_" + (i + 1).ToString() + ".png");
+                }
             }
             catch (Exception e) { Log.Information(e.ToString()); }
         }
+
         public void Play(int m_pictureIndex, Camera camera, PrimitivesRenderer3D primitivesRenderer3d)
         {
             TexturedBatch3D batch = primitivesRenderer3d.TexturedBatch(m_pictures[m_pictureIndex], true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.PointClamp);

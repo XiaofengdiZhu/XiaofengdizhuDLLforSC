@@ -1,9 +1,6 @@
 ﻿using Engine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -19,6 +16,7 @@ namespace Game
         private Color[,] m_layerOutput;
         public bool m_stop = false;
         private CommonMethod commonMethod = new CommonMethod();
+
         public enum SnakeType
         {
             None,
@@ -28,7 +26,8 @@ namespace Game
             Player3,
             Computer
         }
-        Color[] m_snakeBodyColor = new Color[]{
+
+        private Color[] m_snakeBodyColor = new Color[]{
             new Color(0,0,0),
             new Color(255,255,255),
             new Color(255,255,255),
@@ -36,7 +35,8 @@ namespace Game
             new Color(255,255,255),
             new Color(255,0,0)
         };
-        Color[] m_snakeHeadColor = new Color[]{
+
+        private Color[] m_snakeHeadColor = new Color[]{
             new Color(0,0,0),
             new Color(160,160,160),
             new Color(160,160,160),
@@ -44,67 +44,82 @@ namespace Game
             new Color(160,160,160),
             new Color(255,128,128)
         };
+
         public enum SnakeStatus
         {
             Dead,
             Living
         }
+
         public enum TerrainType
         {
             None,
             Wall,
             Fruit
         }
+
         public class Point
         {
             public int X;
             public int Y;
+
             public Point(int x, int y)
             {
                 X = x;
                 Y = y;
             }
+
             public static readonly Point Zero = new Point(0, 0);
             public static readonly Point Up = new Point(0, -1);
             public static readonly Point Down = new Point(0, 1);
             public static readonly Point Right = new Point(1, 0);
             public static readonly Point Left = new Point(-1, 0);
+
             public static Point operator +(Point p1, Point p2)
             {
                 return new Point(p1.X + p2.X, p1.Y + p2.Y);
             }
+
             public static Point operator -(Point p1, Point p2)
             {
                 return new Point(p1.X - p2.X, p1.Y - p2.Y);
             }
+
             public static Point operator -(Point p1)
             {
                 return new Point(-p1.X, -p1.Y);
             }
+
             public static bool operator ==(Point p1, Point p2)
             {
                 return (p1.X == p2.X && p1.Y == p2.Y);
             }
+
             public override bool Equals(object obj)
             {
                 return obj is Point && Equals((Point)obj);
             }
+
             public bool Equals(Point p1)
             {
                 return X == p1.X && Y == p1.Y;
             }
+
             public static bool operator !=(Point p1, Point p2)
             {
                 return (p1.X != p2.X || p1.Y != p2.Y);
             }
+
             public override string ToString()
             {
                 return X + "," + Y;
             }
+
             public override int GetHashCode()
             {
                 return this.X + this.Y;
             }
+
             public Point TurnRight()
             {
                 if (this == Up)
@@ -125,6 +140,7 @@ namespace Game
                 }
                 else return Zero;
             }
+
             public Point TurnLeft()
             {
                 if (this == Up)
@@ -146,6 +162,7 @@ namespace Game
                 else return Zero;
             }
         }
+
         public class Snake
         {
             public int Index;
@@ -155,11 +172,13 @@ namespace Game
             public Point LastDirection;
             public Point Head;
             public List<Point> Body;
+
             public Snake()
             {
                 Body = new List<Point>();
             }
         }
+
         public PlayGluttonousSnake(int width, int height)
         {
             m_width = width;
@@ -171,6 +190,7 @@ namespace Game
             m_snakes = new List<Snake>();
             m_snakes.Add(new Snake() { Index = 0, Type = SnakeType.None, Status = SnakeStatus.Dead });
         }
+
         public int Width
         {
             get
@@ -182,6 +202,7 @@ namespace Game
                 m_width = value;
             }
         }
+
         public int Height
         {
             get
@@ -193,6 +214,7 @@ namespace Game
                 m_height = value;
             }
         }
+
         public Color[,] OutputLayer
         {
             get
@@ -200,6 +222,7 @@ namespace Game
                 return m_layerOutput;
             }
         }
+
         public List<Snake> Snakes
         {
             get
@@ -207,14 +230,17 @@ namespace Game
                 return m_snakes;
             }
         }
+
         public bool isPointInRange(Point point)
         {
             return point.X >= 0 && point.X < m_width && point.Y >= 0 && point.Y < m_height;
         }
+
         public bool isPointInRange(int x, int y)
         {
             return x >= 0 && x < m_width && y >= 0 && y < m_height;
         }
+
         //每帧执行
         public void UpdatePlayerSnakesDirection()
         {
@@ -230,12 +256,15 @@ namespace Game
                     case SnakeType.Player0:
                         playerIndex = 0;
                         break;
+
                     case SnakeType.Player1:
                         playerIndex = 1;
                         break;
+
                     case SnakeType.Player2:
                         playerIndex = 2;
                         break;
+
                     case SnakeType.Player3:
                         playerIndex = 3;
                         break;
@@ -273,8 +302,8 @@ namespace Game
                     }
                 }
             }
-
         }
+
         //每次刷新前执行
         public void UpdateComputerSnakesDirection()
         {
@@ -304,7 +333,7 @@ namespace Game
                     )
                 )
                 {
-                    if (triedTimes ==2)
+                    if (triedTimes == 2)
                     {
                         direction = snake.LastDirection;
                         nextPosition = snake.Head + direction;
@@ -326,17 +355,18 @@ namespace Game
                     else if (triedTimes == 1)
                     {
                         triedTimes++;
-                        if(direction== snake.LastDirection.TurnRight())
+                        if (direction == snake.LastDirection.TurnRight())
                         {
                             direction = snake.LastDirection.TurnLeft();
-                        }else if(direction == snake.LastDirection.TurnLeft())
+                        }
+                        else if (direction == snake.LastDirection.TurnLeft())
                         {
                             direction = snake.LastDirection.TurnRight();
                         }
                         nextPosition = snake.Head + direction;
                     }
                 }
-                if (direction == Point.Zero|| direction == -(snake.LastDirection))
+                if (direction == Point.Zero || direction == -(snake.LastDirection))
                 {
                     snake.Direction = snake.LastDirection;
                 }
@@ -346,6 +376,7 @@ namespace Game
                 }
             }
         }
+
         public void MoveSnakes()
         {
             List<Snake> deadSnakes = new List<Snake>();
@@ -392,6 +423,7 @@ namespace Game
                 AddSnake(snake.Type);
             }
         }
+
         public void UpdateLayerSnakeAndLayerSnakeHead()
         {
             m_layerSnake = new int[m_width, m_height];
@@ -407,6 +439,7 @@ namespace Game
                 m_layerSnakeHead[snake.Head.X, snake.Head.Y] = (snake.Index > 0);
             }
         }
+
         public void UpdateLayerOutput()
         {
             m_layerOutput = new Color[m_width, m_height];
@@ -428,6 +461,7 @@ namespace Game
                 }
             }
         }
+
         public void Update()
         {
             if (m_stop) return;
@@ -437,6 +471,7 @@ namespace Game
             AddFruitRandomly();
             UpdateLayerOutput();
         }
+
         public Point FindBlankRandomly(bool allowFruit)
         {
             for (int triedTimes = 0; triedTimes < 500; triedTimes++)
@@ -450,6 +485,7 @@ namespace Game
             }
             return Point.Zero;
         }
+
         public void AddSnake(SnakeType type)
         {
             Point position = Point.Zero;
@@ -485,19 +521,23 @@ namespace Game
             snake.Body.Add(position - snake.Direction);
             m_snakes.Add(snake);
         }
+
         public void AddFruit(int x, int y)
         {
             m_layerTerrain[x, y] = TerrainType.Fruit;
         }
+
         public void AddFruit(Point position)
         {
             m_layerTerrain[position.X, position.Y] = TerrainType.Fruit;
         }
+
         public void AddFruitRandomly()
         {
             Point position = FindBlankRandomly(false);
             if (position != Point.Zero) m_layerTerrain[position.X, position.Y] = TerrainType.Fruit;
         }
+
         public Point FindFruitDirection(Point position, Point originDirection, int snakeIndex)
         {
             Dictionary<Point, int> close = new Dictionary<Point, int>() { { position, 0 } };

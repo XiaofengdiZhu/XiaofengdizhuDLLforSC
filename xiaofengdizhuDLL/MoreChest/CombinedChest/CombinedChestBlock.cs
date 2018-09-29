@@ -1,5 +1,4 @@
-﻿using System;
-using Engine;
+﻿using Engine;
 
 namespace Game
 {
@@ -65,7 +64,7 @@ namespace Game
                 return 25;
             }
         }
-        
+
         public override BlockPlacementData GetPlacementValue(SubsystemTerrain subsystemTerrain, ComponentMiner componentMiner, int value, TerrainRaycastResult raycastResult)
         {
             Vector3 forward = Matrix.CreateFromQuaternion(componentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation).Forward;
@@ -96,7 +95,7 @@ namespace Game
                 CellFace = raycastResult.CellFace
             };
         }
-        
+
         public const int Index = 320;
     }
 }

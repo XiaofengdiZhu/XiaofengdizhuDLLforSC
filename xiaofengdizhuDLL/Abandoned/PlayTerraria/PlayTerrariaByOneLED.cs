@@ -1,8 +1,4 @@
-﻿using Engine;
-using Engine.Audio;
-using Engine.Media;
-using System;
-using System.IO;
+﻿using Engine.Media;
 
 namespace Game
 {
@@ -11,6 +7,7 @@ namespace Game
         private Image[] m_pictures = new Image[79];
         public GlowPoint[] m_glowPoints;
         public CommonMethod commonMethod = new CommonMethod();
+
         public PlayTerrariaByOneLED()
         {
             for (int i = 0; i < 79; i++)
@@ -18,6 +15,7 @@ namespace Game
                 m_pictures[i] = Image.Load("app:TerrariaByOneLED\\Terraria_" + (i + 1).ToString() + ".png");
             }
         }
+
         public void Play(int m_pictureIndex)
         {
             for (int x = 0; x < 320; x++)
@@ -30,7 +28,6 @@ namespace Game
                     }
                     catch
                     {
-
                     }
                 }
             }

@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Game;
-using Engine;
+﻿using Engine;
 using GameEntitySystem;
-using TemplatesDatabase;
 using System;
-using System.Globalization;
+using TemplatesDatabase;
 
 namespace Game
 {
-    class ComponentBreedBehavior : ComponentBehavior, IUpdateable
+    internal class ComponentBreedBehavior : ComponentBehavior, IUpdateable
     {
         private SubsystemGameInfo m_subsystemGameInfo;
         private SubsystemTime m_subsystemTime;
@@ -28,6 +24,7 @@ namespace Game
         public double m_breedCheckTime;
         public double m_breedPeriodTime;
         public float m_breedPeriodTimeRandomOffsetRange;
+
         public int UpdateOrder
         {
             get
@@ -35,6 +32,7 @@ namespace Game
                 return 0;
             }
         }
+
         public override float ImportanceLevel
         {
             get
@@ -42,6 +40,7 @@ namespace Game
                 return 0;
             }
         }
+
         protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
@@ -55,26 +54,28 @@ namespace Game
             m_guid = Entity.ValuesDictionary.DatabaseObject.Guid;
             m_isBreeded = true;
             m_breedCheckTime = 0;
-            m_breedPeriodTime = valuesDictionary.GetValue<double>("BreedPeriodTime")/2;
-            m_breedPeriodTimeRandomOffsetRange = valuesDictionary.GetValue<float>("BreedPeriodTimeRandomOffsetRange")/2f;
+            m_breedPeriodTime = valuesDictionary.GetValue<double>("BreedPeriodTime") / 2;
+            m_breedPeriodTimeRandomOffsetRange = valuesDictionary.GetValue<float>("BreedPeriodTimeRandomOffsetRange") / 2f;
             m_lastBreedTime = valuesDictionary.GetValue<double>("LastBreedTime");
         }
+
         protected override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
         {
             base.Save(valuesDictionary, entityToIdMap);
             valuesDictionary.SetValue<double>("lastBreedTime", m_lastBreedTime);
         }
+
         public void Update(float dt)
         {
-            if (m_subsystemTime.GameTime >= m_nextUpdateTime && m_componentHealth.Health>0)
+            if (m_subsystemTime.GameTime >= m_nextUpdateTime && m_componentHealth.Health > 0)
             {
                 if (m_subsystemGameInfo.TotalElapsedGameTime > m_breedCheckTime)
                 {
-                    if(m_lastBreedTime == 0)
+                    if (m_lastBreedTime == 0)
                     {
                         m_lastBreedTime = m_subsystemGameInfo.TotalElapsedGameTime;
                     }
-                    if(m_breedCheckTime == 0)
+                    if (m_breedCheckTime == 0)
                     {
                         m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + (double)m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
                         return;
@@ -89,7 +90,7 @@ namespace Game
                         m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + (double)m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
                         m_nearbyBodies.Clear();
                         m_subsystemBodies.FindBodiesAroundPoint(m_componentCreature.ComponentBody.Position.XZ, 16f, m_nearbyBodies);
-                        if(m_nearbyBodies.Count > 30)
+                        if (m_nearbyBodies.Count > 30)
                         {
                             return;
                         }
@@ -100,7 +101,7 @@ namespace Game
                                 m_nearbyBodies.Remove(body);
                             }
                         }
-                        if(m_nearbyBodies.Count > 1)
+                        if (m_nearbyBodies.Count > 1)
                         {
                             m_componenttPilot.Stop();
                             Entity entity = DatabaseManager.CreateEntity(base.Project, Entity.ValuesDictionary.DatabaseObject.Name, true);
@@ -125,6 +126,8 @@ namespace Game
             }
         }
 
-        public ComponentBreedBehavior() : base() { }
+        public ComponentBreedBehavior() : base()
+        {
+        }
     }
 }
