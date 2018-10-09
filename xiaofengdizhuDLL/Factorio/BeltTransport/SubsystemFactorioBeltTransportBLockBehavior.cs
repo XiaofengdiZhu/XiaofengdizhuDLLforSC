@@ -384,7 +384,7 @@ namespace Game
                                         if (FTB.cornerType.HasValue && process < 4)
                                         {
                                             matrix.Translation += m_cornerItemOffset[FTB.cornerType.Value, side, process];
-                                            if (!item.stop)
+                                            if (!item.stop && !block.justAddedItem.Contains(side * 5 + process))
                                             {
                                                 matrix.Translation += (m_cornerItemOffset[FTB.cornerType.Value, side, process + 1] - m_cornerItemOffset[FTB.cornerType.Value, side, process]) * (float)(m_drawedTime[2] % m_colorDrawScale[FTB.color]) / (float)m_colorDrawScale[FTB.color];
                                             }
@@ -406,12 +406,13 @@ namespace Game
                                             {
                                                 matrix.M42 += 0.25f;
                                             }
-                                            matrix.Translation += ((float)process * 0.25f - 0.5f + (item.stop ? 0 : ((float)(m_drawedTime[2] % m_colorDrawScale[FTB.color]) * 0.25f / (float)m_colorDrawScale[FTB.color]))) * new Vector3(direction) + (side == 1 ? 0.15f : (-0.15f)) * new Vector3(FactorioTransportBeltBlock.RotationToDirection(TurnRight(FTB.rotation)));
+                                            Vector3 v3Direction = new Vector3(direction);
+                                            matrix.Translation += ((float)process * 0.25f - 0.5f + (item.stop|| block.justAddedItem.Contains(side * 5 + process) ? 0 : ((float)(m_drawedTime[2] % m_colorDrawScale[FTB.color]) * 0.25f / (float)m_colorDrawScale[FTB.color]))) * v3Direction + (side == 1 ? 0.15f : (-0.15f)) * new Vector3(FactorioTransportBeltBlock.RotationToDirection(TurnRight(FTB.rotation)));
                                         }
                                         itemBlock.DrawBlock(this.m_primitivesRenderer, item.value, Color.White, 0.18f, ref matrix, this.m_drawBlockEnvironmentData);
-                                        item.stop = false;
                                         if (m_drawedTime[FTB.color] % 4 == 3 && m_drawedTime[3] == 3)
                                         {
+                                            item.stop = false;
                                             if (process >= 3)
                                             {
                                                 Point3 frontPosition = FTB.position + direction;
@@ -491,20 +492,26 @@ namespace Game
                                                         block.items[side, process].stop = true;
                                                     }
                                                 }
-                                                else if (process == 3 && block.items[side, process + 1].value == 0 && !block.justAddedItem.Contains(side * 5 + process))
+                                                else if (process == 3 && block.items[side, process + 1].value == 0)
                                                 {
-                                                    block.items[side, 4] = item;
-                                                    block.items[side, process] = new Item();
+                                                    if(!block.justAddedItem.Contains(side * 5 + process))
+                                                    {
+                                                        block.items[side, 4] = new Item(item.value);
+                                                        block.items[side, process] = new Item();
+                                                    }
                                                 }
                                                 else
                                                 {
                                                     block.items[side, process].stop = true;
                                                 }
                                             }
-                                            else if (block.items[side, process + 1].value == 0 && !block.justAddedItem.Contains(side * 5 + process))
+                                            else if (block.items[side, process + 1].value == 0)
                                             {
-                                                block.items[side, process + 1] = item;
-                                                block.items[side, process] = new Item();
+                                                if (!block.justAddedItem.Contains(side * 5 + process))
+                                                {
+                                                    block.items[side, process + 1] = new Item(item.value);
+                                                    block.items[side, process] = new Item();
+                                                }
                                             }
                                             else
                                             {
