@@ -1,0 +1,64 @@
+<FlyShark>
+  <EntityTemplate Name="Shark_Bull_Fly" Guid="9096e529-aa57-40c5-a47a-49f74c87cdbf" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
+	<MemberComponentTemplate Name="Locomotion" Guid="978eb3b4-dc2e-4473-856f-3661a07ce0cb">
+	  <Parameter Name="TurnSpeed" Guid="1767e2f5-11cd-4ce5-9e75-fa6b2d416c90" Value="8" Type="float" />
+	  <Parameter Name="SwimSpeed" Guid="1992730e-5b45-49d3-af22-b82185193644" Value="4" Type="float" />
+	  <Parameter Name="JumpSpeed" Guid="86ddcc48-ed72-4b03-be4a-2acc0f079618" Value="3" Type="float" />
+	  <Parameter Name="FlySpeed" Guid="9aeccb92-d140-4c1d-8660-575b1708d777" Value="8" Type="float" />
+	  <Parameter Name="WalkSpeedWhenTurning" Guid="c223753f-2211-4c17-b7e1-7b132a0e7717" Value="0" Type="float" />
+	  <Parameter Name="WalkSpeed" Guid="f104f62d-4b82-46e2-8ab3-474c3d37cef2" Value="0.7" Type="float" />
+	  <Parameter Name="LadderSpeed" Guid="fffa129b-2195-48dc-956b-554f3ecfb160" Value="0" Type="float" />
+	  <Parameter Name="InAirWalkFactor" Guid="05b12832-3901-4504-86cb-18da13a5cc47" Value="1" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Health" Guid="2bc2b73e-e59d-41f6-b089-63ebd39b1540">
+	  <Parameter Name="AttackResilience" Guid="e5af580d-aaf6-4f06-aad8-7d4633c7d2fe" Value="40" Type="float" />
+	  <Parameter Name="BreathingMode" Guid="4216fe30-0e15-4e6c-9cca-471b449b7c77" Value="Air" Type="Game.BreathingMode" />
+	  <Parameter Name="FireResilience" Guid="c804dcf1-5aed-4565-a4b1-447de592da56" Value="10" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Miner" Guid="4a3ae6b6-84a0-43f5-b883-d6b2e392d564" InheritanceParent="8acca888-ba39-464f-bcf5-6ae15e448c62">
+	  <Parameter Name="AttackPower" Guid="f2ec184c-3398-473a-9b3b-8df9f7baaa58" Value="3" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Creature" Guid="e01fb855-e990-427f-b4f9-0c73c6ca5513">
+	  <Parameter Name="Description" Guid="9e67a1ab-2146-42b1-b975-d6ef2db80e61" Value="A small, aggressive saltwater fly shark. Will chase anything that comes close in the water. Is not very strong, but will kill smaller animals easily." Type="string" />
+	  <Parameter Name="DisplayName" Guid="bbb6251f-f71f-452b-a983-3b682603da12" Value="Fly Bull Shark" Type="string" />
+	  <Parameter Name="KillVerbs" Guid="197e0a0e-2cb6-4ac5-b8fd-47ce3bf454d4" Value="dismembered" Type="string" />
+	  <Parameter Name="Category" Guid="9e556f95-1934-4fcf-b91c-ae74e5fda93b" Value="WaterPredator" Type="Game.CreatureCategory" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="FishModel" Guid="68d2c191-e05e-4925-8a45-dea83bc08a26" InheritanceParent="210eecbb-7833-4a6b-b3d6-884e8baa6683">
+	  <Parameter Name="SwimAnimationSpeed" Guid="1d2628ac-628a-4e11-b5df-a15fbff3b47e" Value="1.4" Type="float" />
+	  <Parameter Name="TextureOverride" Guid="8b8b0e4c-2ab4-4c37-bdf0-5dff03e0ba9d" Value="Textures/Creatures/Shark_Bull" Type="string" />
+	  <Parameter Name="ModelName" Guid="aab01257-c841-42eb-bd5a-cd541269366f" Value="Models/Shark_Bull" Type="string" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Body" Guid="aad4c52a-1b0e-4ec4-88ae-1f83c86084a1">
+	  <Parameter Name="Mass" Guid="a6a5ffdd-9f8a-4440-85ce-ad8055711985" Value="90" Type="float" />
+	  <Parameter Name="BoxSize" Guid="d0190212-af32-4742-bbeb-0aa427f9c432" Value="0.8,0.4,0.8" Type="Vector3" />
+	  <Parameter Name="Density" Guid="cfa4b8b5-e8c6-47d9-9600-b9a217ddd599" Value="0.99" Type="float" />
+	  <Parameter Name="MaxSmoothRiseHeight" Guid="65c71666-f0b8-458b-8ea3-9c3f5c57653b" Value="0" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="OnFire" Guid="de7c7776-d2e0-4dc5-ada4-cf7b0e8a2947" />
+	<MemberComponentTemplate Name="EatPickableBehavior" Guid="3d6c7c18-cb4e-4d25-a296-4468fa1a509d">
+	  <ParameterSet Name="FoodFactors" Guid="e6638dbf-66cb-49c5-a90d-4bffcf55b7af">
+		<Parameter Name="Fish" Guid="2c516b66-4d98-4293-ad2c-5e67cc4675c4" Value="1" Type="float" />
+		<Parameter Name="Meat" Guid="466621e3-04c9-4237-9c99-a2774b3cd675" Value="1" Type="float" />
+	  </ParameterSet>
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="ChaseBehavior" Guid="4832a2db-34dc-4cb8-b5f6-d51539efeaf2" InheritanceParent="31894441-d90a-4549-9264-db9dbe20e234">
+	  <Parameter Name="NightChaseRange" Guid="6bb5ea92-1484-4c88-a58b-60209f7d5e57" Value="24" Type="float" />
+	  <Parameter Name="NightChaseTime" Guid="d64afba1-ee3d-4fc4-a04a-cd55d9e790fa" Value="120" Type="float" />
+	  <Parameter Name="DayChaseRange" Guid="e59b583d-a8a7-49b0-ab41-bd5fd722a17b" Value="24" Type="float" />
+	  <Parameter Name="DayChaseTime" Guid="e64afba1-ee3d-4fc4-a04a-cd55d9e790fa" Value="120" Type="float" />
+	  <Parameter Name="ChaseNonPlayerProbability" Guid="f23d7309-ca76-4b84-82db-cdfde42fc1ad" Value="1" Type="float" />
+	  <Parameter Name="AutoChaseMask" Guid="04976a27-e7d0-493d-a2e0-473cdf767f1e" Value="LandPredator, LandOther" Type="Game.CreatureCategory" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="StareBehavior" Guid="65ae7653-2b69-4d56-9916-997791fc3750" InheritanceParent="e4fdbb74-183f-4075-9d92-c67f58d700b9">
+	  <Parameter Name="StareRange" Guid="83e02773-cf2e-4aff-8297-4e3ba1fa6361" Value="8" Type="float" />
+	</MemberComponentTemplate>
+	<ParameterSet Name="CreatureEggData" Guid="43e01fbc-14ff-4ae8-ad64-b9439656c9e5">
+	  <Parameter Name="SwapUV" Guid="650670d3-3a02-4704-ac6c-19d7700bb76e" Value="True" Type="bool" />
+	  <Parameter Name="EggTypeIndex" Guid="80f8ba3a-a273-47d5-aac9-6346e3fc2f71" Value="50" Type="int" />
+	  <Parameter Name="Color" Guid="92c3c708-7aae-4fd6-936a-f792bb782171" Value="115,144,123" Type="Color" />
+	  <Parameter Name="TextureSlot" Guid="c0f41fe6-1a87-4191-a75c-649cfaffe95f" Value="163" Type="int" />
+	  <Parameter Name="DisplayName" Guid="ed93a813-f37d-4f79-9585-1ae73888f869" Value="Fly Bull Shark Spawner" Type="string" />
+	</ParameterSet>
+  </EntityTemplate>
+</FlyShark>

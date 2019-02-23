@@ -1,0 +1,114 @@
+<SaddledZebra>
+<Folder Name="Animals" Guid="66a49cbb-cb12-4479-9b40-fbadd9db3425">
+  <EntityTemplate Name="Zebra_Saddled" Guid="23c6487d-6f75-4ea0-a31c-fb95285fd453" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
+	<MemberComponentTemplate Name="DiggerBehavior" Guid="8545c864-4374-45e6-bdbc-25326a6b28a7" InheritanceParent="d138cc15-930c-4805-8cfc-b91bfa7f767a" />
+	<MemberComponentTemplate Name="Creature" Guid="ad1bb3a6-39d8-4c0d-a2b6-8725718519bd">
+	  <Parameter Name="Category" Guid="886f65b2-3b40-4e16-a1a9-7da20b1b0c79" Value="LandOther" Type="Game.CreatureCategory" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Miner" Guid="ec2f0a68-5b99-4146-97a8-217563e16980" InheritanceParent="8acca888-ba39-464f-bcf5-6ae15e448c62">
+	  <Parameter Name="AttackPower" Guid="3fdd2a11-7960-4df2-8544-4fad665985b6" Value="1" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="FlightlessBirdModel" Guid="d1eff7b9-064b-4b57-9eaa-79f728861c01"  InheritanceParent="f0e56b9e-befc-453b-ba44-064fcd341bdc">
+	  <Parameter Name="WalkAnimationSpeed" Guid="077a1b33-0ff8-4991-90f2-c187fa70eae1" Value="0.6" Type="float" />
+	  <Parameter Name="WalkLegsAngle" Guid="60697866-e894-482a-93a1-6fc3f2287ec4" Value="0.42" Type="float" />
+	  <Parameter Name="TextureOverride" Guid="6e7cf974-bc0c-4a19-a4d1-8f537a4dca8e" Value="Textures/Creatures/Ostrich" Type="string" />
+	  <Parameter Name="WalkBobHeight" Guid="9c808439-339b-4a52-8731-cfa4386b8e47" Value="0.1" Type="float" />
+	  <Parameter Name="ModelName" Guid="fbd80e22-746f-43b7-a91f-d11d971408b4" Value="Models/Ostrich" Type="string" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Body" Guid="6350d378-1cd0-4fbd-bdf8-26bb158c7b4d">
+	  <Parameter Name="BoxSize" Guid="f495e944-91e7-4399-87f5-13f696bb5992" Value="0.6,1.85,0.6" Type="Vector3" />
+	</MemberComponentTemplate>
+	<ParameterSet Name="CreatureEggData" Guid="310ff557-775f-4c7c-a88a-26655369f00b">
+	  <Parameter Name="SwapUV" Guid="2707a585-8221-4dc6-a208-e83e1fbafc2f" Value="False" Type="bool" />
+	  <Parameter Name="DisplayName" Guid="73d98d93-767b-4c6f-8031-711718eb93f4" Value="Digger Spawner" Type="string" />
+	  <Parameter Name="EggTypeIndex" Guid="85f5bc3f-efd3-4fad-a6f7-5f51ef62df13" Value="47" Type="int" />
+	  <Parameter Name="TextureSlot" Guid="bf7ca042-8989-453c-a481-14c61fef76b7" Value="163" Type="int" />
+	  <Parameter Name="Color" Guid="f0af559a-7199-48bf-bdff-dba6d0edba91" Value="255,255,255" Type="Color" />
+	</ParameterSet>
+  </EntityTemplate>
+  <EntityTemplate Name="Zebra_Saddled_Saddled" Guid="33c6487d-6f75-4ea0-a31c-fb95285fd453" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
+	<MemberComponentTemplate Name="ShooterBehavior" Guid="9545c864-4374-45e6-bdbc-25326a6b28a7" InheritanceParent="e138cc15-930c-4805-8cfc-b91bfa7f767a" />
+	<MemberComponentTemplate Name="LookAroundBehavior" Guid="a5ad6695-ee42-404c-9859-2c404b6af601" InheritanceParent="faf5cd07-6752-4720-8761-a666831281e0" />
+	<MemberComponentTemplate Name="Miner" Guid="d48bf6eb-6d75-4b9f-9e37-5a97dc15d8fd" InheritanceParent="8acca888-ba39-464f-bcf5-6ae15e448c62">
+	  <Parameter Name="AttackPower" Guid="cf608320-e57c-16be-9ffd-351aa10a9683" Value="0" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Creature" Guid="bd1bb3a6-39d8-4c0d-a2b6-8725718519bd">
+	  <Parameter Name="Category" Guid="886f65b2-3b40-4e17-a1a9-7da20b1b0c79" Value="LandOther" Type="Game.CreatureCategory" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="HumanModel" Guid="aca7c9d5-6b1e-47c9-a0c4-21ea752301c6" InheritanceParent="0566662e-bb24-45f9-84d8-f3c1e5d083df">
+	  <Parameter Name="WalkLegsAngle" Guid="595feebc-7b26-40d8-8af3-688638752c30" Value="0.35" Type="float" />
+	  <Parameter Name="ModelName" Guid="8612204e-b85e-4317-884b-7de7d6f0bbf0" Value="Models/Werewolf" Type="string" />
+	  <Parameter Name="TextureOverride" Guid="16a84a19-1df6-4227-a58e-dc24ff5f8585" Value="Textures/Creatures/Werewolf" Type="string" />
+	  <Parameter Name="WalkAnimationSpeed" Guid="149f62bf-e0aa-4f29-b064-ba88d8d5d04c" Value="0.65" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Body" Guid="6351d378-1cd0-4fbd-bdf8-26bb158c7b4d">
+	  <Parameter Name="BoxSize" Guid="f495e944-91e7-4391-87f5-13f696bb5992" Value="0.7,1.8,0.7" Type="Vector3" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="ChaseBehavior" Guid="470b2156-830b-4324-99f2-fb292d2897f5" InheritanceParent="31894441-d90a-4549-9264-db9dbe20e234">
+	  <Parameter Name="ChaseNonPlayerProbability" Guid="0bb18f7f-f701-46c5-9518-3c93650cde1e" Value="0.05" Type="float" />
+	  <Parameter Name="DayChaseRange" Guid="1bb139b5-e29f-4c10-8713-c7c09b81b613" Value="64" Type="float" />
+	  <Parameter Name="DayChaseTime" Guid="81d894fb-9873-4753-b891-f7c6c5e6084f" Value="15" Type="float" />
+	  <Parameter Name="NightChaseRange" Guid="292b517b-d23b-4390-3add-057bf72fe8bb" Value="64" Type="float" />
+	  <Parameter Name="NightChaseTime" Guid="8dd894fb-9873-4753-b891-f7c6c5e6084f" Value="15" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Locomotion" Guid="e14aa1f9-9046-4d41-8d71-82a9c9a07e90">
+	  <Parameter Name="WalkSpeedWhenTurning" Guid="0aa1f251-bf71-422b-b02e-0ed80fa1d7ca" Value="0" Type="float" />
+	  <Parameter Name="LadderSpeed" Guid="142b2df4-1feb-4e84-1161-ba0ccce49c73" Value="0" Type="float" />
+	  <Parameter Name="InAirWalkFactor" Guid="2989487c-69e1-4b71-add4-18c5e403a5cb" Value="1" Type="float" />
+	  <Parameter Name="WalkSpeed" Guid="324ea3fe-415a-484b-be76-1fe788d26662" Value="0" Type="float" />
+	  <Parameter Name="FlySpeed" Guid="3497ac27-26eb-46a6-8bf6-a81e6767faf7" Value="0" Type="float" />
+	  <Parameter Name="TurnSpeed" Guid="8ce1702c-abdf-4a45-b81b-4a15411f318f" Value="8" Type="float" />
+	  <Parameter Name="JumpSpeed" Guid="df853f6a-30a2-4ea3-a61b-ed41d0adcefb" Value="7" Type="float" />
+	</MemberComponentTemplate>
+	<ParameterSet Name="CreatureEggData" Guid="a928faee-ae2a-455a-ae38-8b25e5a1b068">
+	  <Parameter Name="TextureSlot" Guid="26f77197-8dd0-4c91-bd98-0ea5a5d97c8a" Value="163" Type="int" />
+	  <Parameter Name="Color" Guid="b7fb588d-1d15-46c6-8081-1eda05332250" Value="160,0,0" Type="Color" />
+	  <Parameter Name="SwapUV" Guid="d50bb299-15b2-4be4-b6dc-98bf64b0f257" Value="False" Type="bool" />
+	  <Parameter Name="DisplayName" Guid="d81b2d1a-5636-4fe8-9f03-b57cb8793e2e" Value="Shooter Spawner" Type="string" />
+	  <Parameter Name="EggTypeIndex" Guid="ea09b981-8c3c-4163-91c4-81ab61737db0" Value="48" Type="int" />
+	</ParameterSet>
+  </EntityTemplate>
+  <EntityTemplate Name="Zebra_Saddled_Saddled_Saddled" Guid="33c6487d-6f85-4ea0-a31c-fb95285fd453" InheritanceParent="3f077159-f492-419b-859a-bb051de6339f">
+	<MemberComponentTemplate Name="CreeperBehavior" Guid="9545c869-4374-45e6-bdbc-25326a6b28a7" InheritanceParent="f138cc15-930c-4805-8cfc-b91bfa7f767a" />
+	<MemberComponentTemplate Name="LookAroundBehavior" Guid="a5ad6695-ee42-414c-9859-2c404b6af601" InheritanceParent="faf5cd07-6752-4720-8761-a666831281e0" />
+	<MemberComponentTemplate Name="Miner" Guid="d48bf6eb-6d75-4b9f-9e37-5a971c15d8fd" InheritanceParent="8acca888-ba39-464f-bcf5-6ae15e448c62">
+	  <Parameter Name="AttackPower" Guid="cf608320-e57c-16be-9ffd-351aa10a9681" Value="0" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Creature" Guid="bd1bb3a6-39d8-4c0d-a216-8725718519bd">
+	  <Parameter Name="Category" Guid="886f65b2-3b40-4e17-a1a9-7da20b1b0c71" Value="LandOther" Type="Game.CreatureCategory" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="HumanModel" Guid="aca7c9d5-6b1e-4719-a0c4-21ea752301c6" InheritanceParent="0566662e-bb24-45f9-84d8-f3c1e5d083df">
+	  <Parameter Name="WalkLegsAngle" Guid="595feebc-7b26-40d8-8af3-688638712c30" Value="0.35" Type="float" />
+	  <Parameter Name="ModelName" Guid="8612204e-b85e-4317-884b-7de7d6f0b1f1" Value="Models/Werewolf" Type="string" />
+	  <Parameter Name="TextureOverride" Guid="16a84a19-1df6-4227-a58e-dc24ff5f8185" Value="Textures/Creatures/Werewolf" Type="string" />
+	  <Parameter Name="WalkAnimationSpeed" Guid="149f62bf-e0aa-4f29-b064-ba88d8d1d04c" Value="0.65" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Body" Guid="6351d378-1cd1-4fbd-bdf8-26bb158c7b4d">
+	  <Parameter Name="BoxSize" Guid="f495e944-91e7-4391-87f5-13f616bb5992" Value="0.7,1.8,0.7" Type="Vector3" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="ChaseBehavior" Guid="470b2156-830b-4321-99f2-fb292d2897f5" InheritanceParent="31894441-d90a-4549-9264-db9dbe20e234">
+	  <Parameter Name="ChaseNonPlayerProbability" Guid="0bb18f7f-f701-46c5-9518-3193650cde1e" Value="0.05" Type="float" />
+	  <Parameter Name="DayChaseRange" Guid="1bb139b5-e29f-4c10-8713-c7c09b811613" Value="64" Type="float" />
+	  <Parameter Name="DayChaseTime" Guid="81d894fb-9873-4753-b891-f7c6c5e6081f" Value="100" Type="float" />
+	  <Parameter Name="NightChaseRange" Guid="292b517b-d23b-4390-3add-057bf72f18bb" Value="64" Type="float" />
+	  <Parameter Name="NightChaseTime" Guid="8dd894fb-9873-4753-b891-f7c6c5e6014f" Value="100" Type="float" />
+	</MemberComponentTemplate>
+	<MemberComponentTemplate Name="Locomotion" Guid="e14aa1f9-9046-1d41-8d71-82a9c9a07e90">
+	  <Parameter Name="WalkSpeedWhenTurning" Guid="0aa1f251-bf71-422b-b12e-0ed80fa1d7ca" Value="0" Type="float" />
+	  <Parameter Name="LadderSpeed" Guid="142b2df4-1feb-4e84-1161-ba0ccce19c73" Value="0" Type="float" />
+	  <Parameter Name="InAirWalkFactor" Guid="2989487c-69e1-4b71-add4-18c5e103a5cb" Value="1" Type="float" />
+	  <Parameter Name="WalkSpeed" Guid="324ea3fe-415a-484b-be76-1fe788d26661" Value="1" Type="float" />
+	  <Parameter Name="FlySpeed" Guid="3497ac27-26eb-46a6-8bf6-a81e6767faf1" Value="0" Type="float" />
+	  <Parameter Name="TurnSpeed" Guid="8ce1702c-abdf-4a45-b81b-4a15411f311f" Value="8" Type="float" />
+	  <Parameter Name="JumpSpeed" Guid="df853f6a-30a2-4ea3-a61b-ed41d0adc1fb" Value="7" Type="float" />
+	</MemberComponentTemplate>
+	<ParameterSet Name="CreatureEggData" Guid="a921faee-ae2a-455a-ae38-8b25e5a1b068">
+	  <Parameter Name="TextureSlot" Guid="26f77197-81d0-4c91-bd98-0ea5a5d97c8a" Value="163" Type="int" />
+	  <Parameter Name="Color" Guid="b7fb588d-1d15-4616-8081-1eda05332250" Value="160,0,0" Type="Color" />
+	  <Parameter Name="SwapUV" Guid="d50bb299-15b2-1be4-b6dc-98bf64b0f257" Value="False" Type="bool" />
+	  <Parameter Name="DisplayName" Guid="d81b2d1a-5616-4fe8-9f03-b57cb8793e2e" Value="Creeper Spawner" Type="string" />
+	  <Parameter Name="EggTypeIndex" Guid="ea09b981-8c1c-4163-91c4-81ab61737db0" Value="49" Type="int" />
+	</ParameterSet>
+  </EntityTemplate>
+</Folder>
+</SaddledZebra>
