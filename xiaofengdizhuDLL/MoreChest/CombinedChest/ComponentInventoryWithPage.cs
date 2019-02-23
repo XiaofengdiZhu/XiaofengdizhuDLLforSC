@@ -34,7 +34,7 @@ namespace Game
         {
             while (count > 0)
             {
-                int num = ComponentInventoryWithPage.FindAcquireSlotForItem(inventory, value);
+                int num = FindAcquireSlotForItem(inventory, value);
                 if (num < 0)
                 {
                     break;
@@ -45,90 +45,74 @@ namespace Game
             return count;
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             int value = valuesDictionary.GetValue<int>("SlotsCount");
             for (int i = 0; i < value; i++)
             {
-                this.m_slots.Add(new ComponentInventoryWithPage.Slot());
+                m_slots.Add(new Slot());
             }
             ValuesDictionary value2 = valuesDictionary.GetValue<ValuesDictionary>("Slots");
-            this.PageIndex = valuesDictionary.GetValue<int>("PageIndex");
-            for (int j = 0; j < this.m_slots.Count; j++)
+            PageIndex = valuesDictionary.GetValue<int>("PageIndex");
+            for (int j = 0; j < m_slots.Count; j++)
             {
                 ValuesDictionary value3 = value2.GetValue<ValuesDictionary>("Slot" + j.ToString(CultureInfo.InvariantCulture), null);
                 if (value3 != null)
                 {
-                    ComponentInventoryWithPage.Slot slot = this.m_slots[j];
+                    Slot slot = m_slots[j];
                     slot.Value = value3.GetValue<int>("Contents");
                     slot.Count = value3.GetValue<int>("Count");
                 }
             }
         }
 
-        protected override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
+        public override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
         {
-            ValuesDictionary valuesDictionary2 = new ValuesDictionary();
-            valuesDictionary.SetValue<ValuesDictionary>("Slots", valuesDictionary2);
-            valuesDictionary.SetValue<int>("PageIndex", this.PageIndex);
-            for (int i = 0; i < this.m_slots.Count; i++)
+            var valuesDictionary2 = new ValuesDictionary();
+            valuesDictionary.SetValue("Slots", valuesDictionary2);
+            valuesDictionary.SetValue("PageIndex", PageIndex);
+            for (int i = 0; i < m_slots.Count; i++)
             {
-                ComponentInventoryWithPage.Slot slot = this.m_slots[i];
+                Slot slot = m_slots[i];
                 if (slot.Count > 0)
                 {
-                    ValuesDictionary valuesDictionary3 = new ValuesDictionary();
-                    valuesDictionary2.SetValue<ValuesDictionary>("Slot" + i.ToString(CultureInfo.InvariantCulture), valuesDictionary3);
-                    valuesDictionary3.SetValue<int>("Contents", slot.Value);
-                    valuesDictionary3.SetValue<int>("Count", slot.Count);
+                    var valuesDictionary3 = new ValuesDictionary();
+                    valuesDictionary2.SetValue("Slot" + i.ToString(CultureInfo.InvariantCulture), valuesDictionary3);
+                    valuesDictionary3.SetValue("Contents", slot.Value);
+                    valuesDictionary3.SetValue("Count", slot.Count);
                 }
-            }
-        }
-
-        public Project Project
-        {
-            get
-            {
-                return base.Project;
             }
         }
 
         public virtual int SlotsCount
         {
-            get
-            {
-                return this.m_slots.Count;
-            }
+            get { return m_slots.Count; }
         }
 
         public virtual int ActiveSlotIndex
         {
-            get
-            {
-                return -1;
-            }
-            set
-            {
-            }
+            get { return -1; }
+            set { }
         }
 
         public virtual int GetSlotValue(int slotIndex)
         {
-            if (slotIndex < 0 || slotIndex >= this.m_slots.Count)
+            if (slotIndex < 0 || slotIndex >= m_slots.Count)
             {
                 return 0;
             }
-            if (this.m_slots[slotIndex].Count <= 0)
+            if (m_slots[slotIndex].Count <= 0)
             {
                 return 0;
             }
-            return this.m_slots[slotIndex].Value;
+            return m_slots[slotIndex].Value;
         }
 
         public virtual int GetSlotCount(int slotIndex)
         {
-            if (slotIndex >= 0 && slotIndex < this.m_slots.Count)
+            if (slotIndex >= 0 && slotIndex < m_slots.Count)
             {
-                return this.m_slots[slotIndex].Count;
+                return m_slots[slotIndex].Count;
             }
             return 0;
         }
@@ -136,7 +120,7 @@ namespace Game
         //两倍容量
         public virtual int GetSlotCapacity(int slotIndex, int value)
         {
-            if (slotIndex >= 0 && slotIndex < this.m_slots.Count)
+            if (slotIndex >= 0 && slotIndex < m_slots.Count)
             {
                 return BlocksManager.Blocks[Terrain.ExtractContents(value)].MaxStacking * 2;
             }
@@ -145,11 +129,11 @@ namespace Game
 
         public virtual int GetSlotProcessCapacity(int slotIndex, int value)
         {
-            int slotCount = this.GetSlotCount(slotIndex);
-            int slotValue = this.GetSlotValue(slotIndex);
+            int slotCount = GetSlotCount(slotIndex);
+            int slotValue = GetSlotValue(slotIndex);
             if (slotCount > 0 && slotValue != 0)
             {
-                SubsystemBlockBehavior[] blockBehaviors = base.Project.FindSubsystem<SubsystemBlockBehaviors>(true).GetBlockBehaviors(Terrain.ExtractContents(slotValue));
+                SubsystemBlockBehavior[] blockBehaviors = Project.FindSubsystem<SubsystemBlockBehaviors>(true).GetBlockBehaviors(Terrain.ExtractContents(slotValue));
                 for (int i = 0; i < blockBehaviors.Length; i++)
                 {
                     int processInventoryItemCapacity = blockBehaviors[i].GetProcessInventoryItemCapacity(this, slotIndex, value);
@@ -164,12 +148,12 @@ namespace Game
 
         public virtual void AddSlotItems(int slotIndex, int value, int count)
         {
-            if (count <= 0 || slotIndex < 0 || slotIndex >= this.m_slots.Count)
+            if (count <= 0 || slotIndex < 0 || slotIndex >= m_slots.Count)
             {
                 return;
             }
-            ComponentInventoryWithPage.Slot slot = this.m_slots[slotIndex];
-            if ((this.GetSlotCount(slotIndex) == 0 || this.GetSlotValue(slotIndex) == value) && this.GetSlotCount(slotIndex) + count <= this.GetSlotCapacity(slotIndex, value))
+            Slot slot = m_slots[slotIndex];
+            if ((GetSlotCount(slotIndex) == 0 || GetSlotValue(slotIndex) == value) && GetSlotCount(slotIndex) + count <= GetSlotCapacity(slotIndex, value))
             {
                 slot.Value = value;
                 slot.Count += count;
@@ -180,11 +164,11 @@ namespace Game
 
         public virtual void ProcessSlotItems(int slotIndex, int value, int count, int processCount, out int processedValue, out int processedCount)
         {
-            int slotCount = this.GetSlotCount(slotIndex);
-            int slotValue = this.GetSlotValue(slotIndex);
+            int slotCount = GetSlotCount(slotIndex);
+            int slotValue = GetSlotValue(slotIndex);
             if (slotCount > 0 && slotValue != 0)
             {
-                foreach (SubsystemBlockBehavior subsystemBlockBehavior in base.Project.FindSubsystem<SubsystemBlockBehaviors>(true).GetBlockBehaviors(Terrain.ExtractContents(slotValue)))
+                foreach (SubsystemBlockBehavior subsystemBlockBehavior in Project.FindSubsystem<SubsystemBlockBehaviors>(true).GetBlockBehaviors(Terrain.ExtractContents(slotValue)))
                 {
                     int processInventoryItemCapacity = subsystemBlockBehavior.GetProcessInventoryItemCapacity(this, slotIndex, value);
                     if (processInventoryItemCapacity > 0)
@@ -200,10 +184,10 @@ namespace Game
 
         public virtual int RemoveSlotItems(int slotIndex, int count)
         {
-            if (slotIndex >= 0 && slotIndex < this.m_slots.Count)
+            if (slotIndex >= 0 && slotIndex < m_slots.Count)
             {
-                ComponentInventoryWithPage.Slot slot = this.m_slots[slotIndex];
-                count = MathUtils.Min(count, this.GetSlotCount(slotIndex));
+                Slot slot = m_slots[slotIndex];
+                count = MathUtils.Min(count, GetSlotCount(slotIndex));
                 slot.Count -= count;
                 return count;
             }
@@ -212,21 +196,21 @@ namespace Game
 
         public void DropAllItems(Vector3 position)
         {
-            SubsystemPickables subsystemPickables = base.Project.FindSubsystem<SubsystemPickables>(true);
-            for (int i = 0; i < this.SlotsCount; i++)
+            SubsystemPickables subsystemPickables = Project.FindSubsystem<SubsystemPickables>(true);
+            for (int i = 0; i < SlotsCount; i++)
             {
-                int slotCount = this.GetSlotCount(i);
+                int slotCount = GetSlotCount(i);
                 if (slotCount > 0)
                 {
-                    int slotValue = this.GetSlotValue(i);
-                    int count = this.RemoveSlotItems(i, slotCount);
-                    Vector3 value = this.m_random.UniformFloat(5f, 10f) * Vector3.Normalize(new Vector3(this.m_random.UniformFloat(-1f, 1f), this.m_random.UniformFloat(1f, 2f), this.m_random.UniformFloat(-1f, 1f)));
+                    int slotValue = GetSlotValue(i);
+                    int count = RemoveSlotItems(i, slotCount);
+                    Vector3 value = m_random.UniformFloat(5f, 10f) * Vector3.Normalize(new Vector3(m_random.UniformFloat(-1f, 1f), m_random.UniformFloat(1f, 2f), m_random.UniformFloat(-1f, 1f)));
                     subsystemPickables.AddPickable(slotValue, count, position, new Vector3?(value), null);
                 }
             }
         }
 
-        protected List<ComponentInventoryWithPage.Slot> m_slots = new List<ComponentInventoryWithPage.Slot>();
+        protected List<Slot> m_slots = new List<Slot>();
         public Random m_random = new Random();
 
         protected class Slot

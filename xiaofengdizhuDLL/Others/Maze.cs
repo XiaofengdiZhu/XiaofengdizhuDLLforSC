@@ -10,17 +10,17 @@ namespace Game
         /// <summary>
         /// 迷宫的小房间的数组
         /// </summary>
-        private Room[,] roomMatrix;
+        protected Room[,] roomMatrix;
 
         /// <summary>
         /// 保存通路的链表
         /// </summary>
-        private List<List<Room>> roads;
+        protected List<List<Room>> roads;
 
         /// <summary>
         /// 随机数生成器
         /// </summary>
-        private System.Random random;
+        protected System.Random random;
 
         /// <summary>
         /// 迷宫的构造函数， 一旦构造完成， 迷宫的格数不能改变
@@ -44,7 +44,7 @@ namespace Game
         /// <summary>
         /// 实例化所有房间并添加进通路， 然后将通路添加到通路链表中
         /// </summary>
-        private void InstRooms(int width, int height)
+        protected void InstRooms(int width, int height)
         {
             // 实例化房间数组
             roomMatrix = new Room[width, height];
@@ -56,7 +56,7 @@ namespace Game
                 for (int j = 0; j < height; j++)
                 {
                     // 实例化通路
-                    List<Room> road = new List<Room>();
+                    var road = new List<Room>();
                     // 实例化一个房间
                     roomMatrix[i, j] = new Room();
                     // 将该单元格添加进通路
@@ -70,7 +70,7 @@ namespace Game
         /// <summary>
         /// 将相邻的房间公共的门设为同一个对象的引用
         /// </summary>
-        private void OrganizeRooms()
+        protected void OrganizeRooms()
         {
             // 从上往下， 除了最后一行， 将每个房间下方向的门设为下方的房间上方向的门
             for (int i = 0; i < roomMatrix.GetLength(0); i++)
@@ -93,34 +93,26 @@ namespace Game
         /// <summary>
         /// 设定固定的门
         /// </summary>
-        private void SetFixedDoor()
+        protected void SetFixedDoor()
         {
             // 第一行的所有房间的上门设置为固定
             for (int i = 0; i < roomMatrix.GetLength(0); i++)
-            {
                 roomMatrix[i, 0].TopDoor.IsFixed = true;
-            }
             // 最后一行的所有房间的下门设置为固定
             for (int i = 0; i < roomMatrix.GetLength(0); i++)
-            {
                 roomMatrix[i, roomMatrix.GetLength(1) - 1].BottonDoor.IsFixed = true;
-            }
             // 第一列的所有房间的左门设置为固定
             for (int i = 0; i < roomMatrix.GetLength(1); i++)
-            {
                 roomMatrix[0, i].LeftDoor.IsFixed = true;
-            }
             // 最后一列所有房间的右门设置为固定
             for (int i = 0; i < roomMatrix.GetLength(1); i++)
-            {
                 roomMatrix[roomMatrix.GetLength(0) - 1, i].RightDoor.IsFixed = true;
-            }
         }
 
         /// <summary>
         /// 使迷宫的所有房间连通
         /// </summary>
-        private void Interlink()
+        protected void Interlink()
         {
             while (!AllRoomLinked())
             {
@@ -143,12 +135,12 @@ namespace Game
             }
         }
 
-        private void RemoveOldRoads(List<List<Room>> oldRoads)
+        protected void RemoveOldRoads(List<List<Room>> oldRoads)
         {
             // 移除两条旧的通路
-            foreach (List<Room> oldRoad in oldRoads)
+            for (int i = 0; i < oldRoads.Count; i++)
             {
-                roads.Remove(oldRoad);
+                roads.Remove(oldRoads[i]);
             }
         }
 
@@ -157,10 +149,10 @@ namespace Game
         /// </summary>
         /// <param name="oldRoad"></param>
         /// <returns></returns>
-        private List<Room> GetNewRoad(List<List<Room>> oldRoad)
+        protected static List<Room> GetNewRoad(List<List<Room>> oldRoad)
         {
             // 新的通路
-            List<Room> newRoad = new List<Room>();
+            var newRoad = new List<Room>();
             // 遍历旧的两条通路里面的通路
             foreach (List<Room> road in oldRoad)
             {
@@ -180,10 +172,10 @@ namespace Game
         /// </summary>
         /// <param name="door"></param>
         /// <returns></returns>
-        private List<List<Room>> GetOldRoads(Door door)
+        protected List<List<Room>> GetOldRoads(Door door)
         {
             // 用于保存旧的两条路的链表
-            List<List<Room>> oldRoads = new List<List<Room>>();
+            var oldRoads = new List<List<Room>>();
             // 遍历所有通路， 找出包含指定的门的两条路
             foreach (List<Room> road in roads)
             {
@@ -226,10 +218,10 @@ namespace Game
         /// <param name="doorSource"></param>
         /// <param name="doorTarget"></param>
         /// <returns></returns>
-        private bool TwoDoorAreEqual(Door doorSource, Door doorTarget)
+        protected bool TwoDoorAreEqual(Door doorSource, Door doorTarget)
         {
             // 如果检查的门处于锁闭状态并且不是固定的门， 则表示两扇门相通
-            if (doorSource.GetLockState() && !doorSource.IsFixed)
+            if (doorSource.GetState() && !doorSource.IsFixed)
             {
                 if (Equals(doorSource, doorTarget))
                 {
@@ -243,28 +235,20 @@ namespace Game
         /// 是否所有的房间已经连通
         /// </summary>
         /// <returns></returns>
-        private bool AllRoomLinked()
+        protected bool AllRoomLinked()
         {
-            //  当通路链表中只有一条通路时， 说明所有房间已连通， 返回真
-            if (roads.Count == 1)
-            {
-                return true;
-            }
-            // 否则返回假
-            else
-            {
-                return false;
-            }
+            //  当通路链表中只有一条通路时， 说明所有房间已连通， 返回真， 否则返回假
+            return roads.Count == 1;
         }
 
         /// <summary>
         /// 获取通路外部轮廓上的处于锁闭状态的门
         /// </summary>
         /// <returns></returns>
-        private List<Door> GetOutlineDoors(List<Room> road)
+        protected static List<Door> GetOutlineDoors(List<Room> road)
         {
             // 用来保存轮廓上的门的链表
-            List<Door> outlineDoors = new List<Door>();
+            var outlineDoors = new List<Door>();
             // 获取该通路所有锁闭状态的门
             foreach (Room room in road)
             {
@@ -282,10 +266,10 @@ namespace Game
         /// </summary>
         /// <param name="door"></param>
         /// <param name="outlineDoors"></param>
-        private void AddOutlineDoor(Door door, List<Door> outlineDoors)
+        protected static void AddOutlineDoor(Door door, List<Door> outlineDoors)
         {
             // 只处理处于非固定状态并且处于锁闭状态的门
-            if (door.GetLockState() && !door.IsFixed)
+            if (door.GetState() && !door.IsFixed)
             {
                 // 如果该门未在链表中出现过， 则有可能是轮廓上的门， 先加入链表
                 if (!outlineDoors.Contains(door))
@@ -303,21 +287,21 @@ namespace Game
         /// <summary>
         /// 将迷宫房间转换为二维数组
         /// </summary>
-        private bool[,] RoomToData()
+        protected bool[,] RoomToData()
         {
             // 新建一个布尔型的二维数组用于保存完成后的迷宫
-            bool[,] dataMatrix = new bool[roomMatrix.GetLength(0) * 2 + 1, roomMatrix.GetLength(1) * 2 + 1];
-            // 将房间不影响的门先全部预先填充为关闭， 节省时间复杂度
+            var dataMatrix = new bool[roomMatrix.GetLength(0) * 2 + 1, roomMatrix.GetLength(1) * 2 + 1];
+            // 将房间不影响的门先全部预先填充为关闭，节省时间复杂度
             PreFill(dataMatrix);
             // 遍历每个房间， 并将该房间的四个方向的门的开关状态映射到保存迷宫的数组中
             for (int xPos = 0; xPos < roomMatrix.GetLength(0); xPos++)
             {
                 for (int yPos = 0; yPos < roomMatrix.GetLength(1); yPos++)
                 {
-                    SetData(dataMatrix, xPos, yPos, -1, 0, roomMatrix[xPos, yPos].LeftDoor.GetLockState());
-                    SetData(dataMatrix, xPos, yPos, 1, 0, roomMatrix[xPos, yPos].RightDoor.GetLockState());
-                    SetData(dataMatrix, xPos, yPos, 0, -1, roomMatrix[xPos, yPos].TopDoor.GetLockState());
-                    SetData(dataMatrix, xPos, yPos, 0, 1, roomMatrix[xPos, yPos].BottonDoor.GetLockState());
+                    SetData(dataMatrix, xPos, yPos, -1, 0, roomMatrix[xPos, yPos].LeftDoor.GetState());
+                    SetData(dataMatrix, xPos, yPos, 1, 0, roomMatrix[xPos, yPos].RightDoor.GetState());
+                    SetData(dataMatrix, xPos, yPos, 0, -1, roomMatrix[xPos, yPos].TopDoor.GetState());
+                    SetData(dataMatrix, xPos, yPos, 0, 1, roomMatrix[xPos, yPos].BottonDoor.GetState());
                 }
             }
             // 返回保存迷宫的数组
@@ -332,7 +316,7 @@ namespace Game
         /// <param name="yPos">房间的y坐标</param>
         /// <param name="xOffset">门在迷宫的x方向的偏移</param>
         /// <param name="yOffset">门在迷宫的y方向的偏移</param>
-        private void SetData(bool[,] dataMatrix, int xPos, int yPos, int xOffset, int yOffset, bool isClose)
+        protected static void SetData(bool[,] dataMatrix, int xPos, int yPos, int xOffset, int yOffset, bool isClose)
         {
             dataMatrix[xPos * 2 + 1 + xOffset, yPos * 2 + 1 + yOffset] = isClose;
         }
@@ -341,7 +325,7 @@ namespace Game
         /// 将x与y方向的第奇数格预先填充为真
         /// </summary>
         /// <param name="dataMatrix"></param>
-        private void PreFill(bool[,] dataMatrix)
+        protected static void PreFill(bool[,] dataMatrix)
         {
             for (int i = 0; i < dataMatrix.GetLength(0); i += 2)
             {
@@ -364,119 +348,52 @@ namespace Game
         /// <summary>
         /// 组成迷宫的基本小房间
         /// </summary>
-        private class Room
+        protected class Room
         {
-            // 上下左右的门
-            private Door topDoor;
+            public Door TopDoor;
 
-            public Door TopDoor
-            {
-                get { return topDoor; }
-                set { topDoor = value; }
-            }
+            public Door BottonDoor;
 
-            private Door bottonDoor;
+            public Door LeftDoor;
 
-            public Door BottonDoor
-            {
-                get { return bottonDoor; }
-                set { bottonDoor = value; }
-            }
+            public Door RightDoor;
 
-            private Door leftDoor;
+            public Door TopLeftDoor;
 
-            public Door LeftDoor
-            {
-                get { return leftDoor; }
-                set { leftDoor = value; }
-            }
+            public Door TopRightDoor;
 
-            private Door rightDoor;
+            public Door BottonLeftDoor;
 
-            public Door RightDoor
-            {
-                get { return rightDoor; }
-                set { rightDoor = value; }
-            }
-
-            // 左上 右上 左下 右下的门
-            private Door topLeftDoor;
-
-            public Door TopLeftDoor
-            {
-                get { return topLeftDoor; }
-                set { topLeftDoor = value; }
-            }
-
-            private Door topRightDoor;
-
-            public Door TopRightDoor
-            {
-                get { return topRightDoor; }
-                set { topRightDoor = value; }
-            }
-
-            private Door bottonLeftDoor;
-
-            public Door BottonLeftDoor
-            {
-                get { return bottonLeftDoor; }
-                set { bottonLeftDoor = value; }
-            }
-
-            private Door bottonRightDoor;
-
-            public Door BottonRightDoor
-            {
-                get { return bottonRightDoor; }
-                set { bottonRightDoor = value; }
-            }
+            public Door BottonRightDoor;
 
             /// <summary>
             /// 实例化一个迷宫小房间， 实例化8个方向的门
             /// </summary>
             public Room()
             {
-                topDoor = new Door();
-                bottonDoor = new Door();
-                leftDoor = new Door();
-                rightDoor = new Door();
+                TopDoor = new Door();
+                BottonDoor = new Door();
+                LeftDoor = new Door();
+                RightDoor = new Door();
 
-                topLeftDoor = new Door();
-                topRightDoor = new Door();
-                bottonLeftDoor = new Door();
-                bottonRightDoor = new Door();
+                TopLeftDoor = new Door();
+                TopRightDoor = new Door();
+                BottonLeftDoor = new Door();
+                BottonRightDoor = new Door();
             }
         }
 
         /// <summary>
         /// 迷宫的基本小房间的门
         /// </summary>
-        private class Door
+        protected class Door
         {
             /// <summary>
-            /// 门是否是关闭的
+            /// 门是否是关闭的， 默认为门是锁着的
             /// </summary>
-            private bool isLocked;
+            private bool isLocked = true;
 
-            /// <summary>
-            /// 是否为固定的门(固定的门无法开启和关闭)
-            /// </summary>
-            private bool isFixed;
-
-            public bool IsFixed
-            {
-                get { return isFixed; }
-                set { isFixed = value; }
-            }
-
-            /// <summary>
-            /// 构造函数， 默认为门是锁着的
-            /// </summary>
-            public Door()
-            {
-                isLocked = true;
-            }
+            public bool IsFixed { get; set; }
 
             /// <summary>
             /// 开门
@@ -497,7 +414,7 @@ namespace Game
             /// <summary>
             /// 获取门是否是锁着的
             /// </summary>
-            public bool GetLockState()
+            public bool GetState()
             {
                 return isLocked;
             }

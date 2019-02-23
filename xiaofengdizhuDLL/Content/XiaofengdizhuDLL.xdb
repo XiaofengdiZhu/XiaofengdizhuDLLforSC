@@ -1,0 +1,97 @@
+<Mod Name="XiaofengdizhuDLL">
+<EntityTemplate Name="Player" Guid="4be6c1c5-d65d-4537-8a8b-a391969e6dc2">
+	<MemberComponentTemplate Name="SkillInput" Guid="15e5a7c3-b04e-4d95-8db4-2e7574adc4b9" InheritanceParent="84f93359-4e79-43ab-8cce-ff85a3ddedb3" />
+	<MemberComponentTemplate Name="FireflySurround" Guid="f7b98f0e-317f-4589-8033-ca605f92ee15" InheritanceParent="288816b9-23bd-4fb2-9a3b-ac78540b5e6b" />
+</EntityTemplate>
+<EntityTemplate Name="Creature" Guid="bc5be211-c1f8-4e50-9ffb-4fde625d2692">
+	<MemberComponentTemplate Name="DisplayHealthAndNameBehavior" Guid="9545c864-4364-45e6-bdbc-25326a6b28a7" InheritanceParent="e138cc15-930c-4805-8cfc-b91bfa7f7671" />
+	<MemberComponentTemplate Name="BreedBehavior" Guid="a545c864-4364-45e6-bdbc-25326a6b28a7" InheritanceParent="f138cc15-930c-4805-8cfc-b91bfa7f7671" />
+</EntityTemplate>
+<ProjectTemplate Name="Project" Guid="85023bf8-1c90-4dd1-9442-e6c13691d078">
+	<MemberSubsystemTemplate Name="BlocksEntities" Guid="7bddfe21-5866-4fd2-9d6d-b023ec73a34c" InheritanceParent="dcd8d745-1802-4dc7-80ed-8e01712fe611" />
+	<MemberSubsystemTemplate Name="ExperienceOreBlockBehavior" Guid="997fdf9a-574e-434f-aae3-89bf53a00fd7" InheritanceParent="139ea51e-c41d-4c93-99ae-a9b5a491c7aa" />
+	<MemberSubsystemTemplate Name="OreSaplingBlockBehavior" Guid="eef570aa-83e8-4007-860d-efeda2e89fa8" InheritanceParent="4830d91c-64fd-4048-ac76-efe4b0e26315" />
+	<MemberSubsystemTemplate Name="CombinedChestBlockBehavior" Guid="a7a12f9d-951b-4254-8e57-20d7ed33155f" InheritanceParent="8723c7b1-fe0c-4013-b41b-db3f4d46ac03" />
+	<MemberSubsystemTemplate Name="TelescopeBlockBehavior" Guid="486af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="0f038d3d-e999-452c-959d-47eefb16457a" />
+	<MemberSubsystemTemplate Name="FlysharkBlockBehavior" Guid="586af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="1f038d3d-e999-452c-959d-47eefb16457a" />
+	<MemberSubsystemTemplate Name="DefenceTowerCoreBlockBehavior" Guid="686af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="2f038d3d-e999-452c-959d-47eefb16457a" />
+	<MemberSubsystemTemplate Name="AutoCollectPickablesHoleBlockBehavior" Guid="786af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="3f038d3d-e999-452c-959d-47eefb16457a" />
+	<MemberSubsystemTemplate Name="FactorioTransportBeltBlockBehavior" Guid="886af16d-6a33-4182-a334-9e287aa334a8" InheritanceParent="4f038d3d-e999-452c-959d-47eefb16457a" />
+</ProjectTemplate>
+<Folder Name="AI" Guid="33dfd132-3c41-4dfa-a385-af3ba34ff86b">
+	<ComponentTemplate Name="DiggerBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="d138cc15-930c-4805-8cfc-b91bfa7f767a" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+	  <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-8ef5-617c0b1a74ba" Value="Game.ComponentDiggerBehavior" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="ShooterBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="e138cc15-930c-4805-8cfc-b91bfa7f767a" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+	  <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-8ef5-117c0b1a74ba" Value="Game.ComponentShooterBehavior" Type="string" />
+	  <Parameter Name="ArrowType" Description="WoodenArrow,StoneArrow,IronArrow,DiamondArrow,FireArrow,IronBolt,DiamondBolt,ExplosiveBolt,CopperArrow" Guid="95d46363-a281-4ead-92a0-95db5641d5d6" Value="CopperArrow" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="CreeperBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="f138cc15-930c-4805-8cfc-b91bfa7f767a" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+	  <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-1ef5-117c0b1a74ba" Value="Game.ComponentCreeperBehavior" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="DisplayHealthAndNameBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="e138cc15-930c-4805-8cfc-b91bfa7f7671" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+	  <Parameter Name="Class" Guid="7f538db3-f1fe-4e91-8ef5-117c0b1a79ba" Value="Game.ComponentDisplayHealthAndNameBehavior" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="BreedBehavior" Description="Behavior that makes a creature run away from attacker or danger" Guid="f138cc15-930c-4805-8cfc-b91bfa7f7671" InheritanceParent="6cc7245f-56f2-4a77-a3db-5f628b6369b3">
+	  <Parameter Name="Class" Guid="8f538db3-f1fe-4e91-8ef5-117c0b1a79ba" Value="Game.ComponentBreedBehavior" Type="string" />
+	  <Parameter Name="BreedPeriodTime" Description="Breed Period Time, in second" Guid="9ad46363-a281-4ead-92a0-95db5641d5d6" Value="2400" Type="double" />
+	  <Parameter Name="BreedPeriodTimeRandomOffsetRange" Description="For Example, BreedPeriodTime=100, BreedPeriodTimeRandomOffsetRange=10, then the real breed period time will be between 90s and 110s" Guid="9ad86363-a281-4ead-92a0-95db5641d5d6" Value="100" Type="float" />
+	  <Parameter Name="LastBreedTime" Description="Last Period Time, in second" Guid="9ad46363-a281-4ead-9210-95db5641d5d6" Value="0" Type="double" />
+	</ComponentTemplate>
+</Folder>
+<Folder Name="Gameplay" Guid="d3d4b692-acc9-4128-9b99-a5acf1de1fbb">
+	<ComponentTemplate Name="BlocksEntity" Description="Represents an entity that is a part of terrain as blocks" Guid="19a85cba-d94e-41b8-9497-f20ed942c17e" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+	  <Parameter Name="Class" Guid="6d97eae3-490b-4028-ba4d-bc9ef72eb069" Value="Game.ComponentBlocksEntity" Type="string" />
+	  <Parameter Name="Coordinates" Description="Block coordinates of entity" Guid="717a435a-514a-4177-b8d9-069ac586e6a8" Value="0,0,0" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="FireflySurround" Description="Handles sleeping of the creature entity" Guid="288816b9-23bd-4fb2-9a3b-ac78540b5e6b" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+	  <Parameter Name="Class" Guid="56dd5d8f-8a84-4bb6-bb7c-bc42afe926d4" Value="Game.ComponentFireflySurround" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="CombinedChest" Description="A chest that you can store items in" Guid="8312ec8c-10c7-4133-85b4-4a35bd44c956" InheritanceParent="91a44c6a-c30a-4f53-8d64-0c30aabab8f9">
+	  <Parameter Name="SlotsCount" Guid="0b7d4642-f972-431b-9828-d30e0fbf33f1" Value="32" Type="int" />
+	  <Parameter Name="Class" Guid="1caa89de-22f9-45aa-aae3-039ba63b12b6" Value="Game.ComponentCombinedChest" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="SkillInput" Description="Collects skill input for the player" Guid="84f93359-4e79-43ab-8cce-ff85a3ddedb3" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+	  <Parameter Name="Class" Guid="ec809766-ba61-4341-bfde-e677f506b887" Value="Game.ComponentSkillInput" Type="string" />
+	</ComponentTemplate>
+	<ComponentTemplate Name="InventoryWithPage" Description="Base component for all inventory-containing components" Guid="91a44c6a-c30a-4f53-8d64-0c30aabab8f9" InheritanceParent="b05700ed-7e4e-4679-98f5-b597f421496b">
+	  <ParameterSet Name="Slots" Description="Contains inventory slots contents, one parameter set per slot" Guid="bb4f2d01-ac8c-4943-841d-064726122409" />
+	  <Parameter Name="SlotsCount" Description="Number of inventory slots" Guid="db0f852e-38b4-4a74-a176-874fbe0c72c1" Value="0" Type="int" />
+	  <Parameter Name="PageIndex" Description="Active page of creative inventory" Guid="8ebc611d-a9ac-4c70-8edc-a35ee63892ea" Value="0" Type="int" />
+	</ComponentTemplate>
+</Folder>
+<Folder Name="BlockBehaviors" Guid="00c97f0f-731e-481c-9909-eae9cc5ee940">
+	<SubsystemTemplate Name="ExperienceOreBlockBehavior" Guid="139ea51e-c41d-4c93-99ae-a9b5a491c7aa" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <ParameterSet Name="Texts" Description="Contains sign texts" Guid="cdafca01-cf4e-414d-854e-aaaa8a138d0e" />
+	  <Parameter Name="Class" Guid="f62ca7a9-a354-48ee-a504-e7d112d859b9" Value="Game.SubsystemExperienceOreBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="OreSaplingBlockBehavior" Guid="4830d91c-64fd-4048-ac76-efe4b0e26315" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <ParameterSet Name="OreSaplings" Description="Contains saplings data" Guid="7743c56e-9e37-411d-ba9b-ad9bf5631201" />
+	  <Parameter Name="Class" Guid="7dfdc7f1-530b-4f6d-a7f3-1691f021533d" Value="Game.SubsystemOreSaplingBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="CombinedChestBlockBehavior" Guid="8723c7b1-fe0c-4013-b41b-db3f4d46ac03" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="Class" Guid="fffc87b1-8fdf-4b13-1c37-9590cbb19928" Value="Game.SubsystemCombinedChestBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="TelescopeBlockBehavior" Guid="0f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="Class" Guid="018571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemTelescopeBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="FlysharkBlockBehavior" Guid="1f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="Class" Guid="118571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemFlysharkBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="DefenceTowerCoreBlockBehavior" Guid="2f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="Class" Guid="218571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemDefenceTowerCoreBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="AutoCollectPickablesHoleBlockBehavior" Guid="3f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="Class" Guid="318571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemAutoCollectPickablesHoleBlockBehavior" Type="string" />
+	</SubsystemTemplate>
+	<SubsystemTemplate Name="FactorioTransportBeltBlockBehavior" Guid="4f038d3d-e999-452c-959d-47eefb16457a" InheritanceParent="fefb9590-4972-4893-b02a-76063611b745">
+	  <Parameter Name="FactorioTransportBelt" Description="List of FactorioTransportBelt positions in the world" Guid="392653e2-854a-4805-ace9-e64bd00de984" Value="" Type="string" />
+	  <Parameter Name="Class" Guid="418571da-4268-41d7-90a9-9a066f2feea8" Value="Game.SubsystemFactorioTransportBeltBLockBehavior" Type="string" />
+	</SubsystemTemplate>
+</Folder>
+<Folder Name="Gameplay" Guid="23dd4cdf-442b-4951-b4b1-1043fe4f444e">
+	<SubsystemTemplate Name="BlocksEntities" Description="Manages entities associated with terrain blocks" Guid="dcd8d745-1802-4dc7-80ed-8e01712fe611" InheritanceParent="a3914c13-7801-46a6-b23a-9e2b36e9defb">
+	  <Parameter Name="Class" Guid="fee3dcbd-2520-4868-ab8b-895491f05bdc" Value="Game.SubsystemBlocksEntities" Type="string" />
+	</SubsystemTemplate>
+</Folder>
+</Mod>

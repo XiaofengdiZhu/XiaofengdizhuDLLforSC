@@ -12,7 +12,7 @@ namespace Game
 
         private Dictionary<string, bool> m_skillInputDictionary;
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentPlayer = Entity.FindComponent<ComponentPlayer>(true);
@@ -23,22 +23,19 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public void Update(float dt)
         {
-            Dictionary<string, bool> skillInputDictionary = new Dictionary<string, bool>();
+            var skillInputDictionary = new Dictionary<string, bool>();
             foreach (string key in SkillManager.DefaultSkillInputDictionary.Keys)
             {
                 skillInputDictionary.Add(key, SkillManager.DefaultSkillInputDictionary[key]);
             }
             m_skillInputDictionary = skillInputDictionary;
             UpdateInputFromMouseAndKeyboard();
-            if (this.m_componentPlayer.ComponentHealth.Health > 0f && !this.m_componentPlayer.ComponentSleep.IsSleeping && this.m_componentPlayer.View.ActiveCamera.IsEntityControlEnabled)
+            if (m_componentPlayer.ComponentHealth.Health > 0f && !m_componentPlayer.ComponentSleep.IsSleeping && m_componentPlayer.View.ActiveCamera.IsEntityControlEnabled)
             {
                 skillInputDictionary = m_skillInputDictionary;
             }
@@ -55,10 +52,10 @@ namespace Game
 
         private void UpdateInputFromMouseAndKeyboard()
         {
-            Dictionary<string, bool> skillInputDictionary = new Dictionary<string, bool>();
+            var skillInputDictionary = new Dictionary<string, bool>();
             foreach (string key in m_skillInputDictionary.Keys)
             {
-                skillInputDictionary.Add(key, (m_skillInputDictionary[key] || SkillManager.SkillDictionary[key].Input()));
+                skillInputDictionary.Add(key, m_skillInputDictionary[key] || SkillManager.SkillDictionary[key].Input());
             }
             m_skillInputDictionary = skillInputDictionary;
         }

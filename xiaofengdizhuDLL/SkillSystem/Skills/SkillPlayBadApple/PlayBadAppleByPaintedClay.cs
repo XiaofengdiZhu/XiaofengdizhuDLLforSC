@@ -20,13 +20,13 @@ namespace Game
         public PlayBadAppleByPaintedClay()
         {
             Stream stream = Storage.OpenFile("app:BadAppleByPaintedClay\\BadApple.ogg", OpenFileMode.Read);
-            BinaryReader br = new BinaryReader(stream);
+            var br = new BinaryReader(stream);
             SoundBuffer soundBuffer;
             bool flag = br.ReadBoolean();
             int bytesCount = br.ReadInt32();
             if (flag)
             {
-                MemoryStream memoryStream = new MemoryStream();
+                var memoryStream = new MemoryStream();
                 using (StreamingSource streamingSource = Ogg.Stream(stream, false))
                 {
                     streamingSource.CopyTo(memoryStream);
@@ -74,11 +74,11 @@ namespace Game
                 {
                     try
                     {
-                        commonMethod.setBlock(x, 56 - y, -1, Terrain.ReplaceData(72, (1 | color2colorInt[m_pictures[m_pictureIndex].GetPixel(x, y)] << 1)));
+                        commonMethod.setBlock(x, 56 - y, -1, Terrain.ReplaceData(72, 1 | color2colorInt[m_pictures[m_pictureIndex].GetPixel(x, y)] << 1));
                     }
                     catch
                     {
-                        commonMethod.setBlock(x, 56 - y, -1, Terrain.ReplaceData(72, (1 | 8 << 1)));
+                        commonMethod.setBlock(x, 56 - y, -1, Terrain.ReplaceData(72, 1 | 8 << 1));
                     }
                 }
             }

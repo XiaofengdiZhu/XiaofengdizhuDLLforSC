@@ -20,21 +20,15 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public override float ImportanceLevel
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentCreature = Entity.FindComponent<ComponentCreature>(true);
@@ -49,7 +43,7 @@ namespace Game
         {
             if (m_subsystemTime.GameTime >= m_nextUpdateTime)
             {
-                Vector3 vector3 = this.m_componentCreature.ComponentBody.Position;
+                Vector3 vector3 = m_componentCreature.ComponentBody.Position;
                 if (!m_isDigging)
                 {
                     TerrainRaycastResult? terrainRaycastResult = m_componentMiner.PickTerrainForDigging(vector3, new Vector3(0, -1, 0));
@@ -91,8 +85,8 @@ namespace Game
             }
         }
 
-        public ComponentDiggerBehavior() : base()
+        /*public ComponentDiggerBehavior() : base()
         {
-        }
+        }*/
     }
 }

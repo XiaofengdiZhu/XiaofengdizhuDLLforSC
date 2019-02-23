@@ -1,6 +1,4 @@
-﻿using GameEntitySystem;
-
-namespace Game
+﻿namespace Game
 {
     public abstract class Skill
     {
@@ -21,20 +19,9 @@ namespace Game
         {
         }
 
-        public Project project
-        {
-            get
-            {
-                return GameManager.Project;
-            }
-        }
-
         public ComponentPlayer componentPlayer
         {
-            get
-            {
-                return subsystems.componentPlayer;
-            }
+            get { return subsystems.componentPlayer; }
         }
     }
 }

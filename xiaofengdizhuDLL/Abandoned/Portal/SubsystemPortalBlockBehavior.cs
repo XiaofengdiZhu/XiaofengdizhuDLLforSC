@@ -20,16 +20,10 @@ namespace Game
         private double m_nextUpdateTime;
         public override int[] HandledBlocks
         {
-            get
-            {
-                return new int[]
-                {
-                    370
-                };
-            }
+            get { return new[] { 370 }; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary)
+        public override void Load(ValuesDictionary valuesDictionary)
         {
             base.Load(valuesDictionary);
             m_subsystemTime = Project.FindSubsystem<SubsystemTime>(true);
@@ -104,18 +98,12 @@ namespace Game
 
         public int[] DrawOrders
         {
-            get
-            {
-                return new int[] { 10 };
-            }
+            get { return new[] { 10 }; }
         }
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public class Portal

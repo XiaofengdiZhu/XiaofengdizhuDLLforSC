@@ -15,53 +15,48 @@ namespace Game
                 return 42;
             }
             int num = Terrain.ExtractData(value);
-            if (num == 0)
+            switch (num)
             {
-                if (face == 0)
-                {
-                    return 27;
-                }
-                if (face == 2)
-                {
-                    return 26;
-                }
-                return 25;
-            }
-            else if (num == 1)
-            {
-                if (face == 1)
-                {
-                    return 27;
-                }
-                if (face == 3)
-                {
-                    return 26;
-                }
-                return 25;
-            }
-            else if (num == 2)
-            {
-                if (face == 2)
-                {
-                    return 27;
-                }
-                if (face == 0)
-                {
-                    return 26;
-                }
-                return 25;
-            }
-            else
-            {
-                if (face == 3)
-                {
-                    return 27;
-                }
-                if (face == 1)
-                {
-                    return 26;
-                }
-                return 25;
+                case 0:
+                    if (face == 0)
+                    {
+                        return 27;
+                    }
+                    if (face == 2)
+                    {
+                        return 26;
+                    }
+                    return 25;
+                case 1:
+                    if (face == 1)
+                    {
+                        return 27;
+                    }
+                    if (face == 3)
+                    {
+                        return 26;
+                    }
+                    return 25;
+                case 2:
+                    if (face == 2)
+                    {
+                        return 27;
+                    }
+                    if (face == 0)
+                    {
+                        return 26;
+                    }
+                    return 25;
+                default:
+                    if (face == 3)
+                    {
+                        return 27;
+                    }
+                    if (face == 1)
+                    {
+                        return 26;
+                    }
+                    return 25;
             }
         }
 

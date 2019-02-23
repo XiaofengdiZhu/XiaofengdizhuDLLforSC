@@ -6,11 +6,11 @@ namespace Game
 {
     public class PlayGluttonousSnake
     {
-        private Engine.Random m_random = new Engine.Random();
+        protected Engine.Random m_random = new Engine.Random();
         private int m_width;
         private int m_height;
         public List<Snake> m_snakes;
-        private TerrainType[,] m_layerTerrain;
+        private readonly TerrainType[,] m_layerTerrain;
         private int[,] m_layerSnake;
         private bool[,] m_layerSnakeHead;
         private Color[,] m_layerOutput;
@@ -27,7 +27,7 @@ namespace Game
             Computer
         }
 
-        private Color[] m_snakeBodyColor = new Color[]{
+        private readonly Color[] m_snakeBodyColor = new Color[]{
             new Color(0,0,0),
             new Color(255,255,255),
             new Color(255,255,255),
@@ -36,7 +36,7 @@ namespace Game
             new Color(255,0,0)
         };
 
-        private Color[] m_snakeHeadColor = new Color[]{
+        private readonly Color[] m_snakeHeadColor = new Color[]{
             new Color(0,0,0),
             new Color(160,160,160),
             new Color(160,160,160),
@@ -92,7 +92,7 @@ namespace Game
 
             public static bool operator ==(Point p1, Point p2)
             {
-                return (p1.X == p2.X && p1.Y == p2.Y);
+                return p1.X == p2.X && p1.Y == p2.Y;
             }
 
             public override bool Equals(object obj)
@@ -107,7 +107,7 @@ namespace Game
 
             public static bool operator !=(Point p1, Point p2)
             {
-                return (p1.X != p2.X || p1.Y != p2.Y);
+                return p1.X != p2.X || p1.Y != p2.Y;
             }
 
             public override string ToString()
@@ -117,7 +117,7 @@ namespace Game
 
             public override int GetHashCode()
             {
-                return this.X + this.Y;
+                return X + Y;
             }
 
             public Point TurnRight()
@@ -171,12 +171,7 @@ namespace Game
             public Point Direction;
             public Point LastDirection;
             public Point Head;
-            public List<Point> Body;
-
-            public Snake()
-            {
-                Body = new List<Point>();
-            }
+            public List<Point> Body = new List<Point>();
         }
 
         public PlayGluttonousSnake(int width, int height)
@@ -187,48 +182,32 @@ namespace Game
             m_layerSnake = new int[m_width, m_height];
             m_layerSnakeHead = new bool[m_width, m_height];
             m_layerOutput = new Color[m_width, m_height];
-            m_snakes = new List<Snake>();
-            m_snakes.Add(new Snake() { Index = 0, Type = SnakeType.None, Status = SnakeStatus.Dead });
+            m_snakes = new List<Snake>
+            {
+                new Snake() { Index = 0, Type = SnakeType.None, Status = SnakeStatus.Dead }
+            };
         }
 
         public int Width
         {
-            get
-            {
-                return this.m_width;
-            }
-            set
-            {
-                m_width = value;
-            }
+            get { return m_width; }
+            set { m_width = value; }
         }
 
         public int Height
         {
-            get
-            {
-                return this.m_height;
-            }
-            set
-            {
-                m_height = value;
-            }
+            get { return m_height; }
+            set { m_height = value; }
         }
 
         public Color[,] OutputLayer
         {
-            get
-            {
-                return m_layerOutput;
-            }
+            get { return m_layerOutput; }
         }
 
         public List<Snake> Snakes
         {
-            get
-            {
-                return m_snakes;
-            }
+            get { return m_snakes; }
         }
 
         public bool isPointInRange(Point point)
@@ -296,7 +275,7 @@ namespace Game
                             direction = Point.Left;
                         }
                     }
-                    if (direction != snake.LastDirection && direction != -(snake.LastDirection))
+                    if (direction != snake.LastDirection && direction != -snake.LastDirection)
                     {
                         snake.Direction = direction;
                     }
@@ -312,7 +291,7 @@ namespace Game
                 if (snake.Type != SnakeType.Computer) continue;
                 Point fruitDirection = FindFruitDirection(snake.Head, snake.LastDirection, snake.Index);
                 Point direction = fruitDirection;
-                if (direction == Point.Zero || direction == snake.LastDirection || direction == -(snake.LastDirection))
+                if (direction == Point.Zero || direction == snake.LastDirection || direction == -snake.LastDirection)
                 {
                     fruitDirection = snake.LastDirection;
                     direction = snake.LastDirection;
@@ -324,7 +303,7 @@ namespace Game
                     || (m_layerSnake[nextPosition.X, nextPosition.Y] > 0 && m_layerSnake[nextPosition.X, nextPosition.Y] != snake.Index)
                     || m_layerTerrain[nextPosition.X, nextPosition.Y] == TerrainType.Wall
                     || (
-                        (m_layerSnake[nextPosition.X, nextPosition.Y] == 0 && m_layerTerrain[nextPosition.X, nextPosition.Y] != TerrainType.Wall)
+                        m_layerSnake[nextPosition.X, nextPosition.Y] == 0 && m_layerTerrain[nextPosition.X, nextPosition.Y] != TerrainType.Wall
                         && (
                             (isPointInRange(nextPosition.X + direction.X, nextPosition.Y + direction.Y) && m_layerSnakeHead[nextPosition.X + direction.X, nextPosition.Y + direction.Y])
                             || (isPointInRange(nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y) && m_layerSnakeHead[nextPosition.X + direction.TurnLeft().X, nextPosition.Y + direction.TurnLeft().Y])
@@ -366,7 +345,7 @@ namespace Game
                         nextPosition = snake.Head + direction;
                     }
                 }
-                if (direction == Point.Zero || direction == -(snake.LastDirection))
+                if (direction == Point.Zero || direction == -snake.LastDirection)
                 {
                     snake.Direction = snake.LastDirection;
                 }
@@ -379,7 +358,7 @@ namespace Game
 
         public void MoveSnakes()
         {
-            List<Snake> deadSnakes = new List<Snake>();
+            var deadSnakes = new List<Snake>();
             foreach (Snake snake in m_snakes)
             {
                 if (snake.Status == SnakeStatus.Dead) continue;
@@ -435,8 +414,8 @@ namespace Game
                 {
                     m_layerSnake[point.X, point.Y] = snake.Index;
                 }
-                if (m_layerSnake[snake.Head.X, snake.Head.Y] == 0) m_layerSnake[snake.Head.X, snake.Head.Y] = (int)snake.Index;
-                m_layerSnakeHead[snake.Head.X, snake.Head.Y] = (snake.Index > 0);
+                if (m_layerSnake[snake.Head.X, snake.Head.Y] == 0) m_layerSnake[snake.Head.X, snake.Head.Y] = snake.Index;
+                m_layerSnakeHead[snake.Head.X, snake.Head.Y] = snake.Index > 0;
             }
         }
 
@@ -489,7 +468,7 @@ namespace Game
         public void AddSnake(SnakeType type)
         {
             Point position = Point.Zero;
-            List<Point> directions = new List<Point>();
+            var directions = new List<Point>();
             int triedTimes = 0;
             while (true)
             {
@@ -509,7 +488,7 @@ namespace Game
                 if (triedTimes > 1000) return;
             }
             int index = m_random.Int();
-            Snake snake = new Snake()
+            var snake = new Snake()
             {
                 Index = index,
                 Type = type,
@@ -540,10 +519,10 @@ namespace Game
 
         public Point FindFruitDirection(Point position, Point originDirection, int snakeIndex)
         {
-            Dictionary<Point, int> close = new Dictionary<Point, int>() { { position, 0 } };
-            Dictionary<Point, int> open = new Dictionary<Point, int>();
+            var close = new Dictionary<Point, int>() { { position, 0 } };
+            var open = new Dictionary<Point, int>();
             bool flag = m_random.Bool();
-            List<Point> fourDirection = new List<Point>() {
+            var fourDirection = new List<Point>() {
                 originDirection,
                 flag ? originDirection.TurnRight() : originDirection.TurnLeft(),
                 flag ? originDirection.TurnLeft() : originDirection.TurnRight(),
@@ -627,7 +606,7 @@ namespace Game
                 while (close[previousPosition] > 1)
                 {
                     circled++;
-                    Point[] previousPositions = new Point[5];
+                    var previousPositions = new Point[5];
                     previousPositions[4] = previousPosition;
                     for (int directionIndex = 0; directionIndex < 4; directionIndex++)
                     {

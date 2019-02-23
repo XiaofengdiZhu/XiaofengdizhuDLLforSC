@@ -45,7 +45,7 @@ namespace Game
         {
             return string.Format("{0},{1},{2},{3}", new object[]
             {
-                this.X,this.Y,this.Z,this.Value
+                X,Y,Z,Value
             });
         }
 

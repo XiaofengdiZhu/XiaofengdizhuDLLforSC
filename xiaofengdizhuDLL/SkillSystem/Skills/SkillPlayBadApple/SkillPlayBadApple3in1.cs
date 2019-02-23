@@ -65,5 +65,4 @@ namespace Game
             m_playBadAppleByPaintedClay.m_music.Volume = volume;
         }
     }
-}
-*/
+}*/

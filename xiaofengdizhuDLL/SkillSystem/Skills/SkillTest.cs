@@ -56,7 +56,7 @@ namespace Game
             Vector3 position = commonMethod.playerPosition;
             commonMethod.exportBlocks((int)position.X + 1, (int)position.Y + 1, (int)position.Z + 1, (int)position.X + 10, (int)position.Y - 10, (int)position.Z + 10, "data:/mydata", "Binary");
             commonMethod.exportBlocks((int)position.X + 1, (int)position.Y + 1, (int)position.Z + 1, (int)position.X + 10, (int)position.Y - 10, (int)position.Z + 10, "data:/mydata.txt", "Text");
-            commonMethod.uploadFile("data:/mydata.txt");
+            CommonMethod.uploadFile("data:/mydata.txt");
         }
     }
 
@@ -76,8 +76,10 @@ namespace Game
         public override void Action()
         {
             //转换dae模型
-            Engine.Content.ModelDataContentWriter m = new Engine.Content.ModelDataContentWriter();
-            m.ModelData = "miku.dae";
+            var m = new Engine.Content.ModelDataContentWriter
+            {
+                ModelData = "miku.dae"
+            };
             Stream st = Storage.OpenFile("data:/logs\\miku", OpenFileMode.CreateOrOpen);
             m.Write("app:/myDae", st);
             st.Flush();
@@ -113,14 +115,8 @@ namespace Game
 
         public Maze LastMaze
         {
-            get
-            {
-                return m_lastMaze;
-            }
-            set
-            {
-                m_lastMaze = value;
-            }
+            get { return m_lastMaze; }
+            set { m_lastMaze = value; }
         }
     }
 
@@ -145,7 +141,7 @@ namespace Game
                 Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
                 Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
                 GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
-                Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+                var direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
                 TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
                 if (terrainRaycastResult.HasValue)
                 {
@@ -188,7 +184,7 @@ namespace Game
                 Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
                 Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
                 GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
-                Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+                var direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
                 TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
                 if (terrainRaycastResult.HasValue)
                 {
@@ -231,7 +227,7 @@ namespace Game
                 Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
                 Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
                 GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
-                Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+                var direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
                 TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
                 if (terrainRaycastResult.HasValue)
                 {
@@ -273,7 +269,7 @@ namespace Game
                 Vector3 viewPosition = componentPlayer.View.ActiveCamera.ViewPosition;
                 Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewDirection;
                 GameViewWidget gameViewWidget = componentPlayer.View.GameWidget.GameViewWidget;
-                Vector3 direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
+                var direction = Vector3.Normalize(componentPlayer.View.ActiveCamera.ScreenToWorld(new Vector3(gameViewWidget.WidgetToScreen(gameViewWidget.ActualSize / 2f), 1f), Matrix.Identity) - viewPosition);
                 TerrainRaycastResult? terrainRaycastResult = miner.PickTerrainForDigging(viewPosition, direction);
                 if (terrainRaycastResult.HasValue)
                 {

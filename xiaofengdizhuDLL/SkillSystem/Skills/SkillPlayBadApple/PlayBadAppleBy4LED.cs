@@ -18,13 +18,13 @@ namespace Game
         public PlayBadAppleBy4LED()
         {
             Stream stream = Storage.OpenFile("app:BadAppleBy4LED\\BadApple.ogg", OpenFileMode.Read);
-            BinaryReader br = new BinaryReader(stream);
+            var br = new BinaryReader(stream);
             SoundBuffer soundBuffer;
             bool flag = br.ReadBoolean();
             int bytesCount = br.ReadInt32();
             if (flag)
             {
-                MemoryStream memoryStream = new MemoryStream();
+                var memoryStream = new MemoryStream();
                 using (StreamingSource streamingSource = Ogg.Stream(stream, false))
                 {
                     streamingSource.CopyTo(memoryStream);
@@ -53,7 +53,7 @@ namespace Game
                 {
                     try
                     {
-                        GlowPoint[] glowPoints = ((FourLedElectricElement)(commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4))).m_glowPoints;
+                        GlowPoint[] glowPoints = ((FourLedElectricElement)commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4)).m_glowPoints;
                         glowPoints[0].Color = m_pictures[m_pictureIndex].GetPixel(x * 2 + 1, y * 2);
                         glowPoints[1].Color = m_pictures[m_pictureIndex].GetPixel(x * 2 + 1, y * 2 + 1);
                         glowPoints[2].Color = m_pictures[m_pictureIndex].GetPixel(x * 2, y * 2);

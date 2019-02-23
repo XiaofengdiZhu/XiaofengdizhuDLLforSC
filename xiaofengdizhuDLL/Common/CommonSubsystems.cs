@@ -1,143 +1,37 @@
-﻿using GameEntitySystem;
-
-namespace Game
+﻿namespace Game
 {
     public class CommonSubsystems
     {
-        public Project project
-        {
-            get
-            {
-                return GameManager.Project;
-            }
-        }
+        public SubsystemPlayers players = GameManager.Project.FindSubsystem<SubsystemPlayers>(true);
 
-        public SubsystemPlayers players
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemPlayers>(true);
-            }
-        }
+        public ComponentPlayer componentPlayer = GameManager.Project.FindSubsystem<SubsystemPlayers>(true).ComponentPlayers[0];
 
-        public ComponentPlayer componentPlayer
-        {
-            get
-            {
-                return players.ComponentPlayers[0];
-            }
-        }
+        public ComponentGui componentGui = GameManager.Project.FindSubsystem<SubsystemPlayers>(true).ComponentPlayers[0].ComponentGui;
 
-        public ComponentGui componentGui
-        {
-            get
-            {
-                return componentPlayer.Entity.FindComponent<ComponentGui>(true);
-            }
-        }
+        public SubsystemTerrain terrain = GameManager.Project.FindSubsystem<SubsystemTerrain>(true);
 
-        public SubsystemTerrain terrain
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemTerrain>(true);
-            }
-        }
+        public SubsystemExplosions explosions = GameManager.Project.FindSubsystem<SubsystemExplosions>(true);
 
-        public SubsystemExplosions explosions
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemExplosions>(true);
-            }
-        }
+        public SubsystemDrawing drawing = GameManager.Project.FindSubsystem<SubsystemDrawing>(true);
 
-        public SubsystemDrawing drawing
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemDrawing>(true);
-            }
-        }
+        public SubsystemWeather weather = GameManager.Project.FindSubsystem<SubsystemWeather>(true);
 
-        public SubsystemWeather weather
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemWeather>(true);
-            }
-        }
+        public SubsystemSky sky = GameManager.Project.FindSubsystem<SubsystemSky>(true);
 
-        public SubsystemSky sky
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemSky>(true);
-            }
-        }
+        public SubsystemGameInfo gameInfo = GameManager.Project.FindSubsystem<SubsystemGameInfo>(true);
 
-        public SubsystemGameInfo gameInfo
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemGameInfo>(true);
-            }
-        }
+        public SubsystemTime time = GameManager.Project.FindSubsystem<SubsystemTime>(true);
 
-        public SubsystemTime time
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemTime>(true);
-            }
-        }
+        public SubsystemPickables pickables = GameManager.Project.FindSubsystem<SubsystemPickables>(true);
 
-        public SubsystemPickables pickables
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemPickables>(true);
-            }
-        }
+        public SubsystemProjectiles projectiles = GameManager.Project.FindSubsystem<SubsystemProjectiles>(true);
 
-        public SubsystemProjectiles projectiles
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemProjectiles>(true);
-            }
-        }
+        public SubsystemParticles particles = GameManager.Project.FindSubsystem<SubsystemParticles>(true);
 
-        public SubsystemParticles particles
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemParticles>(true);
-            }
-        }
+        public SubsystemFireworksBlockBehavior fireworks = GameManager.Project.FindSubsystem<SubsystemFireworksBlockBehavior>(true);
 
-        public SubsystemFireworksBlockBehavior fireworks
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemFireworksBlockBehavior>(true);
-            }
-        }
+        public SubsystemElectricity electricity = GameManager.Project.FindSubsystem<SubsystemElectricity>(true);
 
-        public SubsystemElectricity electricity
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemElectricity>(true);
-            }
-        }
-
-        public SubsystemGlow glow
-        {
-            get
-            {
-                return project.FindSubsystem<SubsystemGlow>(true);
-            }
-        }
+        public SubsystemGlow glow = GameManager.Project.FindSubsystem<SubsystemGlow>(true);
     }
 }

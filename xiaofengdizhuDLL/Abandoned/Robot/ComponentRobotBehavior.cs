@@ -28,19 +28,13 @@ namespace Game
         public double m_lastBreedTime;
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
         public override float ImportanceLevel
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_subsystemGameInfo = Project.FindSubsystem<SubsystemGameInfo>(true);

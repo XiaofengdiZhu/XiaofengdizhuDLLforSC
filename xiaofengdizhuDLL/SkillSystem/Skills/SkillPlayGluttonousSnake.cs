@@ -44,7 +44,7 @@ namespace Game
 
         public override void Action()
         {
-            Vector2 position = new Vector2(10f, 46f);
+            var position = new Vector2(10f, 46f);
             FontBatch2D fontBatch2D = commonMethod.subsystems.componentGui.PrimitivesRenderer2D.FontBatch(ContentManager.Get<BitmapFont>("Fonts/Pericles32"), 1, DepthStencilState.None, null, BlendState.AlphaBlend, null);
             foreach (PlayGluttonousSnake.Snake snake in m_playGluttonousSnake.Snakes)
             {
@@ -70,7 +70,7 @@ namespace Game
                     {
                         try
                         {
-                            GlowPoint[] glowPoints = ((FourLedElectricElement)(commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4))).m_glowPoints;
+                            GlowPoint[] glowPoints = ((FourLedElectricElement)commonMethod.subsystems.electricity.GetElectricElement(x, 3, y, 4)).m_glowPoints;
                             glowPoints[0].Color = m_playGluttonousSnake.OutputLayer[x * 2 + 1, y * 2];
                             glowPoints[1].Color = m_playGluttonousSnake.OutputLayer[x * 2 + 1, y * 2 + 1];
                             glowPoints[2].Color = m_playGluttonousSnake.OutputLayer[x * 2, y * 2];

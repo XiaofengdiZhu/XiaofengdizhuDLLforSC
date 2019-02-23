@@ -13,24 +13,24 @@ namespace Game
             Matrix boneAbsoluteTransform2 = BlockMesh.GetBoneAbsoluteTransform(model.FindMesh("Leaves", true).ParentBone);
             Matrix boneAbsoluteTransform3 = BlockMesh.GetBoneAbsoluteTransform(model.FindMesh("Decorations", true).ParentBone);
             Color color = BlockColorsMap.SpruceLeavesColorsMap.Lookup(4, 15);
-            this.m_leavesBlockMesh.AppendModelMeshPart(model.FindMesh("Leaves", true).MeshParts[0], boneAbsoluteTransform2 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, true, false, Color.White);
-            this.m_standTrunkBlockMesh.AppendModelMeshPart(model.FindMesh("StandTrunk", true).MeshParts[0], boneAbsoluteTransform * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, false, false, Color.White);
-            this.m_decorationsBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, false, false, Color.White);
-            this.m_litDecorationsBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), true, false, false, false, Color.White);
-            this.m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("StandTrunk", true).MeshParts[0], boneAbsoluteTransform * Matrix.CreateTranslation(0f, -1f, 0f), false, false, false, false, Color.White);
-            this.m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("Leaves", true).MeshParts[0], boneAbsoluteTransform2 * Matrix.CreateTranslation(0f, -1f, 0f), false, false, true, false, color);
-            this.m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0f, -1f, 0f), false, false, false, false, Color.White);
+            m_leavesBlockMesh.AppendModelMeshPart(model.FindMesh("Leaves", true).MeshParts[0], boneAbsoluteTransform2 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, true, false, Color.White);
+            m_standTrunkBlockMesh.AppendModelMeshPart(model.FindMesh("StandTrunk", true).MeshParts[0], boneAbsoluteTransform * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, false, false, Color.White);
+            m_decorationsBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), false, false, false, false, Color.White);
+            m_litDecorationsBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0.5f, 0f, 0.5f), true, false, false, false, Color.White);
+            m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("StandTrunk", true).MeshParts[0], boneAbsoluteTransform * Matrix.CreateTranslation(0f, -1f, 0f), false, false, false, false, Color.White);
+            m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("Leaves", true).MeshParts[0], boneAbsoluteTransform2 * Matrix.CreateTranslation(0f, -1f, 0f), false, false, true, false, color);
+            m_standaloneBlockMesh.AppendModelMeshPart(model.FindMesh("Decorations", true).MeshParts[0], boneAbsoluteTransform3 * Matrix.CreateTranslation(0f, -1f, 0f), false, false, false, false, Color.White);
             base.Initialize();
         }
 
         public override void DrawBlock(PrimitivesRenderer3D primitivesRenderer, int value, Color color, float size, ref Matrix matrix, DrawBlockEnvironmentData environmentData)
         {
-            BlocksManager.DrawMeshBlock(primitivesRenderer, this.m_standaloneBlockMesh, color, size, ref matrix, environmentData);
+            BlocksManager.DrawMeshBlock(primitivesRenderer, m_standaloneBlockMesh, color, size, ref matrix, environmentData);
         }
 
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
-            Color[] oreColor = new Color[]
+            Color[] oreColor =
             {
                 new Color(255,205,97),
                 new Color(12,12,12),
@@ -42,16 +42,16 @@ namespace Game
                 new Color(222,222,222),
             };
             Color color = BlockColorsMap.SpruceLeavesColorsMap.Lookup(generator.Terrain, x, z);
-            generator.GenerateMeshVertices(this, x, y, z, this.m_standTrunkBlockMesh, Color.White, null, geometry.SubsetOpaque);
-            generator.GenerateMeshVertices(this, x, y, z, this.m_litDecorationsBlockMesh, oreColor[Terrain.ExtractData(value)], null, geometry.SubsetOpaque);
-            generator.GenerateMeshVertices(this, x, y, z, this.m_leavesBlockMesh, color, null, geometry.SubsetAlphaTest);
+            generator.GenerateMeshVertices(this, x, y, z, m_standTrunkBlockMesh, Color.White, null, geometry.SubsetOpaque);
+            generator.GenerateMeshVertices(this, x, y, z, m_litDecorationsBlockMesh, oreColor[Terrain.ExtractData(value)], null, geometry.SubsetOpaque);
+            generator.GenerateMeshVertices(this, x, y, z, m_leavesBlockMesh, color, null, geometry.SubsetAlphaTest);
             generator.GenerateWireVertices(value, x, y, z, 4, 0.01f, Vector2.Zero, geometry.SubsetOpaque);
         }
 
         public override BlockDebrisParticleSystem CreateDebrisParticleSystem(SubsystemTerrain subsystemTerrain, Vector3 position, int value, float strength)
         {
             Color color = BlockColorsMap.SpruceLeavesColorsMap.Lookup(subsystemTerrain.Terrain, Terrain.ToCell(position.X), Terrain.ToCell(position.Z));
-            return new BlockDebrisParticleSystem(subsystemTerrain, position, strength, this.DestructionDebrisScale, color, this.DefaultTextureSlot);
+            return new BlockDebrisParticleSystem(subsystemTerrain, position, strength, DestructionDebrisScale, color, DefaultTextureSlot);
         }
 
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
@@ -69,7 +69,7 @@ namespace Game
                 case 6: name = "Germanium"; break;
                 case 7: name = "Saltpeter"; break;
             }
-            if (name.Length > 0) return name += " Ore Sapling"; else return "Ore Sapling";
+            return name.Length > 0 ? name + " Ore Sapling" : "Ore Sapling";
         }
 
         public override IEnumerable<int> GetCreativeValues()
@@ -87,7 +87,7 @@ namespace Game
 
         public override IEnumerable<CraftingRecipe> GetProceduralCraftingRecipes()
         {
-            string[] array = new string[]
+            string[] array =
             {
                 "diamondblock",
                 "coalblock",
@@ -100,7 +100,7 @@ namespace Game
             };
             for (int i = 0; i < 8; i++)
             {
-                CraftingRecipe craftingRecipe = new CraftingRecipe
+                var craftingRecipe = new CraftingRecipe
                 {
                     ResultCount = 1,
                     ResultValue = Terrain.MakeBlockValue(340, 0, i),

@@ -1,5 +1,4 @@
 ﻿using Engine;
-using GameEntitySystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,41 +11,21 @@ namespace Game
     {
         public CommonSubsystems subsystems = new CommonSubsystems();
 
-        public Project project
-        {
-            get
-            {
-                return GameManager.Project;
-            }
-        }
-
         public ReadOnlyList<ComponentPlayer> componentPlayers
         {
-            get
-            {
-                return subsystems.players.ComponentPlayers;
-            }
+            get { return subsystems.players.ComponentPlayers; }
         }
 
         public ComponentPlayer componentPlayer
         {
-            get
-            {
-                return componentPlayers[0];
-            }
+            get { return componentPlayers[0]; }
         }
 
         //常用方法
         public Vector3 playerPosition
         {
-            get
-            {
-                return componentPlayer.ComponentBody.Position;
-            }
-            set
-            {
-                componentPlayer.ComponentBody.Position = value;
-            }
+            get { return componentPlayer.ComponentBody.Position; }
+            set { componentPlayer.ComponentBody.Position = value; }
         }
 
         //获取指定位置方块Value
@@ -56,7 +35,7 @@ namespace Game
         }
 
         //方块Value转方块ID
-        public int BlockValue2ID(int value)
+        public static int BlockValue2ID(int value)
         {
             //TerrainData.ExtractContents
             return value & 1023;
@@ -243,12 +222,12 @@ namespace Game
             exportBlocks(storeBlocks, stream, way);
         }
 
-        public void exportBlocks(StoreBlocks storeBlocks, Stream stream, string way)
+        public static void exportBlocks(StoreBlocks storeBlocks, Stream stream, string way)
         {
             switch (way)
             {
                 case "Binary":
-                    using (BinaryWriter binaryWriter = new BinaryWriter(stream))
+                    using (var binaryWriter = new BinaryWriter(stream))
                     {
                         binaryWriter.Write(storeBlocks.Count);
                         foreach (StoreBlock storeBlock in storeBlocks)
@@ -262,7 +241,7 @@ namespace Game
                     break;
 
                 case "Text":
-                    using (StreamWriter streamWriter = new StreamWriter(stream, Encoding.UTF8))
+                    using (var streamWriter = new StreamWriter(stream, Encoding.UTF8))
                     {
                         int blockCount = storeBlocks.Count;
                         //string s = blockCount.ToString();
@@ -281,7 +260,7 @@ namespace Game
 
         public StoreBlocks getBlocks(int x1, int y1, int z1, int dx, int dy, int dz)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             for (int x = 0; x <= dx; x++)
             {
                 for (int y = 0; y <= dy; y++)
@@ -303,14 +282,14 @@ namespace Game
             return importBlocks(stream, way);
         }
 
-        public StoreBlocks importBlocks(Stream stream, string way)
+        public static StoreBlocks importBlocks(Stream stream, string way)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             int blockCount = 0;
             switch (way)
             {
                 case "Binary":
-                    using (BinaryReader binaryReader = new BinaryReader(stream))
+                    using (var binaryReader = new BinaryReader(stream))
                     {
                         blockCount = binaryReader.ReadInt32();
                         for (int i = 0; i < blockCount; i++)
@@ -321,7 +300,7 @@ namespace Game
                     break;
 
                 case "Text":
-                    using (StreamReader streamReader = new StreamReader(stream, Encoding.UTF8))
+                    using (var streamReader = new StreamReader(stream, Encoding.UTF8))
                     {
                         string[] s = streamReader.ReadToEnd().Split(';');
                         blockCount = int.Parse(s[0]);
@@ -361,7 +340,7 @@ namespace Game
         //生成迷宫，floorValue、ceilingValue、borderValue为-1代表不生成地板、天花板、外墙，bottomY为-1会在地形表面生成整个迷宫
         public Maze generateMaze(int centerX, int centerZ, int sizeX, int sizeZ, int bottomY, int height, int wallValue, int floorValue, int ceilingValue, int borderValue)
         {
-            Maze maze = new Maze(sizeX, sizeZ);
+            var maze = new Maze(sizeX, sizeZ);
             bool[,] mazeArray = maze.GetBoolArray();
             int startX = centerX - (sizeX >> 1);
             int startZ = centerZ - (sizeZ >> 1);
@@ -457,23 +436,23 @@ namespace Game
             packFile(stream, fileName, targetFilePath);
         }
 
-        public void packFile(Stream file2Pack, string fileName, string targetFilePath)
+        public static void packFile(Stream file2Pack, string fileName, string targetFilePath)
         {
             Stream tmpStream = Storage.OpenFile(targetFilePath, OpenFileMode.Create);
-            using (ZipArchive zipArchive = ZipArchive.Create(tmpStream, true))
+            using (var zipArchive = ZipArchive.Create(tmpStream, true))
             {
                 zipArchive.AddStream(fileName, file2Pack);
             }
         }
 
-        public void uploadFile(string path)
+        public static void uploadFile(string path)
         {
             DialogsManager.ShowDialog(null, new SelectExternalContentProviderDialog("Select Upload Destination", false, delegate (IExternalContentProvider provider)
               {
                   try
                   {
                       string fileName = Storage.GetFileName(path);
-                      CancellableBusyDialog busyDialog = new CancellableBusyDialog("Uploading file", false);
+                      var busyDialog = new CancellableBusyDialog("Uploading file", false);
                       DialogsManager.ShowDialog(null, busyDialog);
                       Task.Run(delegate
                       {
@@ -487,12 +466,12 @@ namespace Game
                                   provider.Upload(fileName, stream, busyDialog.Progress, delegate
                                   {
                                       DialogsManager.HideDialog(busyDialog);
-                                      Utilities.Dispose<Stream>(ref stream);
+                                      Utilities.Dispose(ref stream);
                                   }, delegate (Exception error)
                                   {
                                       DialogsManager.HideDialog(busyDialog);
                                       DialogsManager.ShowDialog(null, new MessageDialog("Error", error.Message, "OK", null, null));
-                                      Utilities.Dispose<Stream>(ref stream);
+                                      Utilities.Dispose(ref stream);
                                   });
                               }, false);
                           }
@@ -500,7 +479,7 @@ namespace Game
                           {
                               DialogsManager.HideDialog(busyDialog);
                               DialogsManager.ShowDialog(null, new MessageDialog("Error", ex.Message, "OK", null, null));
-                              Utilities.Dispose<Stream>(ref stream);
+                              Utilities.Dispose(ref stream);
                           }
                       });
                   }

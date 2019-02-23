@@ -13,7 +13,7 @@ namespace Game
             Point3 B = RoundV3toP3(v2);
             Point3 C = RoundV3toP3(v3);
             StoreBlocks BC = getLine3D(B.X, B.Y, B.Z, C.X, C.Y, C.Z, value);
-            StoreBlocks ABC = new StoreBlocks();
+            var ABC = new StoreBlocks();
             ABC.IsAbsolute = true;
             ABC.AddRange(BC);
             foreach (StoreBlock D in BC)
@@ -35,7 +35,7 @@ namespace Game
 
         public static StoreBlocks getLine3D(int x1, int y1, int z1, int x2, int y2, int z2, int value)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
             Bresenham3D.DoLine(x1, y1, z1, x2, y2, z2, (int x3, int y3, int z3) => storeBlocks.Add(x3, y3, z3, value));
             return storeBlocks;
@@ -43,10 +43,10 @@ namespace Game
 
         public static StoreBlocks getCircle(int centerX, int centerY, int diameter, int value)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
             int radius = diameter >> 1;
-            bool isOdd = ((diameter & 1) == 1);
+            bool isOdd = (diameter & 1) == 1;
             int x = 0, y = radius, d = 3 - (radius << 1);
             while (x < y)
             {
@@ -67,7 +67,7 @@ namespace Game
 
         public static StoreBlocks CirclePlot(int centerX, int centerY, int x, int y, int value, bool isOdd)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
             if (isOdd)
             {
@@ -116,24 +116,24 @@ namespace Game
         //生成xz平面像素画，默认使用彩色粘土Clay,defaultColorIndex默认颜色序号（色表中不存在该颜色时的颜色）
         public static StoreBlocks getImage(string path, int defaultColorIndex)
         {
-            Image image = Image.Load(path);
+            var image = Image.Load(path);
             return getImage(image, defaultColorIndex);
         }
 
         public static StoreBlocks getImage(Image image, int defaultColorIndex)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             for (int x = 0; x < image.Width; x++)
             {
                 for (int y = 0; y < image.Height; y++)
                 {
                     try
                     {
-                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | color2colorInt[image.GetPixel(x, y)] << 1)));
+                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, 1 | color2colorInt[image.GetPixel(x, y)] << 1));
                     }
                     catch
                     {
-                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, (1 | defaultColorIndex << 1)));
+                        storeBlocks.Add(x, 0, y, Terrain.ReplaceData(72, 1 | defaultColorIndex << 1));
                     }
                 }
             }
@@ -143,24 +143,24 @@ namespace Game
         //谢尔宾斯基三角形
         public static float sqrt3 = (float)Math.Sqrt(3);
 
-        public static float sqrt12 = (float)(Math.Sqrt(12));
-        public static float sqrt48 = (float)(Math.Sqrt(48));
+        public static float sqrt12 = (float)Math.Sqrt(12);
+        public static float sqrt48 = (float)Math.Sqrt(48);
 
         public static StoreBlocks get3DSierpinskiTriangle(Vector3 bottomCenter, int value, float height, int targetTimes)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
-            StoreBlocks pyramid = getPyramid(Vector3.Zero, height / (float)(Math.Pow(2, targetTimes)), value);
+            StoreBlocks pyramid = getPyramid(Vector3.Zero, height / (float)Math.Pow(2, targetTimes), value);
             foreach (Vector3 v1 in get3DSierpinskiTriangleNextBotomCenters(bottomCenter, height, 0, targetTimes))
             {
-                storeBlocks.AddRange(pyramid.Translate3D(StaticCommonMethod.RoundV3toP3(v1)));
+                storeBlocks.AddRange(pyramid.Translate3D(RoundV3toP3(v1)));
             }
             return storeBlocks;
         }
 
         public static List<Vector3> get3DSierpinskiTriangleNextBotomCenters(Vector3 bottomCenter, float height, int nowTimes, int targetTimes)
         {
-            List<Vector3> nexts = new List<Vector3>();
+            var nexts = new List<Vector3>();
             if (nowTimes >= targetTimes)
             {
                 nexts.Add(bottomCenter);
@@ -183,28 +183,28 @@ namespace Game
 
         public static StoreBlocks getPyramid(Vector3 bottomCenter, float height, int value)
         {
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
-            Vector3 P = new Vector3(bottomCenter.X, bottomCenter.Y + height, bottomCenter.Z);
-            Vector3 A = new Vector3(bottomCenter.X, bottomCenter.Y, bottomCenter.Z + height / sqrt3);
-            Vector3 B = new Vector3(bottomCenter.X + height / 2f, bottomCenter.Y, bottomCenter.Z - height / sqrt12);
-            Vector3 C = new Vector3(bottomCenter.X - height / 2f, bottomCenter.Y, bottomCenter.Z - height / sqrt12);
-            storeBlocks.AddRange(StaticCommonMethod.getTriangle(P, A, B, value));
-            storeBlocks.AddRange(StaticCommonMethod.getTriangle(P, A, C, value));
-            storeBlocks.AddRange(StaticCommonMethod.getTriangle(P, B, C, value));
-            storeBlocks.AddRange(StaticCommonMethod.getTriangle(A, B, C, value));
+            var P = new Vector3(bottomCenter.X, bottomCenter.Y + height, bottomCenter.Z);
+            var A = new Vector3(bottomCenter.X, bottomCenter.Y, bottomCenter.Z + height / sqrt3);
+            var B = new Vector3(bottomCenter.X + height / 2f, bottomCenter.Y, bottomCenter.Z - height / sqrt12);
+            var C = new Vector3(bottomCenter.X - height / 2f, bottomCenter.Y, bottomCenter.Z - height / sqrt12);
+            storeBlocks.AddRange(getTriangle(P, A, B, value));
+            storeBlocks.AddRange(getTriangle(P, A, C, value));
+            storeBlocks.AddRange(getTriangle(P, B, C, value));
+            storeBlocks.AddRange(getTriangle(A, B, C, value));
             return storeBlocks.ClearDuplicatePosition();
         }
 
-        public static int[] halfHeights = new int[5] { 40, 13, 4, 1, 0 };
+        public static int[] halfHeights = { 40, 13, 4, 1, 0 };
 
         public static StoreBlocks getKoch90(CellFace bottomCenter, int value, int targetTimes)
         {
             targetTimes = targetTimes < 6 ? targetTimes : 5;
-            StoreBlocks storeBlocks = new StoreBlocks();
+            var storeBlocks = new StoreBlocks();
             storeBlocks.IsAbsolute = true;
-            List<CellFace> nowBottomCenters = new List<CellFace>();
-            List<CellFace> nextBottomCenters = new List<CellFace>();
+            var nowBottomCenters = new List<CellFace>();
+            var nextBottomCenters = new List<CellFace>();
             nowBottomCenters.Add(bottomCenter);
             for (int x = -121; x <= 121; x++)
             {
@@ -281,68 +281,64 @@ namespace Game
 
         public static int[] FaceToSurround(int face)
         {
-            if (face == 4 || face == 5)
+            switch (face)
             {
-                return new int[4]
+                case 4:
+                case 5:
+                    return new[]
                     {
                         0,1,2,3
                     };
-            }
-            else if (face == 1 || face == 3)
-            {
-                return new int[4]
+                case 1:
+                case 3:
+                    return new[]
                     {
                         0,2,4,5
                     };
-            }
-            else if (face == 0 || face == 2)
-            {
-                return new int[4]
+                case 0:
+                case 2:
+                    return new[]
                     {
                         1,3,4,5
                     };
-            }
-            else
-            {
-                return new int[0];
+                default:
+                    return new int[0];
             }
         }
 
         public static Point3[] FaceToDiagonal(int face)
         {
-            if (face == 4 || face == 5)
+            switch (face)
             {
-                return new Point3[4]
+                case 4:
+                case 5:
+                    return new[]
                     {
                         new Point3(1,0,1),
                         new Point3(1,0,-1),
                         new Point3(-1,0,1),
                         new Point3(-1,0,-1)
                     };
-            }
-            else if (face == 1 || face == 3)
-            {
-                return new Point3[4]
+                case 1:
+                case 3:
+                    return new[]
                     {
                         new Point3(0,1,1),
                         new Point3(0,1,-1),
                         new Point3(0,-1,1),
                         new Point3(0,-1,-1)
                     };
-            }
-            else if (face == 0 || face == 2)
-            {
-                return new Point3[4]
+                case 0:
+                case 2:
+                    return new[]
                     {
                         new Point3(1,1,0),
                         new Point3(1,-1,0),
                         new Point3(-1,1,0),
                         new Point3(-1,-1,0)
                     };
-            }
-            else
-            {
-                return new Point3[0];
+                default:
+                    return new Point3[0];
             }
         }
     }

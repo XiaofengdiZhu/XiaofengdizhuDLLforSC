@@ -14,11 +14,11 @@ namespace Game
         public SubsystemPlayers m_subsystemPlayers;
         public SubsystemSky m_subsystemSky;
         public DynamicArray<ComponentBody> m_componentBodies = new DynamicArray<ComponentBody>();
-        private Random m_random = new Random();
+        private readonly Random m_random = new Random();
         public Dictionary<Point3, DefenceTower> m_defenceTowers = new Dictionary<Point3, DefenceTower>();
         public bool m_attackPlayer = false;
 
-        protected override void Load(ValuesDictionary valuesDictionary)
+        public override void Load(ValuesDictionary valuesDictionary)
         {
             base.Load(valuesDictionary);
             m_subsystemBodies = Project.FindSubsystem<SubsystemBodies>(true);
@@ -30,13 +30,10 @@ namespace Game
 
         public override int[] HandledBlocks
         {
-            get
-            {
-                return new int[]
+            get { return new[]
                 {
                     360
-                };
-            }
+                }; }
         }
 
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
@@ -62,7 +59,7 @@ namespace Game
         {
             if (Terrain.ExtractData(value) > 0)
             {
-                Point3 point3 = new Point3(x, y, z);
+                var point3 = new Point3(x, y, z);
                 if (m_defenceTowers.ContainsKey(point3))
                 {
                     m_defenceTowers.Remove(point3);
@@ -81,7 +78,7 @@ namespace Game
                     if (tower.type == 1)
                     {
                         m_componentBodies.Clear();
-                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, this.m_componentBodies);
+                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, m_componentBodies);
                         if (m_componentBodies.Count > 0)
                         {
                             foreach (ComponentBody body in m_componentBodies.Array)
@@ -98,7 +95,7 @@ namespace Game
                     else if (tower.type == 2)
                     {
                         m_componentBodies.Clear();
-                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, this.m_componentBodies);
+                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, m_componentBodies);
                         if (m_componentBodies.Count > 0)
                         {
                             foreach (ComponentBody body in m_componentBodies.Array)
@@ -115,7 +112,7 @@ namespace Game
                     else if (tower.type == 3)
                     {
                         m_componentBodies.Clear();
-                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, this.m_componentBodies);
+                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 12, m_componentBodies);
                         if (m_componentBodies.Count > 0)
                         {
                             foreach (ComponentBody body in m_componentBodies.Array)
@@ -132,7 +129,7 @@ namespace Game
                     else if (tower.type == 4)
                     {
                         m_componentBodies.Clear();
-                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 8, this.m_componentBodies);
+                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 8, m_componentBodies);
                         if (m_componentBodies.Count > 0)
                         {
                             foreach (ComponentBody body in m_componentBodies.Array)
@@ -141,9 +138,9 @@ namespace Game
                                 {
                                     continue;
                                 }
-                                Vector3 towerPosition = new Vector3(tower.position);
+                                var towerPosition = new Vector3(tower.position);
                                 Vector3 impulse = Vector3.Zero;
-                                Vector3 bodyDirection = Vector3.Normalize(body.Position - towerPosition);
+                                var bodyDirection = Vector3.Normalize(body.Position - towerPosition);
                                 if (Vector3.DistanceSquared(towerPosition, body.Position) > 16)
                                 {
                                     impulse -= bodyDirection;
@@ -160,7 +157,7 @@ namespace Game
                     else if (tower.type == 5)
                     {
                         m_componentBodies.Clear();
-                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 24, this.m_componentBodies);
+                        m_subsystemBodies.FindBodiesAroundPoint(new Vector2(tower.position.X, tower.position.Z), 24, m_componentBodies);
                         if (m_componentBodies.Count > 0)
                         {
                             foreach (ComponentBody body in m_componentBodies.Array)
@@ -180,17 +177,14 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 10;
-            }
+            get { return 10; }
         }
 
         public bool AddDefenceTower(int x, int y, int z, int type)
         {
             if (type > 0)
             {
-                Point3 point3 = new Point3(x, y, z);
+                var point3 = new Point3(x, y, z);
                 m_defenceTowers.Add(point3, new DefenceTower(point3, type, m_subsystemTime.GameTime));
                 return true;
             }
@@ -233,7 +227,7 @@ namespace Game
                     if (flag)
                     {
                         SubsystemTerrain.ChangeCell(x, y, z, Terrain.ReplaceData(360, i));
-                        Point3 point3 = new Point3(x, y, z);
+                        var point3 = new Point3(x, y, z);
                         m_defenceTowers.Add(point3, new DefenceTower(point3, i, m_subsystemTime.GameTime));
                         return true;
                     }
@@ -245,7 +239,7 @@ namespace Game
         public void FireItem(Vector3 towerPosition, ComponentBody body, int blockValue, float vx)
         {
             Vector3 bodyPosition = body.Position;
-            float[] distance = new float[5];
+            var distance = new float[5];
             for (int i = 0; i < 5; i++)
             {
                 distance[i] = Vector3.DistanceSquared(towerPosition + CellFace.FaceToVector3(i) * 0.6f, bodyPosition);
