@@ -16,7 +16,7 @@ namespace Game
                 Matrix m;
                 if (i < 4)
                 {
-                    m = Matrix.CreateRotationX(1.57079637f) * Matrix.CreateTranslation(0f, 0f, -0.5f) * Matrix.CreateRotationY((float)i * 3.14159274f / 2f) * Matrix.CreateTranslation(0.5f, 0.5f, 0.5f);
+                    m = Matrix.CreateRotationX(1.57079637f) * Matrix.CreateTranslation(0f, 0f, -0.5f) * Matrix.CreateRotationY(i * 3.14159274f / 2f) * Matrix.CreateTranslation(0.5f, 0.5f, 0.5f);
                 }
                 else if (i == 4)
                 {
@@ -26,28 +26,27 @@ namespace Game
                 {
                     m = Matrix.CreateRotationX(3.14159274f) * Matrix.CreateTranslation(0.5f, 1f, 0.5f);
                 }
-                this.m_blockMeshesByFace[i] = new BlockMesh();
-                this.m_blockMeshesByFace[i].AppendModelMeshPart(modelMesh.MeshParts[0], boneAbsoluteTransform * m, false, false, false, false, Color.White);
-                this.m_collisionBoxesByFace[i] = new BoundingBox[]
+                m_blockMeshesByFace[i] = new BlockMesh();
+                m_blockMeshesByFace[i].AppendModelMeshPart(modelMesh.MeshParts[0], boneAbsoluteTransform * m, false, false, false, false, Color.White);
+                m_collisionBoxesByFace[i] = new BoundingBox[]
                 {
-                    this.m_blockMeshesByFace[i].CalculateBoundingBox()
+                    m_blockMeshesByFace[i].CalculateBoundingBox()
                 };
             }
             Matrix m2 = Matrix.CreateRotationY(-1.57079637f) * Matrix.CreateRotationZ(1.57079637f);
-            this.m_standaloneBlockMesh = new BlockMesh();
-            this.m_standaloneBlockMesh.AppendModelMeshPart(modelMesh.MeshParts[0], boneAbsoluteTransform * m2, false, false, false, false, Color.White);
+            m_standaloneBlockMesh = new BlockMesh();
+            m_standaloneBlockMesh.AppendModelMeshPart(modelMesh.MeshParts[0], boneAbsoluteTransform * m2, false, false, false, false, Color.White);
         }
 
-        //[IteratorStateMachine(typeof(SixteenLedBlock.< GetProceduralCraftingRecipes > d__5))]
         public override IEnumerable<CraftingRecipe> GetProceduralCraftingRecipes()
         {
             int num;
             for (int i = 0; i < 8; i = num)
             {
-                CraftingRecipe craftingRecipe = new CraftingRecipe
+                var craftingRecipe = new CraftingRecipe
                 {
                     ResultCount = 4,
-                    ResultValue = Terrain.MakeBlockValue(310, 0, SixteenLedBlock.SetColor(0, i)),
+                    ResultValue = Terrain.MakeBlockValue(310, 0, SetColor(0, i)),
                     RemainsCount = 1,
                     RemainsValue = Terrain.MakeBlockValue(90),
                     RequiredHeatLevel = 0f,
@@ -68,18 +67,18 @@ namespace Game
 
         public override bool IsFaceTransparent(SubsystemTerrain subsystemTerrain, int face, int value)
         {
-            int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
+            int mountingFace = GetMountingFace(Terrain.ExtractData(value));
             return face != CellFace.OppositeFace(mountingFace);
         }
 
         public override int GetFace(int value)
         {
-            return SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
+            return GetMountingFace(Terrain.ExtractData(value));
         }
 
         public override string GetDisplayName(SubsystemTerrain subsystemTerrain, int value)
         {
-            int color = SixteenLedBlock.GetColor(Terrain.ExtractData(value));
+            int color = GetColor(Terrain.ExtractData(value));
             return LedBlock.LedColorDisplayNames[color] + " 16-LED";
         }
 
@@ -89,7 +88,7 @@ namespace Game
             int num;
             for (int i = 0; i < 8; i = num)
             {
-                yield return Terrain.MakeBlockValue(310, 0, SixteenLedBlock.SetColor(0, i));
+                yield return Terrain.MakeBlockValue(310, 0, SetColor(0, i));
                 num = i + 1;
             }
             yield break;
@@ -97,7 +96,7 @@ namespace Game
 
         public override BlockPlacementData GetPlacementValue(SubsystemTerrain subsystemTerrain, ComponentMiner componentMiner, int value, TerrainRaycastResult raycastResult)
         {
-            int data = SixteenLedBlock.SetMountingFace(Terrain.ExtractData(value), raycastResult.CellFace.Face);
+            int data = SetMountingFace(Terrain.ExtractData(value), raycastResult.CellFace.Face);
             int value2 = Terrain.ReplaceData(value, data);
             return new BlockPlacementData
             {
@@ -108,10 +107,10 @@ namespace Game
 
         public override void GetDropValues(SubsystemTerrain subsystemTerrain, int oldValue, int newValue, int toolLevel, List<BlockDropValue> dropValues, out bool showDebris)
         {
-            int color = SixteenLedBlock.GetColor(Terrain.ExtractData(oldValue));
+            int color = GetColor(Terrain.ExtractData(oldValue));
             dropValues.Add(new BlockDropValue
             {
-                Value = Terrain.MakeBlockValue(310, 0, SixteenLedBlock.SetColor(0, color)),
+                Value = Terrain.MakeBlockValue(310, 0, SetColor(0, color)),
                 Count = 1
             });
             showDebris = true;
@@ -119,37 +118,37 @@ namespace Game
 
         public override BoundingBox[] GetCustomCollisionBoxes(SubsystemTerrain terrain, int value)
         {
-            int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
-            if (mountingFace >= this.m_collisionBoxesByFace.Length)
+            int mountingFace = GetMountingFace(Terrain.ExtractData(value));
+            if (mountingFace >= m_collisionBoxesByFace.Length)
             {
                 return null;
             }
-            return this.m_collisionBoxesByFace[mountingFace];
+            return m_collisionBoxesByFace[mountingFace];
         }
 
         public override void GenerateTerrainVertices(BlockGeometryGenerator generator, TerrainGeometrySubsets geometry, int value, int x, int y, int z)
         {
-            int mountingFace = SixteenLedBlock.GetMountingFace(Terrain.ExtractData(value));
-            if (mountingFace < this.m_blockMeshesByFace.Length)
+            int mountingFace = GetMountingFace(Terrain.ExtractData(value));
+            if (mountingFace < m_blockMeshesByFace.Length)
             {
-                generator.GenerateMeshVertices(this, x, y, z, this.m_blockMeshesByFace[mountingFace], Color.White, null, geometry.SubsetOpaque);
+                generator.GenerateMeshVertices(this, x, y, z, m_blockMeshesByFace[mountingFace], Color.White, null, geometry.SubsetOpaque);
                 generator.GenerateWireVertices(value, x, y, z, mountingFace, 1f, Vector2.Zero, geometry.SubsetOpaque);
             }
         }
 
         public override void DrawBlock(PrimitivesRenderer3D primitivesRenderer, int value, Color color, float size, ref Matrix matrix, DrawBlockEnvironmentData environmentData)
         {
-            BlocksManager.DrawMeshBlock(primitivesRenderer, this.m_standaloneBlockMesh, color, 2f * size, ref matrix, environmentData);
+            BlocksManager.DrawMeshBlock(primitivesRenderer, m_standaloneBlockMesh, color, 2f * size, ref matrix, environmentData);
         }
 
         public override ElectricElement CreateElectricElement(SubsystemElectricity subsystemElectricity, int value, int x, int y, int z)
         {
-            return new SixteenLedElectricElement(subsystemElectricity, new CellFace(x, y, z, this.GetFace(value)));
+            return new SixteenLedElectricElement(subsystemElectricity, new CellFace(x, y, z, GetFace(value)));
         }
 
         public override ElectricConnectorType? GetConnectorType(SubsystemTerrain terrain, int value, int face, int connectorFace, int x, int y, int z)
         {
-            int face2 = this.GetFace(value);
+            int face2 = GetFace(value);
             if (face == face2 && SubsystemElectricity.GetConnectorDirection(face2, 0, connectorFace).HasValue)
             {
                 return new ElectricConnectorType?(ElectricConnectorType.Input);

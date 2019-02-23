@@ -12,20 +12,17 @@ namespace Game
 
         public override int[] HandledBlocks
         {
-            get
-            {
-                return new int[]
+            get { return new[]
                 {
                     320
-                };
-            }
+                }; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary)
+        public override void Load(ValuesDictionary valuesDictionary)
         {
             base.Load(valuesDictionary);
-            this.m_subsystemBlocksEntities = base.Project.FindSubsystem<SubsystemBlocksEntities>(true);
-            this.m_subsystemAudio = base.Project.FindSubsystem<SubsystemAudio>(true);
+            m_subsystemBlocksEntities = Project.FindSubsystem<SubsystemBlocksEntities>(true);
+            m_subsystemAudio = Project.FindSubsystem<SubsystemAudio>(true);
             m_subsystemTerrain = Project.FindSubsystem<SubsystemTerrain>(true);
         }
 
@@ -51,16 +48,16 @@ namespace Game
             }
             if (blocksEntity != null && blocksEntity.Coordinates.Count < 2)
             {
-                Point3 point = new Point3(x, y, z);
+                var point = new Point3(x, y, z);
                 blocksEntity.Coordinates.Add(point);
                 m_subsystemBlocksEntities.m_blocksEntities.Add(point, blocksEntity);
             }
             else
             {
-                ValuesDictionary valuesDictionary = new ValuesDictionary();
-                valuesDictionary.PopulateFromDatabaseObject(base.Project.GameDatabase.Database.FindDatabaseObject("CombinedChest", base.Project.GameDatabase.EntityTemplateType, true));
-                valuesDictionary.GetValue<ValuesDictionary>("BlocksEntity").SetValue<string>("Coordinates", x + "," + y + "," + z);
-                base.Project.AddEntity(base.Project.CreateEntity(valuesDictionary));
+                var valuesDictionary = new ValuesDictionary();
+                valuesDictionary.PopulateFromDatabaseObject(Project.GameDatabase.Database.FindDatabaseObject("CombinedChest", Project.GameDatabase.EntityTemplateType, true));
+                valuesDictionary.GetValue<ValuesDictionary>("BlocksEntity").SetValue("Coordinates", x + "," + y + "," + z);
+                Project.AddEntity(Project.CreateEntity(valuesDictionary));
             }
         }
 
@@ -85,28 +82,28 @@ namespace Game
             }
             if (blocksEntity != null)
             {
-                Point3 point = new Point3(x, y, z);
+                var point = new Point3(x, y, z);
                 blocksEntity.Coordinates.Remove(point);
                 m_subsystemBlocksEntities.m_blocksEntities.Remove(point);
             }
             else
             {
-                blocksEntity = this.m_subsystemBlocksEntities.GetBlockEntity(x, y, z);
+                blocksEntity = m_subsystemBlocksEntities.GetBlockEntity(x, y, z);
                 if (blocksEntity != null)
                 {
-                    Vector3 position = new Vector3((float)x, (float)y, (float)z) + new Vector3(0.5f);
+                    Vector3 position = new Vector3(x, y, z) + new Vector3(0.5f);
                     foreach (IInventory inventory in blocksEntity.Entity.FindComponents<IInventory>())
                     {
                         inventory.DropAllItems(position);
                     }
-                    base.Project.RemoveEntity(blocksEntity.Entity, true);
+                    Project.RemoveEntity(blocksEntity.Entity, true);
                 }
             }
         }
 
         public override bool OnInteract(TerrainRaycastResult raycastResult, ComponentMiner componentMiner)
         {
-            ComponentBlocksEntity blocksEntity = this.m_subsystemBlocksEntities.GetBlockEntity(raycastResult.CellFace.X, raycastResult.CellFace.Y, raycastResult.CellFace.Z);
+            ComponentBlocksEntity blocksEntity = m_subsystemBlocksEntities.GetBlockEntity(raycastResult.CellFace.X, raycastResult.CellFace.Y, raycastResult.CellFace.Z);
             if (blocksEntity != null && blocksEntity.Coordinates.Count == 2 && componentMiner.ComponentPlayer != null)
             {
                 ComponentCombinedChest ComponentCombinedChest = blocksEntity.Entity.FindComponent<ComponentCombinedChest>(true);
@@ -121,16 +118,16 @@ namespace Game
         {
             if (!worldItem.ToRemove)
             {
-                ComponentBlocksEntity blocksEntity = this.m_subsystemBlocksEntities.GetBlockEntity(cellFace.X, cellFace.Y, cellFace.Z);
+                ComponentBlocksEntity blocksEntity = m_subsystemBlocksEntities.GetBlockEntity(cellFace.X, cellFace.Y, cellFace.Z);
                 if (blocksEntity != null)
                 {
-                    IInventory inventory = blocksEntity.Entity.FindComponent<ComponentCombinedChest>(true);
-                    Pickable pickable = worldItem as Pickable;
+                    var inventory = blocksEntity.Entity.FindComponent<ComponentCombinedChest>(true);
+                    var pickable = worldItem as Pickable;
                     int num = (pickable != null) ? pickable.Count : 1;
                     int num2 = ComponentInventoryBase.AcquireItems(inventory, worldItem.Value, num);
                     if (num2 < num)
                     {
-                        this.m_subsystemAudio.PlaySound("Audio/PickableCollected", 1f, 0f, worldItem.Position, 3f, true);
+                        m_subsystemAudio.PlaySound("Audio/PickableCollected", 1f, 0f, worldItem.Position, 3f, true);
                     }
                     if (num2 <= 0)
                     {

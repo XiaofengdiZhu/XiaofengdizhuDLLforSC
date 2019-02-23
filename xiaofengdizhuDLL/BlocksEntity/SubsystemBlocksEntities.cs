@@ -12,7 +12,7 @@ namespace Game
             return result;
         }
 
-        protected override void OnEntityAdded(Entity entity)
+        public override void OnEntityAdded(Entity entity)
         {
             ComponentBlocksEntity componentBlocksEntity = entity.FindComponent<ComponentBlocksEntity>();
             if (componentBlocksEntity != null)
@@ -24,7 +24,7 @@ namespace Game
             }
         }
 
-        protected override void OnEntityRemoved(Entity entity)
+        public override void OnEntityRemoved(Entity entity)
         {
             ComponentBlocksEntity componentBlocksEntity = entity.FindComponent<ComponentBlocksEntity>();
             if (componentBlocksEntity != null)

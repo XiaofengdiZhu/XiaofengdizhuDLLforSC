@@ -11,7 +11,7 @@ namespace Game
             int num = Terrain.ExtractData(value);
             string name = "";
             name = DefenceTowerManager.m_towerName[num];
-            if (name.Length > 0) return name += " Tower Core"; else return "Defence Tower Core";
+            return name.Length > 0 ? name + " Tower Core" : "Defence Tower Core";
         }
 
         public override IEnumerable<int> GetCreativeValues()

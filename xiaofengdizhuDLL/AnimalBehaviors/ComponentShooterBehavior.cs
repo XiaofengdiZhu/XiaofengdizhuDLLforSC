@@ -22,21 +22,15 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public override float ImportanceLevel
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentCreature = Entity.FindComponent<ComponentCreature>(true);
@@ -98,7 +92,7 @@ namespace Game
                     Vector3 position = m_componentCreature.ComponentCreatureModel.EyePosition + m_componentCreature.ComponentBody.Matrix.Right * 0.3f - m_componentCreature.ComponentBody.Matrix.Up * 0.2f + m_componentCreature.ComponentBody.Matrix.Forward * 0.2f;
                     Vector3 target_direction = m_componenttChaseBehavior.Target.ComponentBody.Position - position;
                     m_distance = target_direction.Length();
-                    Vector3 direction = Vector3.Normalize(target_direction + m_random.Vector3((m_distance < 10) ? 0.4f : 1f, false));
+                    var direction = Vector3.Normalize(target_direction + m_random.Vector3((m_distance < 10) ? 0.4f : 1f, false));
                     float vx = MathUtils.Lerp(0f, 40f, MathUtils.Pow((float)m_ChargeTime / 2f, 0.5f));
                     m_subsystemProjectiles.FireProjectile(m_arrowValue, position, direction * vx + new Vector3(0, m_random.UniformFloat(5f, 8f) * m_distance / vx, 0), Vector3.Zero, m_componentCreature);
                 }
@@ -109,8 +103,8 @@ namespace Game
             }
         }
 
-        public ComponentShooterBehavior() : base()
+        /*public ComponentShooterBehavior() : base()
         {
-        }
+        }*/
     }
 }

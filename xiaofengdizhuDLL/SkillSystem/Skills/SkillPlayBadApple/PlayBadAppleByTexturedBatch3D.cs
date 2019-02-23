@@ -20,13 +20,13 @@ namespace Game
             try
             {
                 Stream stream = Storage.OpenFile("app:BadAppleByTexturedBatch3D\\BadApple.ogg", OpenFileMode.Read);
-                BinaryReader br = new BinaryReader(stream);
+                var br = new BinaryReader(stream);
                 SoundBuffer soundBuffer;
                 bool flag = br.ReadBoolean();
                 int bytesCount = br.ReadInt32();
                 if (flag)
                 {
-                    MemoryStream memoryStream = new MemoryStream();
+                    var memoryStream = new MemoryStream();
                     using (StreamingSource streamingSource = Ogg.Stream(stream, false))
                     {
                         streamingSource.CopyTo(memoryStream);
@@ -52,10 +52,10 @@ namespace Game
         public void Play(int m_pictureIndex, Camera camera, PrimitivesRenderer3D primitivesRenderer3d)
         {
             TexturedBatch3D batch = primitivesRenderer3d.TexturedBatch(m_pictures[m_pictureIndex], true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.PointClamp);
-            Vector3 p1 = Vector3.Transform(position - 36 * unitZ - 27 * unitY, camera.ViewMatrix);
-            Vector3 p2 = Vector3.Transform(position + 36 * unitZ - 27 * unitY, camera.ViewMatrix);
-            Vector3 p3 = Vector3.Transform(position + 36 * unitZ + 27 * unitY, camera.ViewMatrix);
-            Vector3 p4 = Vector3.Transform(position - 36 * unitZ + 27 * unitY, camera.ViewMatrix);
+            var p1 = Vector3.Transform(position - 36 * unitZ - 27 * unitY, camera.ViewMatrix);
+            var p2 = Vector3.Transform(position + 36 * unitZ - 27 * unitY, camera.ViewMatrix);
+            var p3 = Vector3.Transform(position + 36 * unitZ + 27 * unitY, camera.ViewMatrix);
+            var p4 = Vector3.Transform(position - 36 * unitZ + 27 * unitY, camera.ViewMatrix);
             batch.QueueQuad(p1, p2, p3, p4, new Vector2(1f, 1f), new Vector2(0f, 1f), new Vector2(0f, 0f), new Vector2(1f, 0f), Color.White);
         }
     }

@@ -78,10 +78,7 @@ namespace Game
         }
         public ComponentBody TargetBody
         {
-            get
-            {
-                return m_targetBody;
-            }
+            get { return m_targetBody; }
             set
             {
                 m_targetBody = value;

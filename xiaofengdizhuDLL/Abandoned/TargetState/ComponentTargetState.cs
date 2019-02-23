@@ -12,7 +12,7 @@ namespace Game
         private SubsystemTime m_subsystemTime;
         private SubsystemDrawing m_subsystemDrawing;
         private TargetStateWidget targetStateWidget;
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentPlayer = Entity.FindComponent<ComponentPlayer>(true);
@@ -23,10 +23,7 @@ namespace Game
         }
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
         public void Update(float dt)
         {

@@ -6,7 +6,7 @@ namespace Game
 {
     public class SubsystemTelescopeBlockBehavior : SubsystemBlockBehavior
     {
-        /*protected override void Load(ValuesDictionary valuesDictionary)
+        /*public override void Load(ValuesDictionary valuesDictionary)
         {
             m_cameras.Add(new LoadingCamera(this));
         }*/
@@ -16,13 +16,7 @@ namespace Game
 
         public override int[] HandledBlocks
         {
-            get
-            {
-                return new int[]
-                {
-                    350
-                };
-            }
+            get { return new[] { 350 }; }
         }
 
         public override bool OnUse(Vector3 start, Vector3 direction, ComponentMiner componentMiner)
@@ -32,19 +26,12 @@ namespace Game
                 if (!m_hasInitiated)
                 {
                     m_view = componentMiner.ComponentPlayer.View;
-                    if ((TelescopeCamera)((object)m_view.m_cameras.FirstOrDefault((Camera c) => c is TelescopeCamera)) == null)
+                    if ((TelescopeCamera)m_view.m_cameras.FirstOrDefault((Camera c) => c is TelescopeCamera) == null)
                     {
                         m_view.m_cameras.Add(new TelescopeCamera(m_view));
                     }
                 }
-                if (m_view.ActiveCamera is TelescopeCamera)
-                {
-                    m_view.ActiveCamera = m_view.FindCamera<FppCamera>(true);
-                }
-                else
-                {
-                    m_view.ActiveCamera = m_view.FindCamera<TelescopeCamera>(true);
-                }
+                m_view.ActiveCamera = m_view.ActiveCamera is TelescopeCamera ? m_view.FindCamera<FppCamera>(true) : (Camera)m_view.FindCamera<TelescopeCamera>(true);
                 return true;
             }
             catch (Exception e)

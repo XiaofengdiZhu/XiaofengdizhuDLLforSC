@@ -23,13 +23,13 @@ namespace Game
 
         public static List<int[]> m_towerBlocks = new List<int[]>()
         {
-            new int[]{},
-            new int[]{ 150,150,150},//大煤块
-            new int[]{71,71,71 },//大孔雀石
-            new int[]{47,47,47 },//大铜块
-            new int[]{46,46,46,46 },//大铁块
-            new int[]{231,231,231,231 },//大锗块
-            new int[]{126,126,126,126,126}//大钻块
+            new int[0],
+            new[]{ 150,150,150},//大煤块
+            new[]{71,71,71 },//大孔雀石
+            new[]{47,47,47 },//大铜块
+            new[]{46,46,46,46 },//大铁块
+            new[]{231,231,231,231 },//大锗块
+            new[]{126,126,126,126,126}//大钻块
         };
 
         public static double[] m_towerPeriod = new double[]

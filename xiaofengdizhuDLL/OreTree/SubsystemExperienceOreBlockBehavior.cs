@@ -20,28 +20,25 @@ namespace Game
 
         public override int[] HandledBlocks
         {
-            get
-            {
-                return new int[]
+            get { return new[]
                 {
                     330
-                };
-            }
+                }; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary)
+        public override void Load(ValuesDictionary valuesDictionary)
         {
             base.Load(valuesDictionary);
-            m_subsystemAudio = base.Project.FindSubsystem<SubsystemAudio>(true);
-            m_subsystemTime = base.Project.FindSubsystem<SubsystemTime>(true);
+            m_subsystemAudio = Project.FindSubsystem<SubsystemAudio>(true);
+            m_subsystemTime = Project.FindSubsystem<SubsystemTime>(true);
             m_texture = ContentManager.Get<Texture2D>("Textures/Round32");
             m_primitivesRenderer = Project.FindSubsystem<SubsystemModelsRenderer>(true).PrimitivesRenderer;
-            m_visibilityRange = (float)SettingsManager.VisibilityRange;
+            m_visibilityRange = SettingsManager.VisibilityRange;
         }
 
         public override void OnBlockAdded(int value, int oldValue, int x, int y, int z)
         {
-            Point3 point = new Point3(x, y, z);
+            var point = new Point3(x, y, z);
             if (!m_blocks.ContainsKey(point))
             {
                 m_blocks.Add(point, new ExperienceOre(x, y, z));
@@ -50,7 +47,7 @@ namespace Game
 
         public override void OnBlockGenerated(int value, int x, int y, int z, bool isLoaded)
         {
-            Point3 point = new Point3(x, y, z);
+            var point = new Point3(x, y, z);
             if (!m_blocks.ContainsKey(point))
             {
                 m_blocks.Add(point, new ExperienceOre(x, y, z));
@@ -59,12 +56,12 @@ namespace Game
 
         public override void OnBlockRemoved(int value, int newValue, int x, int y, int z)
         {
-            Point3 point = new Point3(x, y, z);
+            var point = new Point3(x, y, z);
             if (m_blocks.ContainsKey(point))
             {
                 m_blocks.Remove(point);
             }
-            m_subsystemAudio.PlaySound("Audio/ExperienceCollected", 0.3f, this.m_random.UniformFloat(-0.1f, 0.4f), 0f, 0f);
+            m_subsystemAudio.PlaySound("Audio/ExperienceCollected", 0.3f, m_random.UniformFloat(-0.1f, 0.4f), 0f, 0f);
         }
 
         public void Draw(Camera camera, int drawOrder)
@@ -75,7 +72,7 @@ namespace Game
                 float dt = m_subsystemTime.GameTimeDelta;
                 foreach (ExperienceOre block in m_blocks.Values)
                 {
-                    Vector3 blockPosition = new Vector3(block.position.X + 0.5f, block.position.Y + 0.5f, block.position.Z + 0.5f);
+                    var blockPosition = new Vector3(block.position.X + 0.5f, block.position.Y + 0.5f, block.position.Z + 0.5f);
                     foreach (ExperienceOrb orb in block.orbs)
                     {
                         if (Vector3.Distance(orb.position, camera.ViewPosition) < m_visibilityRange + 10)
@@ -100,12 +97,12 @@ namespace Game
                                 float speed = (orb.nextSize - orb.size) / (float)(orb.timeToStopResizing - nowTime) * dt;
                                 orb.size = MathUtils.Clamp(orb.size + speed, 0.03f, 0.3f);
                             }
-                            Vector3 v1 = Vector3.Normalize(Vector3.Cross(camera.ViewDirection, Vector3.UnitY));
+                            var v1 = Vector3.Normalize(Vector3.Cross(camera.ViewDirection, Vector3.UnitY));
                             Vector3 v2 = -Vector3.Normalize(Vector3.Cross(camera.ViewDirection, v1));
-                            Vector3 p1 = Vector3.Transform(orb.position + orb.size * (-v1 - v2), camera.ViewMatrix);
-                            Vector3 p2 = Vector3.Transform(orb.position + orb.size * (v1 - v2), camera.ViewMatrix);
-                            Vector3 p3 = Vector3.Transform(orb.position + orb.size * (-v1 + v2), camera.ViewMatrix);
-                            Vector3 p4 = Vector3.Transform(orb.position + orb.size * (v1 + v2), camera.ViewMatrix);
+                            var p1 = Vector3.Transform(orb.position + orb.size * (-v1 - v2), camera.ViewMatrix);
+                            var p2 = Vector3.Transform(orb.position + orb.size * (v1 - v2), camera.ViewMatrix);
+                            var p3 = Vector3.Transform(orb.position + orb.size * (-v1 + v2), camera.ViewMatrix);
+                            var p4 = Vector3.Transform(orb.position + orb.size * (v1 + v2), camera.ViewMatrix);
                             TexturedBatch3D texturedBatch3D = m_primitivesRenderer.TexturedBatch(m_texture, true, 0, null, RasterizerState.CullCounterClockwiseScissor, null, SamplerState.AnisotropicWrap);
                             texturedBatch3D.QueueQuad(p1, p3, p4, p2, new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Color(255, 205, 97));
                         }
@@ -116,10 +113,7 @@ namespace Game
 
         public int[] DrawOrders
         {
-            get
-            {
-                return new int[] { 10 };
-            }
+            get { return new[] { 10 }; }
         }
 
         public class ExperienceOre
@@ -130,7 +124,7 @@ namespace Game
             {
                 position = new Point3(x, y, z);
                 orbs = new ExperienceOrb[3];
-                Vector3 vector3 = new Vector3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f);
+                var vector3 = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f);
                 orbs[0] = new ExperienceOrb(vector3 + m_random.Vector3(0.5f), m_random.UniformFloat(0.03f, 0.3f));
                 orbs[1] = new ExperienceOrb(vector3 + m_random.Vector3(0.5f), m_random.UniformFloat(0.03f, 0.3f));
                 orbs[2] = new ExperienceOrb(vector3 + m_random.Vector3(0.5f), m_random.UniformFloat(0.03f, 0.3f));

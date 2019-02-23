@@ -15,7 +15,7 @@ namespace Game
             //return Keyboard.IsKeyDownOnce(Key.N);
         }
 
-        private int[] some_items = new int[] { 34, 222, 36, 113, 32, 35, 218, 38, 115, 33, 29, 165, 37, 114, 169, 170, 32960, 49344, 65728, 82112, 98496, 74, 40, 42, 85, 109, 79, 22, 43, 102, 103, 111, 149, 30, 219, 171, 172, 80, 81, 220, 82, 116, 122, 123, 221, 124, 125, 192, 16576, 131264 };
+        protected int[] some_items = new[] { 34, 222, 36, 113, 32, 35, 218, 38, 115, 33, 29, 165, 37, 114, 169, 170, 32960, 49344, 65728, 82112, 98496, 74, 40, 42, 85, 109, 79, 22, 43, 102, 103, 111, 149, 30, 219, 171, 172, 80, 81, 220, 82, 116, 122, 123, 221, 124, 125, 192, 16576, 131264 };
 
         public override void Action()
         {
@@ -23,7 +23,7 @@ namespace Game
             Vector3 eyePosition = miner.ComponentCreature.ComponentCreatureModel.EyePosition;
             Vector3 viewDirection = componentPlayer.View.ActiveCamera.ViewPosition;
             Matrix matrix = miner.ComponentCreature.ComponentBody.Matrix;
-            Random random = new Random();
+            var random = new Random();
             BodyRaycastResult? bodyRaycastResult = miner.PickBody(eyePosition, viewDirection);
             if (bodyRaycastResult.HasValue)
             {

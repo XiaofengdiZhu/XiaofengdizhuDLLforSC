@@ -27,21 +27,15 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public override float ImportanceLevel
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_subsystemGameInfo = Project.FindSubsystem<SubsystemGameInfo>(true);
@@ -59,10 +53,10 @@ namespace Game
             m_lastBreedTime = valuesDictionary.GetValue<double>("LastBreedTime");
         }
 
-        protected override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
+        public override void Save(ValuesDictionary valuesDictionary, EntityToIdMap entityToIdMap)
         {
             base.Save(valuesDictionary, entityToIdMap);
-            valuesDictionary.SetValue<double>("lastBreedTime", m_lastBreedTime);
+            valuesDictionary.SetValue("lastBreedTime", m_lastBreedTime);
         }
 
         public void Update(float dt)
@@ -77,7 +71,7 @@ namespace Game
                     }
                     if (m_breedCheckTime == 0)
                     {
-                        m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + (double)m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
+                        m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
                         return;
                     }
                     if (m_isBreeded)
@@ -87,7 +81,7 @@ namespace Game
                     else
                     {
                         m_lastBreedTime = m_subsystemGameInfo.TotalElapsedGameTime;
-                        m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + (double)m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
+                        m_breedCheckTime = m_lastBreedTime + m_breedPeriodTime + m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
                         m_nearbyBodies.Clear();
                         m_subsystemBodies.FindBodiesAroundPoint(m_componentCreature.ComponentBody.Position.XZ, 16f, m_nearbyBodies);
                         if (m_nearbyBodies.Count > 30)
@@ -104,9 +98,9 @@ namespace Game
                         if (m_nearbyBodies.Count > 1)
                         {
                             m_componenttPilot.Stop();
-                            Entity entity = DatabaseManager.CreateEntity(base.Project, Entity.ValuesDictionary.DatabaseObject.Name, true);
+                            Entity entity = DatabaseManager.CreateEntity(Project, Entity.ValuesDictionary.DatabaseObject.Name, true);
                             entity.FindComponent<ComponentBody>(true).Position = m_componentCreature.ComponentBody.Position;
-                            entity.FindComponent<ComponentBody>(true).Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, this.m_random.UniformFloat(0f, 6.28318548f));
+                            entity.FindComponent<ComponentBody>(true).Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, m_random.UniformFloat(0f, 6.28318548f));
                             entity.FindComponent<ComponentSpawn>(true).SpawnDuration = 5f;
                             entity.FindComponent<ComponentBreedBehavior>(true).m_isBreeded = true;
                             Project.AddEntity(entity);
@@ -116,7 +110,7 @@ namespace Game
                                 ComponentBreedBehavior bb = body.Entity.FindComponent<ComponentBreedBehavior>(true);
                                 bb.m_isBreeded = true;
                                 bb.m_lastBreedTime = m_lastBreedTime;
-                                bb.m_breedCheckTime = m_breedCheckTime + m_breedPeriodTime + (double)m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
+                                bb.m_breedCheckTime = m_breedCheckTime + m_breedPeriodTime + m_random.UniformFloat(-m_breedPeriodTimeRandomOffsetRange, m_breedPeriodTimeRandomOffsetRange);
                             }
                         }
                     }
@@ -126,8 +120,8 @@ namespace Game
             }
         }
 
-        public ComponentBreedBehavior() : base()
+        /*public ComponentBreedBehavior() : base()
         {
-        }
+        }*/
     }
 }

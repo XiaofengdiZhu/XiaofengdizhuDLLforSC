@@ -12,14 +12,14 @@ namespace Game
 
         public static void Initialize()
         {
-            Dictionary<string, Skill> skillDictionary = new Dictionary<string, Skill>();
-            Dictionary<string, bool> defaultSkillInputDictionary = new Dictionary<string, bool>();
-            List<TypeInfo> list = new List<TypeInfo>(typeof(SkillManager).GetTypeInfo().Assembly.DefinedTypes);
+            var skillDictionary = new Dictionary<string, Skill>();
+            var defaultSkillInputDictionary = new Dictionary<string, bool>();
+            var list = new List<TypeInfo>(typeof(SkillManager).GetTypeInfo().Assembly.DefinedTypes);
             foreach (TypeInfo current in list)
             {
                 if (current.IsSubclassOf(typeof(Skill)) && !current.IsAbstract)
                 {
-                    Skill skill = (Skill)Activator.CreateInstance(current.AsType());
+                    var skill = (Skill)Activator.CreateInstance(current.AsType());
                     if (skill.Name != null)
                     {
                         if (skillDictionary.ContainsKey(skill.Name))

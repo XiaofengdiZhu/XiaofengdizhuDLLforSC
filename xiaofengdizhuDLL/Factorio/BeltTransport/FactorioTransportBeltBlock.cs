@@ -66,15 +66,15 @@ namespace Game
 
         public override BlockDebrisParticleSystem CreateDebrisParticleSystem(SubsystemTerrain subsystemTerrain, Vector3 position, int value, float strength)
         {
-            return new BlockDebrisParticleSystem(subsystemTerrain, position, 0f, this.DestructionDebrisScale, Color.White, this.GetFaceTextureSlot(4, value));
+            return new BlockDebrisParticleSystem(subsystemTerrain, position, 0f, DestructionDebrisScale, Color.White, GetFaceTextureSlot(4, value));
         }
 
         public override IEnumerable<int> GetCreativeValues()
         {
-            yield return Terrain.MakeBlockValue(this.BlockIndex, 0, SetColor(0, 0));
+            yield return Terrain.MakeBlockValue(BlockIndex, 0, SetColor(0, 0));
             for (int i = 1; i < 3; i++)
             {
-                yield return Terrain.MakeBlockValue(this.BlockIndex, 0, SetColor(0, i));
+                yield return Terrain.MakeBlockValue(BlockIndex, 0, SetColor(0, i));
             }
             yield break;
         }
@@ -91,7 +91,7 @@ namespace Game
             int color = GetColor(Terrain.ExtractData(oldValue));
             dropValues.Add(new BlockDropValue
             {
-                Value = Terrain.MakeBlockValue(this.BlockIndex, 0, SetColor(0, color)),
+                Value = Terrain.MakeBlockValue(BlockIndex, 0, SetColor(0, color)),
                 Count = 1
             });
         }
@@ -123,7 +123,7 @@ namespace Game
             int data = Terrain.ExtractData(value);
             return new BlockPlacementData
             {
-                Value = Terrain.MakeBlockValue(this.BlockIndex, 0, SetRotation(data, rotation)),
+                Value = Terrain.MakeBlockValue(BlockIndex, 0, SetRotation(data, rotation)),
                 CellFace = raycastResult.CellFace
             };
         }
@@ -146,7 +146,7 @@ namespace Game
 
         public static int GetColor(int data)
         {
-            return (data >> 3 & 3);
+            return data >> 3 & 3;
         }
 
         public static int SetColor(int data, int color)
@@ -176,7 +176,7 @@ namespace Game
         {
             if ((data & 32) != 0)
             {
-                return new int?(data >> 6 & 7);
+                return data >> 6 & 7;
             }
             return null;
         }
@@ -203,16 +203,16 @@ namespace Game
 
         public static Vector4 XYToTextureCoords(int x, int y)
         {
-            float x1 = (float)x / (float)m_texColCount;
-            float y1 = (float)y / (float)m_texRowCount;
-            float z = (float)(x + 1f) / (float)m_texColCount;
-            float w = (float)(y + 1f) / (float)m_texRowCount;
+            float x1 = x / (float)m_texColCount;
+            float y1 = y / (float)m_texRowCount;
+            float z = (x + 1f) / m_texColCount;
+            float w = (y + 1f) / m_texRowCount;
             return new Vector4(x1, y1, z, w);
         }
 
         public static void DrawFactorioBeltTransportBlock(PrimitivesRenderer3D primitivesRenderer, int value, float size, ref Matrix matrix, Texture2D texture, DrawBlockEnvironmentData environmentData)
         {
-            environmentData = (environmentData ?? BlocksManager.m_defaultEnvironmentData);
+            environmentData = environmentData ?? BlocksManager.m_defaultEnvironmentData;
             Vector3 translation = matrix.Translation;
             Vector3 vector;
             Vector3 v;

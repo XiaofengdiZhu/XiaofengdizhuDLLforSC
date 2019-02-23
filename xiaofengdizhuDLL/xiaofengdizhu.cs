@@ -8,7 +8,7 @@ namespace xiaofengdizhuDLL
     {
         public static IEnumerable<TypeInfo> getMyEnumerable()
         {
-            List<TypeInfo> l1 = new List<TypeInfo>(typeof(BlocksManager).GetTypeInfo().Assembly.DefinedTypes);
+            var l1 = new List<TypeInfo>(typeof(BlocksManager).GetTypeInfo().Assembly.DefinedTypes);
             l1.AddRange(typeof(xiaofengdizhu).GetTypeInfo().Assembly.DefinedTypes);
             return l1;
         }

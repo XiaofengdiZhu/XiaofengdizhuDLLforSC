@@ -24,21 +24,15 @@ namespace Game
 
         public int UpdateOrder
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public override float ImportanceLevel
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
-        protected override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
+        public override void Load(ValuesDictionary valuesDictionary, IdToEntityMap idToEntityMap)
         {
             base.Load(valuesDictionary, idToEntityMap);
             m_componentCreature = Entity.FindComponent<ComponentCreature>(true);
@@ -64,7 +58,7 @@ namespace Game
                     Vector3 position = m_componentCreature.ComponentBody.Position;
                     Vector3 target_position = m_componenttChaseBehavior.Target.ComponentBody.Position;
                     float distance = Vector3.Distance(position, target_position);
-                    if (!m_shouldExplose) m_shouldExplose = (distance < 1.5);//距离小于1.5应该爆炸
+                    if (!m_shouldExplose) m_shouldExplose = distance < 1.5;//距离小于1.5应该爆炸
                     else
                     {
                         if (distance < 5 && m_componentHealth.Health > 0)
@@ -103,8 +97,8 @@ namespace Game
             }
         }
 
-        public ComponentCreeperBehavior() : base()
+        /*public ComponentCreeperBehavior() : base()
         {
-        }
+        }*/
     }
 }
